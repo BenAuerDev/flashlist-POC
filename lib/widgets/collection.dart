@@ -12,7 +12,7 @@ class CollectionWidget extends HookWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: collection.color!),
       ),
       child: Column(
         children: [
