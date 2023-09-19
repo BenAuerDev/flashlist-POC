@@ -42,6 +42,10 @@ class HomeScreen extends HookConsumerWidget {
           },
         ),
       );
+    } else {
+      content = const Center(
+        child: Text('No lists yet'),
+      );
     }
 
     return Scaffold(
