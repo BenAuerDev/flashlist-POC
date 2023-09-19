@@ -1,3 +1,4 @@
+import 'package:brainstorm_array/widgets/color_input.dart';
 import 'package:flutter/material.dart';
 import 'package:brainstorm_array/providers/collections.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,17 +11,21 @@ class NewCollectionScreen extends HookConsumerWidget {
     final collectionFormKey = GlobalKey<FormState>();
 
     var enteredTitle = '';
+    Color? enteredColor;
 
     void submit() {
       final isValid = collectionFormKey.currentState!.validate();
 
-      if (!isValid) {
+      if (!isValid || enteredColor == null) {
         return;
       }
 
       collectionFormKey.currentState!.save();
 
-      ref.read(collectionsProvider.notifier).addCollection(enteredTitle);
+      ref.read(collectionsProvider.notifier).addCollection({
+        'title': enteredTitle,
+        'color': enteredColor,
+      });
 
       Navigator.of(context).pop();
     }
@@ -47,6 +52,12 @@ class NewCollectionScreen extends HookConsumerWidget {
                 },
                 onSaved: (newValue) {
                   enteredTitle = newValue!;
+                },
+              ),
+              const SizedBox(height: 12),
+              ColorInput(
+                onSelectColor: (Color color) {
+                  enteredColor = color;
                 },
               ),
               const SizedBox(height: 12),
