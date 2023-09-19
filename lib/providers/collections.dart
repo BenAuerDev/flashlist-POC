@@ -19,7 +19,7 @@ class CollectionsNotifier extends StateNotifier<List<Collection>> {
     state = collections;
   }
 
-  Future<void> addCollection(dynamic newCollection) async {
+  Future<void> addCollection(Map<String, dynamic> newCollection) async {
     final newItem = await _firestoreService.addCollection(newCollection);
     state = [...state, newItem];
   }
