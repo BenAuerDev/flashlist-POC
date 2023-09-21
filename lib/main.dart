@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Brainstorm Array',
       theme: ThemeData(
+        textTheme: GoogleFonts.latoTextTheme(textTheme),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 4, 255, 180),
         ),
