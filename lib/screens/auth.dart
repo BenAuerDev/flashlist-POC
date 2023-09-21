@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/user_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,7 +75,7 @@ class AuthScreen extends HookWidget {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: retrieveColorScheme(context).primary,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -93,7 +94,7 @@ class AuthScreen extends HookWidget {
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color: retrieveColorScheme(context).primaryContainer,
                   ),
                 ),
               ),
@@ -165,7 +166,7 @@ class AuthScreen extends HookWidget {
                           const SizedBox(height: 12),
                           if (isAuthenticating.value)
                             CircularProgressIndicator(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: retrieveColorScheme(context).primary,
                             ),
                           if (!isAuthenticating.value)
                             ElevatedButton(
