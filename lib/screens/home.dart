@@ -28,8 +28,10 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('collections').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('collections')
+              .orderBy('createdAt', descending: false)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
