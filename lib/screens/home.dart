@@ -1,5 +1,5 @@
 import 'package:brainstorm_array/models/collection.dart';
-import 'package:brainstorm_array/screens/new_collection.dart';
+import 'package:brainstorm_array/screens/collection_form_screen.dart';
 import 'package:brainstorm_array/widgets/collection_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     void goToNewCollectionScreen() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const NewCollectionScreen(),
+          builder: (context) => const CollectionFormScreen(),
         ),
       );
     }

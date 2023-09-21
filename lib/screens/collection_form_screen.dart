@@ -1,20 +1,41 @@
+import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/color_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewCollectionScreen extends ConsumerWidget {
-  const NewCollectionScreen({super.key});
+class CollectionFormScreen extends ConsumerWidget {
+  const CollectionFormScreen({super.key, this.collection});
+
+  final Collection? collection;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final collectionFormKey = GlobalKey<FormState>();
 
-    var enteredTitle = '';
-    Color? enteredColor;
+    var enteredTitle = collection?.title ?? '';
+    Color? enteredColor =
+        collection?.color ?? retrieveColorScheme(context).primary;
 
-    void submit() async {
+    void createCollection() {
+      ref.read(firestoreServiceProvider).addCollection({
+        'title': enteredTitle,
+        'color': enteredColor ?? retrieveColorScheme(context).primary,
+      });
+    }
+
+    Future editCollection() async {
+      final res = await ref
+          .read(firestoreServiceProvider)
+          .editCollection(collection!.uid, {
+        'title': enteredTitle,
+        'color': enteredColor ?? retrieveColorScheme(context).primary,
+      });
+      return res;
+    }
+
+    void submit() {
       final isValid = collectionFormKey.currentState!.validate();
 
       if (!isValid) {
@@ -23,17 +44,17 @@ class NewCollectionScreen extends ConsumerWidget {
 
       collectionFormKey.currentState!.save();
 
-      ref.read(firestoreServiceProvider).addCollection({
-        'title': enteredTitle,
-        'color': enteredColor ?? retrieveColorScheme(context).primary,
-      });
-
+      if (collection == null) {
+        createCollection();
+      } else {
+        editCollection();
+      }
       Navigator.of(context).pop();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add new List'),
+        title: Text(collection == null ? 'Add new List' : 'Edit your List'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -42,6 +63,7 @@ class NewCollectionScreen extends ConsumerWidget {
           child: Column(
             children: [
               TextFormField(
+                initialValue: enteredTitle,
                 decoration: const InputDecoration(
                   labelText: 'List Name',
                 ),
@@ -57,6 +79,7 @@ class NewCollectionScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               ColorInput(
+                initialColor: enteredColor,
                 onSelectColor: (Color color) {
                   enteredColor = color;
                 },
@@ -71,7 +94,8 @@ class NewCollectionScreen extends ConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: submit,
-                    child: const Text('Add List'),
+                    child:
+                        Text(collection == null ? 'Add List' : 'Update List'),
                   ),
                 ],
               )
