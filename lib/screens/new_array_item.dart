@@ -60,27 +60,6 @@ class NewArrayItemScreen extends HookConsumerWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Hero(
-                      tag: collection.uid,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Text(
-                                collection.title,
-                                style: TextStyle(
-                                  color: collection.color,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              ArrayWidget(
-                                collectionUid: collection.uid,
-                                array: collectionArray.value,
-                              ),
-                            ],
                           ),
                         ),
                       ),
@@ -116,6 +95,10 @@ class NewArrayItemScreen extends HookConsumerWidget {
                 ),
               )),
         ),
+                  Hero(
+                    tag: collection.uid,
+                    child: CollectionWidget(collection: collection),
+                  ),
       ),
     );
   }

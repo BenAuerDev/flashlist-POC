@@ -1,6 +1,7 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/screens/collection_form_screen.dart';
 import 'package:brainstorm_array/widgets/collection_widget.dart';
+import 'package:brainstorm_array/widgets/collection_widget_wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                   itemCount: collections.length,
                   itemBuilder: (context, index) {
                     final collection = collections[index];
-                    return CollectionWidget(collection: collection);
+                    return CollectionWidgetWrapper(collection: collection);
                   },
                 ),
               );
