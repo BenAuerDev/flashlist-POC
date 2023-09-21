@@ -20,57 +20,33 @@ class CollectionWidget extends HookWidget {
       );
     }
 
-    return Container(
-      margin: const EdgeInsets.all(4),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: collection.color!),
-        color: collection.color!.withOpacity(0.2),
-      ),
-      child: Column(
-        children: [
-          Hero(
-            tag: collection.uid,
-            child: Material(
-              type: MaterialType.transparency,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(width: 48),
-                        Text(
-                          collection.title,
-                          style: TextStyle(
-                            color: collection.color,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        CollectionMenu(collection: collection),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    ArrayWidget(
-                      collectionUid: collection.uid,
-                      array: collection.array,
-                    ),
-                  ],
+    return Material(
+      type: MaterialType.transparency,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(width: 48),
+                Text(
+                  collection.title,
+                  style: TextStyle(
+                    color: collection.color,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                CollectionMenu(collection: collection),
+              ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: addItemToArray,
-                icon: const Icon(Icons.add),
-              ),
-            ],
-          )
-        ],
+            const SizedBox(height: 12),
+            ArrayWidget(
+              collectionUid: collection.uid,
+              array: collection.array,
+            ),
+          ],
+        ),
       ),
     );
   }
