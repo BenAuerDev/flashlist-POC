@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class FirestoreService {
   final CollectionReference collectionsCollection =
@@ -50,10 +51,30 @@ class FirestoreService {
   Future<String> addItemToArray(String collectionUid, String item) async {
     final collection = await getCollection(collectionUid);
 
+    var uuid = const Uuid().v4();
+
     collectionsCollection.doc(collectionUid).update({
-      'array': [...collection.array, item],
+      'array': [
+        ...collection.array,
+        {
+          'name': item,
+          'uid': uuid,
+        }
+      ],
     });
 
-    return item;
+    return uuid;
+  }
+
+  Future<void> removeItemFromArray(
+      String collectionUid, Map<String, dynamic> item) async {
+    final collection = await getCollection(collectionUid);
+
+    final updatedArray =
+        collection.array.where((element) => element['uid'] != item['uid']);
+
+    collectionsCollection.doc(collectionUid).update({
+      'array': updatedArray.toList(),
+    });
   }
 }
