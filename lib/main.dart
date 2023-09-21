@@ -1,9 +1,11 @@
 import 'package:brainstorm_array/screens/auth.dart';
 import 'package:brainstorm_array/screens/home.dart';
 import 'package:brainstorm_array/screens/splash.dart';
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'firebase_options.dart';
 
@@ -18,9 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = retrieveTextTheme(context);
+
     return MaterialApp(
       title: 'Brainstorm Array',
       theme: ThemeData(
+        textTheme: GoogleFonts.latoTextTheme(textTheme),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 4, 255, 180),
         ),
