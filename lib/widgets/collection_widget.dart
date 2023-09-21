@@ -27,16 +27,29 @@ class CollectionWidget extends HookWidget {
       ),
       child: Column(
         children: [
-          Text(
-            collection.title,
-            style: TextStyle(
-              color: collection.color,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+          Hero(
+            tag: collection.uid,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Column(
+                children: [
+                  Text(
+                    collection.title,
+                    style: TextStyle(
+                      color: collection.color,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ArrayWidget(
+                    collectionUid: collection.uid,
+                    array: collection.array,
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 12),
-          ArrayWidget(array: collection.array),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

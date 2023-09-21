@@ -48,6 +48,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   )
                   .toList();
+
+              if (collections.isEmpty) {
+                return const Center(child: Text('No lists yet...'));
+              }
               return Center(
                 child: ListView.builder(
                   itemCount: collections.length,
