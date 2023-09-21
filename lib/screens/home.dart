@@ -59,10 +59,7 @@ class HomeScreen extends StatelessWidget {
                   itemCount: collections.length,
                   itemBuilder: (context, index) {
                     final collection = collections[index];
-                    return ListTile(
-                      key: ValueKey(collection.uid),
-                      title: CollectionWidget(collection: collection),
-                    );
+                    return CollectionWidget(collection: collection);
                   },
                 ),
               );

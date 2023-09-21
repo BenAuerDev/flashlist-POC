@@ -21,6 +21,7 @@ class CollectionWidget extends HookWidget {
     }
 
     return Container(
+      margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
       decoration: BoxDecoration(
         border: Border.all(color: collection.color!),
