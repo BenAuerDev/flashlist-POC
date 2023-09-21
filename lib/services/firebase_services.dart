@@ -19,8 +19,19 @@ class FirestoreService {
     }).toList();
   }
 
+  Future<Collection> getCollection(String collectionUid) async {
+    final snapshot = await collectionsCollection.doc(collectionUid).get();
+    return Collection(
+      snapshot['title'],
+      snapshot['createdAt'],
+      snapshot.id,
+      Color(snapshot['color']),
+      snapshot['array'],
+    );
+  }
+
   Future<Collection> addCollection(Map<String, dynamic> newCollection) async {
-    final res = await collectionsCollection.add({
+    final collectionReference = await collectionsCollection.add({
       'title': newCollection['title'],
       'createdAt': Timestamp.now(),
       'color': newCollection['color'].value,
@@ -30,9 +41,19 @@ class FirestoreService {
     return Collection(
       newCollection['title'],
       Timestamp.now(),
-      res.id,
+      collectionReference.id,
       newCollection['color'],
       [],
     );
+  }
+
+  Future<String> addItemToArray(String collectionUid, String item) async {
+    final collection = await getCollection(collectionUid);
+
+    collectionsCollection.doc(collectionUid).update({
+      'array': [...collection.array, item],
+    });
+
+    return item;
   }
 }
