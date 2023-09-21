@@ -1,4 +1,5 @@
 import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/color_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,7 +17,7 @@ class NewCollectionScreen extends ConsumerWidget {
     void submit() async {
       final isValid = collectionFormKey.currentState!.validate();
 
-      if (!isValid || enteredColor == null) {
+      if (!isValid) {
         return;
       }
 
@@ -24,7 +25,7 @@ class NewCollectionScreen extends ConsumerWidget {
 
       ref.read(firestoreServiceProvider).addCollection({
         'title': enteredTitle,
-        'color': enteredColor,
+        'color': enteredColor ?? retrieveColorScheme(context).primary,
       });
 
       Navigator.of(context).pop();
