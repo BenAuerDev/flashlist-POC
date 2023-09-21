@@ -1,6 +1,7 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/screens/new_array_item.dart';
 import 'package:brainstorm_array/widgets/array_widget.dart';
+import 'package:brainstorm_array/widgets/collection_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -34,13 +35,20 @@ class CollectionWidget extends HookWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Text(
-                      collection.title,
-                      style: TextStyle(
-                        color: collection.color,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(width: 48),
+                        Text(
+                          collection.title,
+                          style: TextStyle(
+                            color: collection.color,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        CollectionMenu(collection: collection),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     ArrayWidget(
