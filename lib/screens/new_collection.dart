@@ -1,9 +1,9 @@
+import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/widgets/color_input.dart';
 import 'package:flutter/material.dart';
-import 'package:brainstorm_array/providers/collections.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewCollectionScreen extends HookConsumerWidget {
+class NewCollectionScreen extends ConsumerWidget {
   const NewCollectionScreen({super.key});
 
   @override
@@ -13,7 +13,7 @@ class NewCollectionScreen extends HookConsumerWidget {
     var enteredTitle = '';
     Color? enteredColor;
 
-    void submit() {
+    void submit() async {
       final isValid = collectionFormKey.currentState!.validate();
 
       if (!isValid || enteredColor == null) {
@@ -22,7 +22,7 @@ class NewCollectionScreen extends HookConsumerWidget {
 
       collectionFormKey.currentState!.save();
 
-      ref.read(collectionsProvider.notifier).addCollection({
+      ref.read(firestoreServiceProvider).addCollection({
         'title': enteredTitle,
         'color': enteredColor,
       });
@@ -65,7 +65,7 @@ class NewCollectionScreen extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Cancel'),
                   ),
                   ElevatedButton(
