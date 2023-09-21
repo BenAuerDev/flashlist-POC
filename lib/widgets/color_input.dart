@@ -1,11 +1,13 @@
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ColorInput extends HookConsumerWidget {
-  const ColorInput({super.key, this.onSelectColor});
+  const ColorInput({super.key, this.initialColor, this.onSelectColor});
 
+  final Color? initialColor;
   final Function(Color)? onSelectColor;
 
   @override
@@ -14,7 +16,7 @@ class ColorInput extends HookConsumerWidget {
         useState(Color.fromARGB(255, 255, 255, 255));
 
     ValueNotifier<Color> currentColor =
-        useState(Color.fromARGB(255, 255, 255, 255));
+        useState(initialColor ?? retrieveColorScheme(context).primary);
 
     void changeColor(Color color) {
       currentColor.value = color;
