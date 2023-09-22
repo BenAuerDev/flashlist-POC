@@ -1,6 +1,6 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/widgets/array_widget.dart';
-import 'package:brainstorm_array/widgets/collection_menu.dart';
+import 'package:brainstorm_array/widgets/collection/collection_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -32,9 +32,7 @@ class CollectionWidget extends HookWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ArrayWidget(
-              collectionUid: collection.uid,
-            ),
+            ArrayWidget(collectionUid: collection.uid),
           ],
         ),
       ),
