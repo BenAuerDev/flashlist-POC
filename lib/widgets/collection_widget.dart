@@ -1,5 +1,4 @@
 import 'package:brainstorm_array/models/collection.dart';
-import 'package:brainstorm_array/screens/new_array_item.dart';
 import 'package:brainstorm_array/widgets/array_widget.dart';
 import 'package:brainstorm_array/widgets/collection_menu.dart';
 import 'package:flutter/material.dart';
