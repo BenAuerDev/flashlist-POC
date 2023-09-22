@@ -17,7 +17,7 @@ class ArrayWidget extends HookConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (array != null)
+        if (array != null && array.isNotEmpty)
           for (final item in array)
             Dismissible(
               key: ValueKey(item['uid']),
