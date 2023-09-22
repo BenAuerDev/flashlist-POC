@@ -1,6 +1,6 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/widgets/collection_widget.dart';
+import 'package:brainstorm_array/widgets/collection/collection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
