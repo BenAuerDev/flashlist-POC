@@ -43,7 +43,6 @@ class CollectionWidget extends HookWidget {
             const SizedBox(height: 12),
             ArrayWidget(
               collectionUid: collection.uid,
-              array: collection.array,
             ),
           ],
         ),
