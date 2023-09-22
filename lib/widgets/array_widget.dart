@@ -6,18 +6,18 @@ class ArrayWidget extends HookConsumerWidget {
   const ArrayWidget({
     super.key,
     required this.collectionUid,
-    required this.array,
   });
 
   final String collectionUid;
-  final List<dynamic> array;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final array = ref.watch(arrayProvider(collectionUid)).value;
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (array.isNotEmpty)
+        if (array != null)
           for (final item in array)
             Dismissible(
               key: ValueKey(item['uid']),

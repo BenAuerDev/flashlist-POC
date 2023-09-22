@@ -100,6 +100,18 @@ class FirestoreService {
     }
   }
 
+  Future<List<dynamic>> getArray(String collectionUid) async {
+    try {
+      final collection = await getCollection(collectionUid);
+
+      return collection.array;
+    } on FirebaseException catch (error) {
+      print("Error fetching array: $error");
+
+      return Future.error("Failed to fetch array");
+    }
+  }
+
   FutureOr<String> addItemToArray(String collectionUid, String item) async {
     try {
       final collection = await getCollection(collectionUid);

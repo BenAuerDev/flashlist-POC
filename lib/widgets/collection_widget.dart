@@ -12,14 +12,6 @@ class CollectionWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    void addItemToArray() async {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => NewArrayItemScreen(collection: collection),
-        ),
-      );
-    }
-
     return Material(
       type: MaterialType.transparency,
       child: SingleChildScrollView(
@@ -43,7 +35,6 @@ class CollectionWidget extends HookWidget {
             const SizedBox(height: 12),
             ArrayWidget(
               collectionUid: collection.uid,
-              array: collection.array,
             ),
           ],
         ),
