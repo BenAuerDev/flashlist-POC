@@ -1,7 +1,7 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
-import 'package:brainstorm_array/widgets/color_input.dart';
+import 'package:brainstorm_array/widgets/custom_inputs/color_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

@@ -13,7 +13,7 @@ class ColorInput extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ValueNotifier<Color> pickerColor =
-        useState(Color.fromARGB(255, 255, 255, 255));
+        useState(const Color.fromARGB(255, 255, 255, 255));
 
     ValueNotifier<Color> currentColor =
         useState(initialColor ?? retrieveColorScheme(context).primary);

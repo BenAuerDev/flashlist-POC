@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:brainstorm_array/utils/context_retriever.dart';
-import 'package:brainstorm_array/widgets/user_image_picker.dart';
+import 'package:brainstorm_array/widgets/custom_inputs/user_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
