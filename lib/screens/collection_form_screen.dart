@@ -64,6 +64,7 @@ class CollectionFormScreen extends ConsumerWidget {
             children: [
               TextFormField(
                 initialValue: enteredTitle,
+                maxLength: 20,
                 decoration: const InputDecoration(
                   labelText: 'List Name',
                 ),
