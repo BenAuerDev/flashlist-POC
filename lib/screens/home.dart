@@ -1,6 +1,7 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/screens/collection_form_screen.dart';
 import 'package:brainstorm_array/widgets/collection/collection_widget_wrapper.dart';
+import 'package:brainstorm_array/widgets/side_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Your Lists'),
+          title: const Center(child: Text('Your Lists')),
           actions: [
             IconButton(
               onPressed: goToNewCollectionScreen,
@@ -27,6 +28,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+        drawer: const SideDrawer(),
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('collections')
