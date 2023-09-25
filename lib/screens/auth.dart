@@ -25,6 +25,16 @@ class AuthScreen extends HookWidget {
     var enteredPassword = '';
     File? selectedImage;
 
+    void showSnackBar(FirebaseAuthException error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message ?? 'An error occurred!'),
+          backgroundColor: retrieveColorScheme(context).error,
+        ),
+      );
+    }
+
     void submit() async {
       final isValid = formkey.currentState!.validate();
 
@@ -38,7 +48,7 @@ class AuthScreen extends HookWidget {
         isAuthenticating.value = true;
 
         if (isLogin.value) {
-          _firebase.signInWithEmailAndPassword(
+          await _firebase.signInWithEmailAndPassword(
             email: enteredEmail,
             password: enteredPassword,
           );
@@ -67,10 +77,8 @@ class AuthScreen extends HookWidget {
           });
         }
       } on FirebaseAuthException catch (error) {
-        // TODO: add custom exception message
-        print(error);
-
         isAuthenticating.value = false;
+        showSnackBar(error);
       }
     }
 
@@ -164,7 +172,7 @@ class AuthScreen extends HookWidget {
                             },
                           ),
                           const SizedBox(height: 12),
-                          if (isAuthenticating.value)
+                          if (isAuthenticating.value == true)
                             CircularProgressIndicator(
                               color: retrieveColorScheme(context).primary,
                             ),
