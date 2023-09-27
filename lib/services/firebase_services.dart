@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brainstorm_array/models/collection.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,6 +20,7 @@ class FirestoreService {
           doc.id,
           Color(doc['color']),
           doc['array'],
+          doc['permissions'],
         );
       }).toList();
     } on FirebaseException catch (error) {
@@ -37,6 +39,7 @@ class FirestoreService {
         snapshot.id,
         Color(snapshot['color']),
         snapshot['array'],
+        snapshot['permissions'],
       );
     } on FirebaseException catch (error) {
       print("Error fetching collection: $error");
@@ -52,6 +55,11 @@ class FirestoreService {
         'createdAt': Timestamp.now(),
         'color': newCollection['color'].value,
         'array': [],
+        'permissions': {
+          'owner': FirebaseAuth.instance.currentUser!.uid,
+          'editors': [FirebaseAuth.instance.currentUser!.uid],
+          'private': true,
+        }
       });
 
       return Collection(
@@ -59,7 +67,8 @@ class FirestoreService {
         Timestamp.now(),
         collectionReference.id,
         newCollection['color'],
-        [],
+        newCollection['array'],
+        newCollection['permissions'],
       );
     } on FirebaseException catch (error) {
       print("Error creating collection: $error");
@@ -82,6 +91,7 @@ class FirestoreService {
         collectionUid,
         updatedCollection['color'],
         [],
+        updatedCollection['permissions'],
       );
     } on FirebaseException catch (error) {
       print("Error editing collection: $error");

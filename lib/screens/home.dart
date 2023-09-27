@@ -3,6 +3,7 @@ import 'package:brainstorm_array/screens/collection_form_screen.dart';
 import 'package:brainstorm_array/widgets/collection/collection_widget_wrapper.dart';
 import 'package:brainstorm_array/widgets/side_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,6 +34,8 @@ class HomeScreen extends StatelessWidget {
           stream: FirebaseFirestore.instance
               .collection('collections')
               .orderBy('createdAt', descending: false)
+              .where('permissions.editors',
+                  arrayContains: FirebaseAuth.instance.currentUser!.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,6 +52,7 @@ class HomeScreen extends StatelessWidget {
                       doc.id,
                       Color(doc['color']),
                       doc['array'],
+                      doc['permissions'],
                     ),
                   )
                   .toList();
