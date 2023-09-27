@@ -7,6 +7,14 @@ class Collection {
   final String uid;
   final Color? color;
   final List<dynamic> array;
+  final Map<String, dynamic> permissions;
 
-  Collection(this.title, this.createdAt, this.uid, this.color, this.array);
+  Collection(
+    this.title,
+    this.createdAt,
+    this.uid,
+    this.color,
+    this.array,
+    this.permissions,
+  );
 }
