@@ -24,10 +24,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Brainstorm Array',
-      theme: ThemeData(
+      theme: ThemeData().copyWith(
         textTheme: GoogleFonts.latoTextTheme(textTheme),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 4, 255, 180),
+        ),
+        cardTheme: const CardTheme().copyWith(
+          margin: const EdgeInsets.all(4),
         ),
         useMaterial3: true,
       ),
