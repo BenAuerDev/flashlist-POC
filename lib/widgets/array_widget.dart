@@ -1,4 +1,5 @@
 import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -27,6 +28,13 @@ class ArrayWidget extends HookConsumerWidget {
                     .read(firestoreServiceProvider)
                     .removeItemFromArray(collectionUid, item);
               },
+              background: Container(
+                color: retrieveColorScheme(context).error.withOpacity(0.5),
+                margin: EdgeInsets.symmetric(
+                  vertical:
+                      retrieveTheme(context).cardTheme.margin!.vertical / 2,
+                ),
+              ),
               child: Card(
                 shape: const ContinuousRectangleBorder(),
                 child: Padding(
