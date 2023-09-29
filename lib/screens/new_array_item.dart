@@ -53,6 +53,7 @@ class NewArrayItemScreen extends ConsumerWidget {
                     child: CollectionWidget(collection: collection),
                   ),
                   TextFormField(
+                    onFieldSubmitted: (value) => submit(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter some text';
