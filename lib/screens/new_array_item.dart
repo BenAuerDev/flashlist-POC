@@ -53,6 +53,7 @@ class NewArrayItemScreen extends ConsumerWidget {
                     child: CollectionWidget(collection: collection),
                   ),
                   TextFormField(
+                    onEditingComplete: () {},
                     onFieldSubmitted: (value) => submit(),
                     validator: (value) {
                       if (value!.isEmpty) {
