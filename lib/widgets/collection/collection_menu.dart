@@ -1,8 +1,12 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/screens/collection_form_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final currentUser = FirebaseAuth.instance.currentUser;
 
 class CollectionMenu extends ConsumerWidget {
   const CollectionMenu({super.key, required this.collection});
@@ -48,16 +52,45 @@ class CollectionMenu extends ConsumerWidget {
       );
     }
 
+    void onRemoveEditor() {
+      FirebaseFirestore.instance
+          .collection('collections')
+          .doc(collection.uid)
+          .update({
+        'title': collection.title,
+        'color': collection.color!.value,
+        'uid': collection.uid,
+        'array': collection.array,
+        'permissions': {
+          'owner': collection.permissions['owner'],
+          'editors': collection.permissions['editors']
+              .where((editor) => editor != currentUser!.uid)
+              .toList(),
+        },
+      });
+    }
+
     return PopupMenuButton(
       itemBuilder: (context) => [
-        PopupMenuItem(
-          onTap: onEditCollection,
-          child: const Text('Edit'),
-        ),
-        PopupMenuItem(
-          onTap: removeCollection,
-          child: const Text('Delete'),
-        ),
+        // Owner
+        if (collection.permissions['owner'] == currentUser!.uid)
+          PopupMenuItem(
+            onTap: onEditCollection,
+            child: const Text('Edit'),
+          ),
+        if (collection.permissions['owner'] == currentUser!.uid)
+          PopupMenuItem(
+            onTap: removeCollection,
+            child: const Text('Delete'),
+          ),
+
+        // Editors
+        if (collection.permissions['editors'].contains(currentUser!.uid) &&
+            collection.permissions['owner'] != currentUser!.uid)
+          PopupMenuItem(
+            onTap: onRemoveEditor,
+            child: const Text('Remove'),
+          ),
       ],
     );
   }
