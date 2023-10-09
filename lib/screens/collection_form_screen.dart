@@ -94,7 +94,7 @@ class CollectionFormScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               UserEmailInput(
-                collection: collection!,
+                collection: collection,
                 onSelectEditors: (List<dynamic> editors) {
                   final passedEditorUids =
                       editors.map((editor) => editor['uid']).toList();
