@@ -49,17 +49,18 @@ class FirestoreService {
   }
 
   Future<Collection> addCollection(Map<String, dynamic> newCollection) async {
+    final newPermissions = {
+      'owner': FirebaseAuth.instance.currentUser!.uid,
+      'editors': newCollection['editors'],
+    };
+
     try {
       final collectionReference = await collectionsCollection.add({
         'title': newCollection['title'],
         'createdAt': Timestamp.now(),
         'color': newCollection['color'].value,
         'array': [],
-        'permissions': {
-          'owner': FirebaseAuth.instance.currentUser!.uid,
-          'editors': [FirebaseAuth.instance.currentUser!.uid],
-          'private': true,
-        }
+        'permissions': newPermissions,
       });
 
       return Collection(
@@ -67,8 +68,8 @@ class FirestoreService {
         Timestamp.now(),
         collectionReference.id,
         newCollection['color'],
-        newCollection['array'],
-        newCollection['permissions'],
+        [],
+        newPermissions,
       );
     } on FirebaseException catch (error) {
       print("Error creating collection: $error");
@@ -79,10 +80,15 @@ class FirestoreService {
 
   Future<Collection> editCollection(
       String collectionUid, Map<String, dynamic> updatedCollection) async {
+    final updatedPermissions = {
+      'owner': FirebaseAuth.instance.currentUser!.uid,
+      'editors': updatedCollection['editors'],
+    };
     try {
       await collectionsCollection.doc(collectionUid).update({
         'title': updatedCollection['title'],
         'color': updatedCollection['color'].value,
+        'permissions': updatedPermissions,
       });
 
       return Collection(
@@ -91,7 +97,7 @@ class FirestoreService {
         collectionUid,
         updatedCollection['color'],
         [],
-        updatedCollection['permissions'],
+        updatedPermissions,
       );
     } on FirebaseException catch (error) {
       print("Error editing collection: $error");
