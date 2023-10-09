@@ -10,13 +10,11 @@ final currentUser = FirebaseAuth.instance.currentUser;
 class UserEmailInput extends HookConsumerWidget {
   const UserEmailInput({
     super.key,
-    required this.initialEditors,
     required this.collection,
     required this.onSelectEditors,
     required this.onRemoveEditor,
   });
 
-  final List<dynamic> initialEditors;
   final Collection collection;
   final Function(List<dynamic>) onSelectEditors;
   final Function(String uid) onRemoveEditor;

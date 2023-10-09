@@ -94,9 +94,6 @@ class CollectionFormScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               UserEmailInput(
-                initialEditors: collection != null
-                    ? collection!.permissions['editors']
-                    : [],
                 collection: collection!,
                 onSelectEditors: (List<dynamic> editors) {
                   print('inside on select editors: $editors');
