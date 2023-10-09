@@ -49,9 +49,7 @@ class UserEmailInput extends HookConsumerWidget {
           .first
           .then((value) => value.docs.first.data());
 
-      print('user $user');
       editors.value = [...editors.value, user];
-      print('editors from adduser ${editors.value}');
       onSelectEditors(editors.value);
 
       emailController.clear();

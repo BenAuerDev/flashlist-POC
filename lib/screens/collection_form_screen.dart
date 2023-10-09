@@ -96,15 +96,12 @@ class CollectionFormScreen extends ConsumerWidget {
               UserEmailInput(
                 collection: collection!,
                 onSelectEditors: (List<dynamic> editors) {
-                  print('inside on select editors: $editors');
-
                   final passedEditorUids =
                       editors.map((editor) => editor['uid']).toList();
                   enteredEditors = [...enteredEditors, ...passedEditorUids];
                 },
                 onRemoveEditor: (String uid) {
                   enteredEditors.remove(uid);
-                  print('inside onremove editor $enteredEditors');
                 },
               ),
               const SizedBox(height: 12),
