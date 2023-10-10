@@ -3,8 +3,8 @@ import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ArrayWidget extends HookConsumerWidget {
-  const ArrayWidget({
+class GroupBody extends HookConsumerWidget {
+  const GroupBody({
     super.key,
     required this.groupUid,
   });
@@ -13,20 +13,20 @@ class ArrayWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final array = ref.watch(arrayProvider(groupUid)).value;
+    final body = ref.watch(groupBodyProvider(groupUid)).value;
 
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (array != null && array.isNotEmpty)
-          for (final item in array)
+        if (body != null && body.isNotEmpty)
+          for (final item in body)
             Dismissible(
               key: ValueKey(item['uid']),
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 ref
                     .read(firestoreServiceProvider)
-                    .removeItemFromArray(groupUid, item);
+                    .removeItemFromBody(groupUid, item);
               },
               background: Container(
                 color: retrieveColorScheme(context).error.withOpacity(0.5),

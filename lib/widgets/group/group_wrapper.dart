@@ -1,5 +1,5 @@
 import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/screens/new_array_item.dart';
+import 'package:brainstorm_array/screens/new_body_item_form.dart';
 import 'package:brainstorm_array/widgets/group/group_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,10 +11,10 @@ class GroupWrapper extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    void addItemToArray() async {
+    void addItemToBody() async {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => NewArrayItemScreen(group: group),
+          builder: (context) => NewBodyItemForm(group: group),
         ),
       );
     }
@@ -38,7 +38,7 @@ class GroupWrapper extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: addItemToArray,
+                onPressed: addItemToBody,
                 icon: const Icon(Icons.add),
               ),
             ],
