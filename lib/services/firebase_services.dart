@@ -40,26 +40,6 @@ class FirestoreService {
     }
   }
 
-  Future<List<Collection>> getCollections() async {
-    try {
-      final snapshot = await collectionsCollection.get();
-      return snapshot.docs.map((doc) {
-        return Collection(
-          doc['title'],
-          doc['createdAt'],
-          doc.id,
-          Color(doc['color']),
-          doc['array'],
-          doc['permissions'],
-        );
-      }).toList();
-    } on FirebaseException catch (error) {
-      print("Error fetching collections: $error");
-
-      return Future.error("Failed to fetch collections");
-    }
-  }
-
   Future<Collection> getCollection(String collectionUid) async {
     try {
       final snapshot = await collectionsCollection.doc(collectionUid).get();
