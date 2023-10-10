@@ -6,14 +6,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ArrayWidget extends HookConsumerWidget {
   const ArrayWidget({
     super.key,
-    required this.collectionUid,
+    required this.groupUid,
   });
 
-  final String collectionUid;
+  final String groupUid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final array = ref.watch(arrayProvider(collectionUid)).value;
+    final array = ref.watch(arrayProvider(groupUid)).value;
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -26,7 +26,7 @@ class ArrayWidget extends HookConsumerWidget {
               onDismissed: (direction) {
                 ref
                     .read(firestoreServiceProvider)
-                    .removeItemFromArray(collectionUid, item);
+                    .removeItemFromArray(groupUid, item);
               },
               background: Container(
                 color: retrieveColorScheme(context).error.withOpacity(0.5),

@@ -1,13 +1,13 @@
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/widgets/array_widget.dart';
-import 'package:brainstorm_array/widgets/collection/collection_menu.dart';
+import 'package:brainstorm_array/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CollectionWidget extends HookWidget {
-  const CollectionWidget({super.key, required this.collection});
+class GroupWidget extends HookWidget {
+  const GroupWidget({super.key, required this.group});
 
-  final Collection collection;
+  final Group group;
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +21,18 @@ class CollectionWidget extends HookWidget {
               children: [
                 const SizedBox(width: 48),
                 Text(
-                  collection.title,
+                  group.title,
                   style: TextStyle(
-                    color: collection.color,
+                    color: group.color,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                CollectionMenu(collection: collection),
+                GroupMenu(group: group),
               ],
             ),
             const SizedBox(height: 12),
-            ArrayWidget(collectionUid: collection.uid),
+            ArrayWidget(groupUid: group.uid),
           ],
         ),
       ),

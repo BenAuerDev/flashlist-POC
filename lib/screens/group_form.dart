@@ -1,4 +1,4 @@
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/custom_inputs/color_input.dart';
@@ -6,32 +6,31 @@ import 'package:brainstorm_array/widgets/custom_inputs/user_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CollectionFormScreen extends ConsumerWidget {
-  const CollectionFormScreen({super.key, this.collection});
+class GroupForm extends ConsumerWidget {
+  const GroupForm({super.key, this.group});
 
-  final Collection? collection;
+  final Group? group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collectionFormKey = GlobalKey<FormState>();
+    final groupFormKey = GlobalKey<FormState>();
 
-    var enteredTitle = collection?.title ?? '';
-    Color? enteredColor =
-        collection?.color ?? retrieveColorScheme(context).primary;
-    List enteredEditors = collection?.permissions['editors'] ?? [];
+    var enteredTitle = group?.title ?? '';
+    Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
+    List enteredEditors = group?.permissions['editors'] ?? [];
 
-    void createCollection() {
-      ref.read(firestoreServiceProvider).addCollection({
+    Future createGroup() async {
+      final res = await ref.read(firestoreServiceProvider).addGroup({
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
         'editors': enteredEditors,
       });
+      return res;
     }
 
-    Future editCollection() async {
-      final res = await ref
-          .read(firestoreServiceProvider)
-          .editCollection(collection!.uid, {
+    Future editGroup() async {
+      final res =
+          await ref.read(firestoreServiceProvider).editGroup(group!.uid, {
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
         'editors': enteredEditors,
@@ -48,30 +47,30 @@ class CollectionFormScreen extends ConsumerWidget {
     }
 
     void submit() {
-      final isValid = collectionFormKey.currentState!.validate();
+      final isValid = groupFormKey.currentState!.validate();
 
       if (!isValid) {
         return;
       }
 
-      collectionFormKey.currentState!.save();
+      groupFormKey.currentState!.save();
 
-      if (collection == null) {
-        createCollection();
+      if (group == null) {
+        createGroup();
       } else {
-        editCollection();
+        editGroup();
       }
       Navigator.of(context).pop();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(collection == null ? 'Add new List' : 'Edit your List'),
+        title: Text(group == null ? 'Add new List' : 'Edit your List'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Form(
-          key: collectionFormKey,
+          key: groupFormKey,
           child: Column(
             children: [
               TextFormField(
@@ -92,14 +91,14 @@ class CollectionFormScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               ColorInput(
-                initialColor: collection != null ? collection!.color : null,
+                initialColor: group != null ? group!.color : null,
                 onSelectColor: (Color color) {
                   enteredColor = color;
                 },
               ),
               const SizedBox(height: 12),
               UserPicker(
-                collection: collection,
+                group: group,
                 onSelectEditor: onSelectEditor,
                 onRemoveEditor: onRemoveEditor,
               ),
@@ -113,8 +112,7 @@ class CollectionFormScreen extends ConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: submit,
-                    child:
-                        Text(collection == null ? 'Add List' : 'Update List'),
+                    child: Text(group == null ? 'Add List' : 'Update List'),
                   ),
                 ],
               )

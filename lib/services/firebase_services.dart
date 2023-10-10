@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -9,12 +9,12 @@ import 'package:uuid/uuid.dart';
 final currentUser = FirebaseAuth.instance.currentUser;
 
 class FirestoreService {
-  final CollectionReference collectionsCollection =
-      FirebaseFirestore.instance.collection('collections');
+  final CollectionReference groupsCollection =
+      FirebaseFirestore.instance.collection('groups');
 
-  Stream<List<Collection>> userCollectionsStream() {
+  Stream<List<Group>> groupsForUserStream() {
     try {
-      return collectionsCollection.snapshots().map((snapshot) {
+      return groupsCollection.snapshots().map((snapshot) {
         return snapshot.docs.where((doc) {
           final permissions = doc['permissions'];
           final owner = permissions['owner'];
@@ -23,7 +23,7 @@ class FirestoreService {
           return owner == currentUser!.uid ||
               editors.contains(currentUser!.uid);
         }).map((doc) {
-          return Collection(
+          return Group(
             doc['title'],
             doc['createdAt'],
             doc.id,
@@ -38,10 +38,10 @@ class FirestoreService {
     }
   }
 
-  Future<Collection> getCollection(String collectionUid) async {
+  Future<Group> getGroup(String groupUid) async {
     try {
-      final snapshot = await collectionsCollection.doc(collectionUid).get();
-      return Collection(
+      final snapshot = await groupsCollection.doc(groupUid).get();
+      return Group(
         snapshot['title'],
         snapshot['createdAt'],
         snapshot.id,
@@ -50,85 +50,85 @@ class FirestoreService {
         snapshot['permissions'],
       );
     } on FirebaseException catch (error) {
-      print("Error fetching collection: $error");
+      print("Error fetching group: $error");
 
-      return Future.error("Failed to fetch collection");
+      return Future.error("Failed to fetch group");
     }
   }
 
-  Future<Collection> addCollection(Map<String, dynamic> newCollection) async {
+  Future<Group> addGroup(Map<String, dynamic> newGroup) async {
     final newPermissions = {
       'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': newCollection['editors'],
+      'editors': newGroup['editors'],
     };
 
     try {
-      final collectionReference = await collectionsCollection.add({
-        'title': newCollection['title'],
+      final groupReference = await groupsCollection.add({
+        'title': newGroup['title'],
         'createdAt': Timestamp.now(),
-        'color': newCollection['color'].value,
+        'color': newGroup['color'].value,
         'array': [],
         'permissions': newPermissions,
       });
 
-      return Collection(
-        newCollection['title'],
+      return Group(
+        newGroup['title'],
         Timestamp.now(),
-        collectionReference.id,
-        newCollection['color'],
+        groupReference.id,
+        newGroup['color'],
         [],
         newPermissions,
       );
     } on FirebaseException catch (error) {
-      print("Error creating collection: $error");
+      print("Error creating group: $error");
 
-      return Future.error("Failed to create collection");
+      return Future.error("Failed to create group");
     }
   }
 
-  Future<Collection> editCollection(
-      String collectionUid, Map<String, dynamic> updatedCollection) async {
+  Future<Group> editGroup(
+      String groupUid, Map<String, dynamic> updatedGroup) async {
     final updatedPermissions = {
       'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': updatedCollection['editors'],
+      'editors': updatedGroup['editors'],
     };
     try {
-      await collectionsCollection.doc(collectionUid).update({
-        'title': updatedCollection['title'],
-        'color': updatedCollection['color'].value,
+      await groupsCollection.doc(groupUid).update({
+        'title': updatedGroup['title'],
+        'color': updatedGroup['color'].value,
         'permissions': updatedPermissions,
       });
 
-      return Collection(
-        updatedCollection['title'],
+      return Group(
+        updatedGroup['title'],
         Timestamp.now(),
-        collectionUid,
-        updatedCollection['color'],
+        groupUid,
+        updatedGroup['color'],
         [],
         updatedPermissions,
       );
     } on FirebaseException catch (error) {
-      print("Error editing collection: $error");
+      print("Error editing group: $error");
 
-      return Future.error("Failed to edit collection");
+      return Future.error("Failed to edit group");
     }
   }
 
-  Future<void> removeCollection(String collectionUid) async {
+  Future<void> removeGroup(String groupUid) async {
     try {
-      await collectionsCollection.doc(collectionUid).delete();
+      await groupsCollection.doc(groupUid).delete();
     } on FirebaseException catch (error) {
-      print("Error deleting collection: $error");
+      print("Error deleting group: $error");
 
-      return Future.error("Failed to delete collection");
+      return Future.error("Failed to delete group");
     }
   }
 
-  Future<List<dynamic>> getArray(String collectionUid) async {
+  Future<List<dynamic>> getArray(String groupUid) async {
     try {
-      final collection = await getCollection(collectionUid);
+      final group = await getGroup(groupUid);
 
-      return collection.array;
+      return group.array;
     } on FirebaseException catch (error) {
       print("Error fetching array: $error");
 
@@ -136,15 +136,15 @@ class FirestoreService {
     }
   }
 
-  FutureOr<String> addItemToArray(String collectionUid, String item) async {
+  FutureOr<String> addItemToArray(String groupUid, String item) async {
     try {
-      final collection = await getCollection(collectionUid);
+      final group = await getGroup(groupUid);
 
       var uuid = const Uuid().v4();
 
-      collectionsCollection.doc(collectionUid).update({
+      groupsCollection.doc(groupUid).update({
         'array': [
-          ...collection.array,
+          ...group.array,
           {
             'name': item,
             'uid': uuid,
@@ -161,14 +161,14 @@ class FirestoreService {
   }
 
   Future<void> removeItemFromArray(
-      String collectionUid, Map<String, dynamic> item) async {
+      String groupUid, Map<String, dynamic> item) async {
     try {
-      final collection = await getCollection(collectionUid);
+      final group = await getGroup(groupUid);
 
       final updatedArray =
-          collection.array.where((element) => element['uid'] != item['uid']);
+          group.array.where((element) => element['uid'] != item['uid']);
 
-      collectionsCollection.doc(collectionUid).update({
+      groupsCollection.doc(groupUid).update({
         'array': updatedArray.toList(),
       });
     } on FirebaseException catch (error) {
