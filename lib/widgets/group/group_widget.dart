@@ -1,5 +1,5 @@
 import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/widgets/array_widget.dart';
+import 'package:brainstorm_array/widgets/group_body.dart';
 import 'package:brainstorm_array/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -32,7 +32,7 @@ class GroupWidget extends HookWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ArrayWidget(groupUid: group.uid),
+            GroupBody(groupUid: group.uid),
           ],
         ),
       ),

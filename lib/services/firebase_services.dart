@@ -28,7 +28,7 @@ class FirestoreService {
             doc['createdAt'],
             doc.id,
             Color(doc['color']),
-            doc['array'],
+            doc['body'],
             doc['permissions'],
           );
         }).toList();
@@ -46,7 +46,7 @@ class FirestoreService {
         snapshot['createdAt'],
         snapshot.id,
         Color(snapshot['color']),
-        snapshot['array'],
+        snapshot['body'],
         snapshot['permissions'],
       );
     } on FirebaseException catch (error) {
@@ -67,7 +67,7 @@ class FirestoreService {
         'title': newGroup['title'],
         'createdAt': Timestamp.now(),
         'color': newGroup['color'].value,
-        'array': [],
+        'body': [],
         'permissions': newPermissions,
       });
 
@@ -124,27 +124,27 @@ class FirestoreService {
     }
   }
 
-  Future<List<dynamic>> getArray(String groupUid) async {
+  Future<List<dynamic>> getBody(String groupUid) async {
     try {
       final group = await getGroup(groupUid);
 
-      return group.array;
+      return group.body;
     } on FirebaseException catch (error) {
-      print("Error fetching array: $error");
+      print("Error fetching body: $error");
 
-      return Future.error("Failed to fetch array");
+      return Future.error("Failed to fetch body");
     }
   }
 
-  FutureOr<String> addItemToArray(String groupUid, String item) async {
+  FutureOr<String> addItemToBody(String groupUid, String item) async {
     try {
       final group = await getGroup(groupUid);
 
       var uuid = const Uuid().v4();
 
       groupsCollection.doc(groupUid).update({
-        'array': [
-          ...group.array,
+        'body': [
+          ...group.body,
           {
             'name': item,
             'uid': uuid,
@@ -154,25 +154,25 @@ class FirestoreService {
 
       return uuid;
     } on FirebaseException catch (error) {
-      print("Error add item to array: $error");
+      print("Error add item to body: $error");
 
       return Future.error("Failed to add item");
     }
   }
 
-  Future<void> removeItemFromArray(
+  Future<void> removeItemFromBody(
       String groupUid, Map<String, dynamic> item) async {
     try {
       final group = await getGroup(groupUid);
 
-      final updatedArray =
-          group.array.where((element) => element['uid'] != item['uid']);
+      final updatedBody =
+          group.body.where((element) => element['uid'] != item['uid']);
 
       groupsCollection.doc(groupUid).update({
-        'array': updatedArray.toList(),
+        'body': updatedBody.toList(),
       });
     } on FirebaseException catch (error) {
-      print("Error removing item to array: $error");
+      print("Error removing item to body: $error");
 
       return Future.error("Failed to remove item");
     }

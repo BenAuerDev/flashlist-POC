@@ -57,7 +57,7 @@ class GroupMenu extends ConsumerWidget {
         'title': group.title,
         'color': group.color!.value,
         'uid': group.uid,
-        'array': group.array,
+        'body': group.body,
         'permissions': {
           'owner': group.permissions['owner'],
           'editors': group.permissions['editors']

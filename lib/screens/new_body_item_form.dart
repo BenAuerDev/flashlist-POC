@@ -4,29 +4,29 @@ import 'package:brainstorm_array/widgets/group/group_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewArrayItemScreen extends ConsumerWidget {
-  const NewArrayItemScreen({super.key, required this.group});
+class NewBodyItemForm extends ConsumerWidget {
+  const NewBodyItemForm({super.key, required this.group});
 
   final Group group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final arrayItemFormKey = GlobalKey<FormState>();
+    final bodyItemFormKey = GlobalKey<FormState>();
 
     var enteredName = '';
 
     void submit() async {
-      final isValid = arrayItemFormKey.currentState!.validate();
+      final isValid = bodyItemFormKey.currentState!.validate();
 
       if (!isValid) {
         return;
       }
 
-      arrayItemFormKey.currentState!.save();
+      bodyItemFormKey.currentState!.save();
 
-      ref.read(firestoreServiceProvider).addItemToArray(group.uid, enteredName);
+      ref.read(firestoreServiceProvider).addItemToBody(group.uid, enteredName);
 
-      arrayItemFormKey.currentState!.reset();
+      bodyItemFormKey.currentState!.reset();
     }
 
     return Scaffold(
@@ -42,7 +42,7 @@ class NewArrayItemScreen extends ConsumerWidget {
           color: group.color!.withOpacity(0.2),
         ),
         child: Form(
-            key: arrayItemFormKey,
+            key: bodyItemFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [

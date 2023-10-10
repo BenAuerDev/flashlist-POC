@@ -5,14 +5,14 @@ final firestoreServiceProvider = Provider<FirestoreService>((ref) {
   return FirestoreService();
 });
 
-final arrayProvider = StreamProvider.autoDispose.family(
+final groupBodyProvider = StreamProvider.autoDispose.family(
   (ref, String uid) {
     return ref
         .watch(firestoreServiceProvider)
         .groupsCollection
         .doc(uid)
         .snapshots()
-        .map((snapshot) => snapshot['array'])
+        .map((snapshot) => snapshot['body'])
         .asBroadcastStream();
   },
 );

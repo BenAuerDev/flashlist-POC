@@ -6,7 +6,7 @@ class Group {
   final Timestamp createdAt;
   final String uid;
   final Color? color;
-  final List<dynamic> array;
+  final List<dynamic> body;
   final Map<String, dynamic> permissions;
 
   Group(
@@ -14,7 +14,7 @@ class Group {
     this.createdAt,
     this.uid,
     this.color,
-    this.array,
+    this.body,
     this.permissions,
   );
 }
