@@ -1,13 +1,13 @@
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/widgets/collection/collection_widget.dart';
+import 'package:brainstorm_array/widgets/group/group_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NewArrayItemScreen extends ConsumerWidget {
-  const NewArrayItemScreen({super.key, required this.collection});
+  const NewArrayItemScreen({super.key, required this.group});
 
-  final Collection collection;
+  final Group group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,9 +24,7 @@ class NewArrayItemScreen extends ConsumerWidget {
 
       arrayItemFormKey.currentState!.save();
 
-      ref
-          .read(firestoreServiceProvider)
-          .addItemToArray(collection.uid, enteredName);
+      ref.read(firestoreServiceProvider).addItemToArray(group.uid, enteredName);
 
       arrayItemFormKey.currentState!.reset();
     }
@@ -40,8 +38,8 @@ class NewArrayItemScreen extends ConsumerWidget {
         height: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          border: Border.all(color: collection.color!),
-          color: collection.color!.withOpacity(0.2),
+          border: Border.all(color: group.color!),
+          color: group.color!.withOpacity(0.2),
         ),
         child: Form(
             key: arrayItemFormKey,
@@ -49,8 +47,8 @@ class NewArrayItemScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   Hero(
-                    tag: collection.uid,
-                    child: CollectionWidget(collection: collection),
+                    tag: group.uid,
+                    child: GroupWidget(group: group),
                   ),
                   TextFormField(
                     onEditingComplete: () {},

@@ -1,7 +1,7 @@
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/screens/collection_form_screen.dart';
-import 'package:brainstorm_array/widgets/collection/collection_widget_wrapper.dart';
+import 'package:brainstorm_array/screens/group_form.dart';
+import 'package:brainstorm_array/widgets/group/group_wrapper.dart';
 import 'package:brainstorm_array/widgets/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,10 +11,10 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void goToNewCollectionScreen() {
+    void goToGroupForm() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const CollectionFormScreen(),
+          builder: (context) => const GroupForm(),
         ),
       );
     }
@@ -24,24 +24,24 @@ class HomeScreen extends ConsumerWidget {
           title: const Center(child: Text('Your Lists')),
           actions: [
             IconButton(
-              onPressed: goToNewCollectionScreen,
+              onPressed: goToGroupForm,
               icon: const Icon(Icons.add_card),
             ),
           ],
         ),
         drawer: const SideDrawer(),
         body: StreamBuilder(
-          stream: ref.read(firestoreServiceProvider).userCollectionsStream(),
+          stream: ref.read(firestoreServiceProvider).groupsForUserStream(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              final data = snapshot.data as List<Collection>;
-              final collections = data
+              final data = snapshot.data as List<Group>;
+              final groups = data
                   .map(
-                    (doc) => Collection(
+                    (doc) => Group(
                       doc.title,
                       doc.createdAt,
                       doc.uid,
@@ -52,15 +52,15 @@ class HomeScreen extends ConsumerWidget {
                   )
                   .toList();
 
-              if (collections.isEmpty) {
+              if (groups.isEmpty) {
                 return const Center(child: Text('No lists yet...'));
               }
               return Center(
                 child: ListView.builder(
-                  itemCount: collections.length,
+                  itemCount: groups.length,
                   itemBuilder: (context, index) {
-                    final collection = collections[index];
-                    return CollectionWidgetWrapper(collection: collection);
+                    final group = groups[index];
+                    return GroupWrapper(group: group);
                   },
                 ),
               );

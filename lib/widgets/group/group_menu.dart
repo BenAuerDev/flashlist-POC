@@ -1,6 +1,6 @@
-import 'package:brainstorm_array/models/collection.dart';
+import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/screens/collection_form_screen.dart';
+import 'package:brainstorm_array/screens/group_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +8,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
 
-class CollectionMenu extends ConsumerWidget {
-  const CollectionMenu({super.key, required this.collection});
+class GroupMenu extends ConsumerWidget {
+  const GroupMenu({super.key, required this.group});
 
-  final Collection collection;
+  final Group group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AlertDialog deleteDialog = AlertDialog(
-      title: const Text('Delete Collection'),
-      content: Text('Are you sure you want to delete ${collection.title}?'),
+      title: const Text('Delete List'),
+      content: Text('Are you sure you want to delete ${group.title}?'),
       actions: [
         ElevatedButton.icon(
           onPressed: () {
@@ -36,34 +36,31 @@ class CollectionMenu extends ConsumerWidget {
       ],
     );
 
-    void removeCollection() async {
+    void removeGroup() async {
       final wantToDelete = await showDialog(
           context: context, builder: (context) => deleteDialog);
       if (wantToDelete) {
-        ref.watch(firestoreServiceProvider).removeCollection(collection.uid);
+        ref.watch(firestoreServiceProvider).removeGroup(group.uid);
       }
     }
 
-    void onEditCollection() {
+    void onEditGroup() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => CollectionFormScreen(collection: collection),
+          builder: (context) => GroupForm(group: group),
         ),
       );
     }
 
     void onRemoveEditor() {
-      FirebaseFirestore.instance
-          .collection('collections')
-          .doc(collection.uid)
-          .update({
-        'title': collection.title,
-        'color': collection.color!.value,
-        'uid': collection.uid,
-        'array': collection.array,
+      FirebaseFirestore.instance.collection('groups').doc(group.uid).update({
+        'title': group.title,
+        'color': group.color!.value,
+        'uid': group.uid,
+        'array': group.array,
         'permissions': {
-          'owner': collection.permissions['owner'],
-          'editors': collection.permissions['editors']
+          'owner': group.permissions['owner'],
+          'editors': group.permissions['editors']
               .where((editor) => editor != currentUser!.uid)
               .toList(),
         },
@@ -73,20 +70,20 @@ class CollectionMenu extends ConsumerWidget {
     return PopupMenuButton(
       itemBuilder: (context) => [
         // Owner
-        if (collection.permissions['owner'] == currentUser!.uid)
+        if (group.permissions['owner'] == currentUser!.uid)
           PopupMenuItem(
-            onTap: onEditCollection,
+            onTap: onEditGroup,
             child: const Text('Edit'),
           ),
-        if (collection.permissions['owner'] == currentUser!.uid)
+        if (group.permissions['owner'] == currentUser!.uid)
           PopupMenuItem(
-            onTap: removeCollection,
+            onTap: removeGroup,
             child: const Text('Delete'),
           ),
 
         // Editors
-        if (collection.permissions['editors'].contains(currentUser!.uid) &&
-            collection.permissions['owner'] != currentUser!.uid)
+        if (group.permissions['editors'].contains(currentUser!.uid) &&
+            group.permissions['owner'] != currentUser!.uid)
           PopupMenuItem(
             onTap: onRemoveEditor,
             child: const Text('Remove'),

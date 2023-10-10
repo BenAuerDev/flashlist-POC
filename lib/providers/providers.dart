@@ -9,7 +9,7 @@ final arrayProvider = StreamProvider.autoDispose.family(
   (ref, String uid) {
     return ref
         .watch(firestoreServiceProvider)
-        .collectionsCollection
+        .groupsCollection
         .doc(uid)
         .snapshots()
         .map((snapshot) => snapshot['array'])

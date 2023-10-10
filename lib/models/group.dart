@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Collection {
+class Group {
   final String title;
   final Timestamp createdAt;
   final String uid;
@@ -9,7 +9,7 @@ class Collection {
   final List<dynamic> array;
   final Map<String, dynamic> permissions;
 
-  Collection(
+  Group(
     this.title,
     this.createdAt,
     this.uid,
