@@ -2,8 +2,7 @@ import 'package:brainstorm_array/models/collection.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/custom_inputs/color_input.dart';
-import 'package:brainstorm_array/widgets/custom_inputs/user_email_input.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:brainstorm_array/widgets/custom_inputs/user_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,7 +18,7 @@ class CollectionFormScreen extends ConsumerWidget {
     var enteredTitle = collection?.title ?? '';
     Color? enteredColor =
         collection?.color ?? retrieveColorScheme(context).primary;
-    List<String> enteredEditors = [FirebaseAuth.instance.currentUser!.uid];
+    List enteredEditors = collection?.permissions['editors'] ?? [];
 
     void createCollection() {
       ref.read(firestoreServiceProvider).addCollection({
@@ -35,11 +34,17 @@ class CollectionFormScreen extends ConsumerWidget {
           .editCollection(collection!.uid, {
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
-        'editors': enteredEditors.length > 1
-            ? enteredEditors
-            : collection!.permissions['editors'],
+        'editors': enteredEditors,
       });
       return res;
+    }
+
+    void onSelectEditor(String uid) {
+      enteredEditors.add(uid);
+    }
+
+    void onRemoveEditor(String uid) {
+      enteredEditors.remove(uid);
     }
 
     void submit() {
@@ -93,16 +98,10 @@ class CollectionFormScreen extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 12),
-              UserEmailInput(
+              UserPicker(
                 collection: collection,
-                onSelectEditors: (List<dynamic> editors) {
-                  final passedEditorUids =
-                      editors.map((editor) => editor['uid']).toList();
-                  enteredEditors = [...enteredEditors, ...passedEditorUids];
-                },
-                onRemoveEditor: (String uid) {
-                  enteredEditors.remove(uid);
-                },
+                onSelectEditor: onSelectEditor,
+                onRemoveEditor: onRemoveEditor,
               ),
               const SizedBox(height: 12),
               Row(

@@ -1,22 +1,19 @@
 import 'package:brainstorm_array/models/collection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final currentUser = FirebaseAuth.instance.currentUser;
-
-class UserEmailInput extends HookConsumerWidget {
-  const UserEmailInput({
+class UserPicker extends HookConsumerWidget {
+  const UserPicker({
     super.key,
     this.collection,
-    required this.onSelectEditors,
+    required this.onSelectEditor,
     required this.onRemoveEditor,
   });
 
   final Collection? collection;
-  final Function(List<dynamic>) onSelectEditors;
+  final Function(String uid) onSelectEditor;
   final Function(String uid) onRemoveEditor;
 
   @override
@@ -27,12 +24,12 @@ class UserEmailInput extends HookConsumerWidget {
     getEditorUserObjects() async {
       return await FirebaseFirestore.instance
           .collection('users')
-          .where('uid', whereIn: collection!.permissions['editors'])
+          .where('uid', whereIn: collection?.permissions['editors'])
           .get();
     }
 
     useEffect(() {
-      if (collection != null && collection!.permissions['editors'].isNotEmpty) {
+      if (collection != null && collection?.permissions['editors'].isNotEmpty) {
         // TODO: There must be a better way than this
         getEditorUserObjects().then((value) {
           editors.value = value.docs.map((doc) => doc.data()).toList();
@@ -50,7 +47,7 @@ class UserEmailInput extends HookConsumerWidget {
           .then((value) => value.docs.first.data());
 
       editors.value = [...editors.value, user];
-      onSelectEditors(editors.value);
+      onSelectEditor(user['uid']);
 
       emailController.clear();
     }
@@ -78,7 +75,7 @@ class UserEmailInput extends HookConsumerWidget {
           shrinkWrap: true,
           children: [
             for (final editor in editors.value)
-              if (editor['uid'] != collection?.permissions['owner'])
+              if (editor['uid'] != collection?.permissions['editors'])
                 ListTile(
                   title: Text(editor['username'] ?? 'No username'),
                   trailing: IconButton(
