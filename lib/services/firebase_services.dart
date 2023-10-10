@@ -15,7 +15,7 @@ class FirestoreService {
   Stream<List<Collection>> userCollectionsStream() {
     try {
       return collectionsCollection.snapshots().map((snapshot) {
-        final userCollections = snapshot.docs.where((doc) {
+        return snapshot.docs.where((doc) {
           final permissions = doc['permissions'];
           final owner = permissions['owner'];
           final editors = permissions['editors'] ?? [];
@@ -32,8 +32,6 @@ class FirestoreService {
             doc['permissions'],
           );
         }).toList();
-
-        return userCollections;
       });
     } catch (error) {
       throw error;
