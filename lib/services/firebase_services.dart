@@ -6,27 +6,35 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+final currentUser = FirebaseAuth.instance.currentUser;
+
 class FirestoreService {
   final CollectionReference collectionsCollection =
       FirebaseFirestore.instance.collection('collections');
 
-  Future<List<Collection>> getCollections() async {
+  Stream<List<Collection>> userCollectionsStream() {
     try {
-      final snapshot = await collectionsCollection.get();
-      return snapshot.docs.map((doc) {
-        return Collection(
-          doc['title'],
-          doc['createdAt'],
-          doc.id,
-          Color(doc['color']),
-          doc['array'],
-          doc['permissions'],
-        );
-      }).toList();
-    } on FirebaseException catch (error) {
-      print("Error fetching collections: $error");
+      return collectionsCollection.snapshots().map((snapshot) {
+        return snapshot.docs.where((doc) {
+          final permissions = doc['permissions'];
+          final owner = permissions['owner'];
+          final editors = permissions['editors'] ?? [];
 
-      return Future.error("Failed to fetch collections");
+          return owner == currentUser!.uid ||
+              editors.contains(currentUser!.uid);
+        }).map((doc) {
+          return Collection(
+            doc['title'],
+            doc['createdAt'],
+            doc.id,
+            Color(doc['color']),
+            doc['array'],
+            doc['permissions'],
+          );
+        }).toList();
+      });
+    } catch (error) {
+      throw error;
     }
   }
 
