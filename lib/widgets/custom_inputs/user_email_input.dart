@@ -78,7 +78,7 @@ class UserEmailInput extends HookConsumerWidget {
           shrinkWrap: true,
           children: [
             for (final editor in editors.value)
-              if (editor['uid'] != collection!.permissions['owner'])
+              if (editor['uid'] != collection?.permissions['owner'])
                 ListTile(
                   title: Text(editor['username'] ?? 'No username'),
                   trailing: IconButton(
