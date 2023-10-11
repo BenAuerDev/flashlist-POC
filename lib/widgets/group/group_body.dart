@@ -21,6 +21,7 @@ class GroupBody extends ConsumerWidget {
         SnackBar(
           action: action,
           content: Text(message),
+          backgroundColor: retrieveColorScheme(context).primary,
           duration: const Duration(seconds: 2),
         ),
       );
