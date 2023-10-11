@@ -1,4 +1,5 @@
 import 'package:brainstorm_array/models/group.dart';
+import 'package:brainstorm_array/providers/providers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,39 +23,63 @@ class UserPicker extends HookConsumerWidget {
     final editors = useState([]);
 
     getEditorUserObjects() async {
-      return await FirebaseFirestore.instance
-          .collection('users')
-          .where('uid', whereIn: group?.permissions['editors'])
-          .get();
+      final uidList = group!.permissions['editors'];
+      final userObjects =
+          await ref.read(firestoreServiceProvider).getUsersByUid(uidList);
+
+      editors.value = userObjects;
     }
 
     useEffect(() {
       if (group != null && group?.permissions['editors'].isNotEmpty) {
-        // TODO: There must be a better way than this
-        getEditorUserObjects().then((value) {
-          editors.value = value.docs.map((doc) => doc.data()).toList();
-        });
+        getEditorUserObjects();
       }
       return null;
     }, []);
 
+    void showSnackbar(String message, SnackBarAction? action) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          action: action,
+          content: Text(message),
+        ),
+      );
+    }
+
     void addUser() async {
-      final user = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: emailController.text)
-          .snapshots()
-          .first
-          .then((value) => value.docs.first.data());
+      final user = await ref
+          .read(firestoreServiceProvider)
+          .getUserByEmail(emailController.text);
 
-      editors.value = [...editors.value, user];
-      onSelectEditor(user['uid']);
-
-      emailController.clear();
+      if (user != null) {
+        editors.value = [...editors.value, user];
+        onSelectEditor(user.uid);
+        emailController.clear();
+      } else {
+        showSnackbar(
+          'No user found with that email address, maybe check the spelling?',
+          null,
+        );
+      }
     }
 
     void removeUser(editor) async {
+      final oldState = editors.value;
+
       editors.value = editors.value.where((item) => item != editor).toList();
-      onRemoveEditor(editor['uid']);
+      onRemoveEditor(editor.uid);
+
+      showSnackbar(
+        'User has been removed',
+        SnackBarAction(
+          label: 'undo',
+          onPressed: () {
+            editors.value = oldState;
+            onSelectEditor(editor.uid);
+          },
+        ),
+      );
     }
 
     return Column(
@@ -64,6 +89,9 @@ class UserPicker extends HookConsumerWidget {
             Expanded(
               child: TextField(
                 controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email Address',
+                ),
               ),
             ),
             ElevatedButton(onPressed: addUser, child: const Text('Add User')),
@@ -74,10 +102,23 @@ class UserPicker extends HookConsumerWidget {
           key: Key(editors.value.length.toString()),
           shrinkWrap: true,
           children: [
+            if (editors.value.isNotEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Editors',
+                ),
+              ),
             for (final editor in editors.value)
-              if (editor['uid'] != group?.permissions['editors'])
+              if (editor.uid != group?.permissions['editors'])
                 ListTile(
-                  title: Text(editor['username'] ?? 'No username'),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(editor.imageUrl ??
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
+                  ),
+                  title: Text(editor.username ?? 'No username'),
+                  dense: true,
+                  contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
