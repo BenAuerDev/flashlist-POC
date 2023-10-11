@@ -1,10 +1,10 @@
 import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/widgets/group_body.dart';
+import 'package:brainstorm_array/widgets/avatar_group.dart';
+import 'package:brainstorm_array/widgets/group/group_body.dart';
 import 'package:brainstorm_array/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class GroupWidget extends HookWidget {
+class GroupWidget extends StatelessWidget {
   const GroupWidget({super.key, required this.group});
 
   final Group group;
@@ -16,22 +16,28 @@ class GroupWidget extends HookWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Stack(
               children: [
-                const SizedBox(width: 48),
-                Text(
-                  group.title,
-                  style: TextStyle(
-                    color: group.color,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AvatarGroup(users: group.permissions['editors']),
+                    GroupMenu(group: group),
+                  ],
+                ),
+                Center(
+                  child: Text(
+                    group.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: group.color,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                GroupMenu(group: group),
               ],
             ),
-            const SizedBox(height: 12),
             GroupBody(groupUid: group.uid),
           ],
         ),
