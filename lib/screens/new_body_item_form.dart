@@ -24,7 +24,9 @@ class NewBodyItemForm extends ConsumerWidget {
 
       bodyItemFormKey.currentState!.save();
 
-      ref.read(firestoreServiceProvider).addItemToBody(group.uid, enteredName);
+      ref
+          .read(firestoreServiceProvider)
+          .addItemToGroupBody(group.uid, enteredName);
 
       bodyItemFormKey.currentState!.reset();
     }
