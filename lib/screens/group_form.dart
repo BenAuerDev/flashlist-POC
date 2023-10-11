@@ -77,6 +77,7 @@ class GroupForm extends ConsumerWidget {
                 TextFormField(
                   initialValue: enteredTitle,
                   maxLength: 20,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: 'List Name',
                   ),
