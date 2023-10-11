@@ -14,12 +14,20 @@ class AvatarGroup extends HookConsumerWidget {
 
     return FutureBuilder(
       future: ref.read(firestoreServiceProvider).getUsersByUid(users),
-      builder: (context, list) {
+      builder: (context, snapshots) {
+        if (snapshots.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+
+        if (snapshots.hasError) {
+          return const Text('Error fetching users');
+        }
+
         return TextButton(
           onPressed: () => isExpanded.value = !isExpanded.value,
           child: Row(
             children: [
-              for (var user in list.data ?? [])
+              for (var user in snapshots.data ?? [])
                 Align(
                   widthFactor: isExpanded.value ? 1.0 : 0.3,
                   child: CircleAvatar(
