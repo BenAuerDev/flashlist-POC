@@ -48,6 +48,11 @@ class UserPicker extends HookConsumerWidget {
     }
 
     void addUser() async {
+      if (emailController.text.isEmpty || !emailController.text.contains('@')) {
+        showSnackbar('Please enter an email address', null);
+        return;
+      }
+
       final user = await ref
           .read(firestoreServiceProvider)
           .getUserByEmail(emailController.text);
