@@ -5,12 +5,16 @@ import 'package:brainstorm_array/models/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:brainstorm_array/models/user.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
 
 class FirestoreService {
   final CollectionReference groupsCollection =
       FirebaseFirestore.instance.collection('groups');
+
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
 
   Stream<List<Group>> groupsForUserStream() {
     try {
@@ -175,6 +179,72 @@ class FirestoreService {
       print("Error removing item to body: $error");
 
       return Future.error("Failed to remove item");
+    }
+  }
+
+  // User
+  Future<CustomUser?> getUserByUid(String userUid) async {
+    try {
+      DocumentSnapshot documentSnapshot =
+          await userCollection.doc(userUid).get();
+
+      if (documentSnapshot.exists) {
+        return CustomUser(
+          documentSnapshot['email'],
+          documentSnapshot['username'],
+          documentSnapshot['uid'],
+          documentSnapshot['image_url'],
+        );
+      } else {
+        return null;
+      }
+    } on FirebaseException catch (error) {
+      print("Error fetching user: $error");
+
+      return Future.error("Failed to fetch user");
+    }
+  }
+
+  Future<CustomUser?> getUserByEmail(String userEmail) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await userCollection.where('email', isEqualTo: userEmail).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        return CustomUser(
+          documentSnapshot['email'],
+          documentSnapshot['username'],
+          documentSnapshot['uid'],
+          documentSnapshot['image_url'],
+        );
+      } else {
+        return null;
+      }
+    } on FirebaseException catch (error) {
+      print("Error fetching user: $error");
+
+      return Future.error("Failed to fetch user");
+    }
+  }
+
+  Future<List<CustomUser>> getUsersByUid(List<dynamic> userUids) {
+    try {
+      return userCollection
+          .where('uid', whereIn: userUids)
+          .get()
+          .then((value) => value.docs.map((doc) {
+                return CustomUser(
+                  doc['email'],
+                  doc['username'],
+                  doc['uid'],
+                  doc['image_url'],
+                );
+              }).toList());
+    } on FirebaseException catch (error) {
+      print("Error fetching users: $error");
+
+      return Future.error("Failed to fetch users");
     }
   }
 }
