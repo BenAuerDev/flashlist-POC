@@ -21,7 +21,10 @@ class GroupWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AvatarGroup(users: group.permissions['editors']),
+                    if (group.permissions['editors'].isEmpty)
+                      const SizedBox(width: 50),
+                    if (group.permissions['editors'].isNotEmpty)
+                      AvatarGroup(users: group.permissions['editors']),
                     GroupMenu(group: group),
                   ],
                 ),
