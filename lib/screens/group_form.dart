@@ -67,56 +67,58 @@ class GroupForm extends ConsumerWidget {
       appBar: AppBar(
         title: Text(group == null ? 'Add new List' : 'Edit your List'),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Form(
-          key: groupFormKey,
-          child: Column(
-            children: [
-              TextFormField(
-                initialValue: enteredTitle,
-                maxLength: 20,
-                decoration: const InputDecoration(
-                  labelText: 'List Name',
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Form(
+            key: groupFormKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  initialValue: enteredTitle,
+                  maxLength: 20,
+                  decoration: const InputDecoration(
+                    labelText: 'List Name',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a list name';
+                    }
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    enteredTitle = newValue!;
+                  },
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a list name';
-                  }
-                  return null;
-                },
-                onSaved: (newValue) {
-                  enteredTitle = newValue!;
-                },
-              ),
-              const SizedBox(height: 12),
-              ColorInput(
-                initialColor: group != null ? group!.color : null,
-                onSelectColor: (Color color) {
-                  enteredColor = color;
-                },
-              ),
-              const SizedBox(height: 12),
-              UserPicker(
-                group: group,
-                onSelectEditor: onSelectEditor,
-                onRemoveEditor: onRemoveEditor,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: submit,
-                    child: Text(group == null ? 'Add List' : 'Update List'),
-                  ),
-                ],
-              )
-            ],
+                const SizedBox(height: 12),
+                ColorInput(
+                  initialColor: group != null ? group!.color : null,
+                  onSelectColor: (Color color) {
+                    enteredColor = color;
+                  },
+                ),
+                const SizedBox(height: 12),
+                UserPicker(
+                  group: group,
+                  onSelectEditor: onSelectEditor,
+                  onRemoveEditor: onRemoveEditor,
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                      onPressed: submit,
+                      child: Text(group == null ? 'Add List' : 'Update List'),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
