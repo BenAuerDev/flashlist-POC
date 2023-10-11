@@ -77,7 +77,7 @@ class UserPicker extends HookConsumerWidget {
       showSnackbar(
         'User has been removed',
         SnackBarAction(
-          label: 'undo',
+          label: 'Undo',
           onPressed: () {
             editors.value = oldState;
             onSelectEditor(editor.uid);
