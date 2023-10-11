@@ -1,5 +1,6 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,6 +42,7 @@ class UserPicker extends HookConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           action: action,
+          backgroundColor: retrieveColorScheme(context).primary,
           content: Text(message),
         ),
       );
