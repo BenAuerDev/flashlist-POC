@@ -15,10 +15,6 @@ class AvatarGroup extends HookConsumerWidget {
     return FutureBuilder(
       future: ref.read(firestoreServiceProvider).getUsersByUid(users),
       builder: (context, snapshots) {
-        if (snapshots.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-
         if (snapshots.hasError) {
           return const Text('Error fetching users');
         }
