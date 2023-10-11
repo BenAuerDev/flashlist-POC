@@ -3,7 +3,7 @@ import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class GroupBody extends HookConsumerWidget {
+class GroupBody extends ConsumerWidget {
   const GroupBody({
     super.key,
     required this.groupUid,
