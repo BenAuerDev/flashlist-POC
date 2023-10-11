@@ -128,19 +128,7 @@ class FirestoreService {
     }
   }
 
-  Future<List<dynamic>> getBody(String groupUid) async {
-    try {
-      final group = await getGroup(groupUid);
-
-      return group.body;
-    } on FirebaseException catch (error) {
-      print("Error fetching body: $error");
-
-      return Future.error("Failed to fetch body");
-    }
-  }
-
-  FutureOr<String> addItemToBody(String groupUid, String item) async {
+  FutureOr<String> addItemToGroupBody(String groupUid, String item) async {
     try {
       final group = await getGroup(groupUid);
 
@@ -164,21 +152,35 @@ class FirestoreService {
     }
   }
 
-  Future<void> removeItemFromBody(
-      String groupUid, Map<String, dynamic> item) async {
+  Future<bool> removeItemFromGroupBody(
+      String groupUid, Map<String, dynamic> items) async {
     try {
       final group = await getGroup(groupUid);
 
       final updatedBody =
-          group.body.where((element) => element['uid'] != item['uid']);
+          group.body.where((element) => element['uid'] != items['uid']);
 
       groupsCollection.doc(groupUid).update({
         'body': updatedBody.toList(),
       });
+      return true;
     } on FirebaseException catch (error) {
       print("Error removing item to body: $error");
 
       return Future.error("Failed to remove item");
+    }
+  }
+
+  Future<bool> setGroupBody(String groupUid, List<dynamic> items) async {
+    try {
+      groupsCollection.doc(groupUid).update({
+        'body': items,
+      });
+      return true;
+    } on FirebaseException catch (error) {
+      print("Error setting body: $error");
+
+      return Future.error("Failed to set body");
     }
   }
 
