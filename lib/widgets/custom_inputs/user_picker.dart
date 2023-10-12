@@ -1,9 +1,12 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final currentUser = FirebaseAuth.instance.currentUser;
 
 class UserPicker extends HookConsumerWidget {
   const UserPicker({
@@ -51,6 +54,11 @@ class UserPicker extends HookConsumerWidget {
     void addUser() async {
       if (emailController.text.isEmpty || !emailController.text.contains('@')) {
         showSnackbar('Please enter an email address', null);
+        return;
+      }
+
+      if (emailController.text == currentUser!.email) {
+        showSnackbar('Dude that\'s your own email address ;-)', null);
         return;
       }
 
