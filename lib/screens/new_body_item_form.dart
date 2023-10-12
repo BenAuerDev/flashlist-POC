@@ -38,7 +38,7 @@ class NewBodyItemForm extends ConsumerWidget {
       body: Container(
         margin: const EdgeInsets.all(4),
         height: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(color: group.color!),
           color: group.color!.withOpacity(0.2),
