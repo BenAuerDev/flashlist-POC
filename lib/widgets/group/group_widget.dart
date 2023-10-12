@@ -24,7 +24,7 @@ class GroupWidget extends StatelessWidget {
                     if (group.permissions['editors'].isEmpty)
                       const SizedBox(width: 50),
                     if (group.permissions['editors'].isNotEmpty)
-                      AvatarGroup(users: group.permissions['editors']),
+                      AvatarGroup(group: group),
                     GroupMenu(group: group),
                   ],
                 ),
