@@ -131,7 +131,7 @@ class _DragAndDropListState extends ConsumerState<DismissibleDragAndDropList> {
     }
 
     return ReorderableListView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       proxyDecorator: proxyDecorator,
       buildDefaultDragHandles: true,
