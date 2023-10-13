@@ -20,7 +20,7 @@ class GroupWrapper extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.all(4),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(color: group.color!),
         color: group.color!.withOpacity(0.2),

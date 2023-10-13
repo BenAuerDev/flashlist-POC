@@ -78,7 +78,7 @@ class AvatarGroup extends HookConsumerWidget {
                           ? 0.9
                           : animationController.value,
                       child: CircleAvatar(
-                        radius: 15,
+                        radius: 16,
                         backgroundImage: NetworkImage(
                           user.imageUrl ??
                               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
