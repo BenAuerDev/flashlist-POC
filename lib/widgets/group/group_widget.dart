@@ -18,16 +18,6 @@ class GroupWidget extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (group.permissions['editors'].isEmpty)
-                      const SizedBox(width: 50),
-                    if (group.permissions['editors'].isNotEmpty)
-                      AvatarGroup(group: group),
-                    GroupMenu(group: group),
-                  ],
-                ),
                 Center(
                   child: Text(
                     group.title,
@@ -38,6 +28,16 @@ class GroupWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (group.permissions['editors'].isEmpty)
+                      const SizedBox(width: 50),
+                    if (group.permissions['editors'].isNotEmpty)
+                      AvatarGroup(group: group),
+                    GroupMenu(group: group),
+                  ],
                 ),
               ],
             ),
