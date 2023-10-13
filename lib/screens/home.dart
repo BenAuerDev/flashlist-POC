@@ -36,7 +36,6 @@ class HomeScreen extends ConsumerWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              print(snapshot.error);
               return Text('Error: ${snapshot.error}');
             } else {
               final data = snapshot.data as List<Group>;
