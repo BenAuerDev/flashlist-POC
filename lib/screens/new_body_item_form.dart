@@ -11,6 +11,8 @@ class NewBodyItemForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var color = ref.watch(groupColorProvider(group.uid));
+
     final bodyItemFormKey = GlobalKey<FormState>();
 
     var enteredName = '';
@@ -40,8 +42,8 @@ class NewBodyItemForm extends ConsumerWidget {
         height: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
         decoration: BoxDecoration(
-          border: Border.all(color: group.color!),
-          color: group.color!.withOpacity(0.2),
+          border: Border.all(color: Color(color.value)),
+          color: Color(color.value).withOpacity(0.2),
         ),
         child: Form(
             key: bodyItemFormKey,
