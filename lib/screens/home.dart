@@ -3,6 +3,7 @@ import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/screens/group_form.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/group/group_wrapper.dart';
+import 'package:brainstorm_array/widgets/notification/notification_modal.dart';
 import 'package:brainstorm_array/widgets/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,11 +24,8 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Center(child: Text('Your Lists')),
-          actions: [
-            IconButton(
-              onPressed: goToGroupForm,
-              icon: const Icon(Icons.add_card),
-            ),
+          actions: const [
+            NotificationModal(),
           ],
         ),
         drawer: const SideDrawer(),
