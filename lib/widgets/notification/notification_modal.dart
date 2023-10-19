@@ -1,6 +1,7 @@
 import 'package:brainstorm_array/models/notification.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/notification/notification_badge.dart';
+import 'package:brainstorm_array/widgets/notification/notification_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -11,24 +12,24 @@ class NotificationModal extends HookWidget {
   Widget build(BuildContext context) {
     var notifications = <UserNotification>[
       UserNotification(
-        '##User invited you to the list ##listname',
+        'Marcus Antonius Aurelius invited you to the list: Conquest of Germania',
         '23423423',
         false,
       ),
       UserNotification(
-        '##User invited you to the list ##listname',
+        'John Snow invited you to the list: Black Castle Supplies',
         '23423423',
         false,
       ),
       UserNotification(
-        '##User invited you to the list ##listname',
+        'Gaius Julius Caesar invited you to the list: Conquest of Gaul',
         '23423423',
         false,
       ),
       UserNotification(
-        '##User invited you to the list ##listname',
+        'Kratos invited you to the list: Revenge on the Gods',
         '23423423',
-        false,
+        true,
       ),
     ];
 
@@ -60,31 +61,15 @@ class NotificationModal extends HookWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Expanded(
-                    flex: 5,
                     child: SizedBox.expand(
-                      child: ListView(
-                        children: [
-                          for (var notification in notifications)
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              key: Key(notification.uid),
-                              title: GestureDetector(
-                                onTap: () {
-                                  print('tapped');
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: Column(
-                                    children: [
-                                      Text(notification.message),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: notifications.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final notification = notifications[index];
+
+                          return NotificationItem(notification: notification);
+                        },
                       ),
                     ),
                   ),
