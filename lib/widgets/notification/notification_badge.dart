@@ -1,4 +1,3 @@
-import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 
 class NotificationBadge extends StatelessWidget {
@@ -27,11 +26,11 @@ class NotificationBadge extends StatelessWidget {
                   padding: const EdgeInsets.all(3),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.red, // or your desired badge color
+                    color: Colors.red,
                   ),
                   child: Text(
                     notificationCount.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -39,6 +38,6 @@ class NotificationBadge extends StatelessWidget {
               )
             : const SizedBox(),
       ],
-    ); // Return an empty SizedBox when no notifications.
+    );
   }
 }
