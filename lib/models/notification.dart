@@ -1,7 +1,7 @@
 class UserNotification {
   final String message;
   final String uid;
-  final bool isRead;
+  bool isRead;
 
   UserNotification(
     this.message,
