@@ -5,14 +5,18 @@ import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/group/group_wrapper.dart';
 import 'package:brainstorm_array/widgets/notification/notification_modal.dart';
 import 'package:brainstorm_array/widgets/side_drawer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var fcmToken = useState<dynamic>('');
+
     void goToGroupForm() {
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -20,6 +24,18 @@ class HomeScreen extends ConsumerWidget {
         ),
       );
     }
+
+    setupPushNotifications() async {
+      final fcm = FirebaseMessaging.instance;
+      await fcm.requestPermission();
+      final token = await fcm.getToken();
+      return token;
+    }
+
+    useEffect(() {
+      fcmToken.value = setupPushNotifications();
+      return;
+    }, []);
 
     return Scaffold(
         appBar: AppBar(
