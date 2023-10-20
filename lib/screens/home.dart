@@ -67,20 +67,20 @@ class HomeScreen extends HookConsumerWidget {
                   )
                   .toList();
 
-              if (groups.isEmpty) {
-                return const Center(child: Text('No lists yet...'));
-              }
               return Stack(
                 children: [
-                  Center(
-                    child: ListView.builder(
-                      itemCount: groups.length,
-                      itemBuilder: (context, index) {
-                        final group = groups[index];
-                        return GroupWrapper(group: group);
-                      },
+                  if (groups.isEmpty)
+                    const Center(child: Text('No lists yet...'))
+                  else
+                    Center(
+                      child: ListView.builder(
+                        itemCount: groups.length,
+                        itemBuilder: (context, index) {
+                          final group = groups[index];
+                          return GroupWrapper(group: group);
+                        },
+                      ),
                     ),
-                  ),
                   Positioned(
                     bottom: 15,
                     right: 15,
