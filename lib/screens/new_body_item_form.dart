@@ -29,8 +29,6 @@ class NewBodyItemForm extends ConsumerWidget {
       ref
           .read(firestoreServiceProvider)
           .addItemToGroupBody(group.uid, enteredName);
-
-      bodyItemFormKey.currentState!.reset();
     }
 
     return Scaffold(
@@ -54,18 +52,24 @@ class NewBodyItemForm extends ConsumerWidget {
                     tag: group.uid,
                     child: GroupWidget(group: group),
                   ),
-                  TextFormField(
-                    onEditingComplete: () {},
-                    onFieldSubmitted: (value) => submit(),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    onSaved: (newValue) {
-                      enteredName = newValue!;
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: TextFormField(
+                      autofocus: true,
+                      onEditingComplete: () {},
+                      onFieldSubmitted: (value) {
+                        submit();
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        enteredName = newValue!;
+                      },
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Row(
