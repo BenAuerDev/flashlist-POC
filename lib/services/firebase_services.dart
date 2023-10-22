@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brainstorm_array/models/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:brainstorm_array/models/user.dart';
@@ -247,6 +249,25 @@ class FirestoreService {
       print("Error fetching users: $error");
 
       return Future.error("Failed to fetch users");
+    }
+  }
+
+  Future<void> uploadUserAvatar(File userImage, String userUid) async {
+    try {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('$userUid.jpg');
+
+      await storageRef.putFile(userImage);
+
+      final imageUrl = await storageRef.getDownloadURL();
+
+      await FirebaseFirestore.instance.collection('users').doc(userUid).update({
+        'image_url': imageUrl,
+      });
+    } catch (error) {
+      print(error);
     }
   }
 }
