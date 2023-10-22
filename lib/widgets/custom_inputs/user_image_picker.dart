@@ -5,8 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends HookWidget {
-  const UserImagePicker({super.key, required this.onPickImage});
+  const UserImagePicker(
+      {super.key, required this.onPickImage, this.initialImage});
 
+  final String? initialImage;
   final void Function(File pickedImage) onPickImage;
 
   @override
@@ -23,7 +25,6 @@ class UserImagePicker extends HookWidget {
       if (pickedImage == null) {
         return;
       }
-
       pickedImageFile.value = File(pickedImage.path);
 
       onPickImage(pickedImageFile.value!);
@@ -66,17 +67,26 @@ class UserImagePicker extends HookWidget {
 
     return Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundColor: Colors.grey,
-          backgroundImage: null,
-          foregroundImage: pickedImageFile.value != null
-              ? FileImage(pickedImageFile.value!)
-              : null,
-        ),
+        if (pickedImageFile.value == null)
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.grey,
+            backgroundImage: null,
+            foregroundImage: NetworkImage(initialImage ??
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
+          ),
+        if (pickedImageFile.value != null)
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.grey,
+            backgroundImage: null,
+            foregroundImage: pickedImageFile.value != null
+                ? FileImage(pickedImageFile.value!)
+                : null,
+          ),
         TextButton.icon(
           icon: const Icon(Icons.image),
-          label: const Text('Add Image'),
+          label: Text(initialImage != null ? 'Upload new Image' : 'Add Image'),
           onPressed: useImagePicker,
         )
       ],
