@@ -14,37 +14,6 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: ListView(
-        children: [
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    if (isThemeLight)
-                      const Icon(Icons.light_mode)
-                    else
-                      const Icon(Icons.dark_mode),
-                    const SizedBox(width: 10),
-                    if (isThemeLight)
-                      const Text('Dark Mode')
-                    else
-                      const Text('Light Mode'),
-                  ],
-                ),
-                Switch(
-                  value: isThemeLight,
-                  onChanged: (value) {
-                    if (value) {
-                      AdaptiveTheme.of(context).setLight();
-                    } else {
-                      AdaptiveTheme.of(context).setDark();
-                    }
-                  },
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
