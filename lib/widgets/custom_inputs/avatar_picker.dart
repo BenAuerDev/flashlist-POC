@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UserImagePicker extends HookWidget {
-  const UserImagePicker(
-      {super.key, required this.onPickImage, this.initialImage});
+class AvatarPicker extends HookWidget {
+  const AvatarPicker({super.key, required this.onPickImage, this.initialImage});
 
   final String? initialImage;
   final void Function(File pickedImage) onPickImage;
