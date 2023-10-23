@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/providers/users.dart';
-import 'package:brainstorm_array/widgets/custom_inputs/user_image_picker.dart';
+import 'package:brainstorm_array/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,7 +22,7 @@ class ProfileScreen extends ConsumerWidget {
             return Center(
               child: Column(
                 children: [
-                  UserImagePicker(
+                  AvatarPicker(
                     initialImage: user['image_url'],
                     onPickImage: uploadNewImage,
                   ),
