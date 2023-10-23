@@ -25,8 +25,7 @@ class FirestoreService {
           final owner = permissions['owner'];
           final editors = permissions['editors'] ?? [];
 
-          return owner == currentUser!.uid ||
-              editors.contains(currentUser!.uid);
+          return owner == currentUser!.uid || editors.contains(currentUser.uid);
         }).map((doc) {
           return Group(
             doc['title'],
