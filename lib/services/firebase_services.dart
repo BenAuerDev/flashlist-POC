@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:brainstorm_array/models/user.dart';
 
-final currentUser = FirebaseAuth.instance.currentUser;
-
 class FirestoreService {
   final CollectionReference groupsCollection =
       FirebaseFirestore.instance.collection('groups');
@@ -19,6 +17,7 @@ class FirestoreService {
       FirebaseFirestore.instance.collection('users');
 
   Stream<List<Group>> groupsForUserStream() {
+    final currentUser = FirebaseAuth.instance.currentUser;
     try {
       return groupsCollection.snapshots().map((snapshot) {
         return snapshot.docs.where((doc) {
