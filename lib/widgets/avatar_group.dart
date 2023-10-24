@@ -50,6 +50,10 @@ class AvatarGroup extends HookConsumerWidget {
       }
     }
 
+    if (usersWithoutCurrent.isEmpty) {
+      return const SizedBox(width: 20);
+    }
+
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget? child) {

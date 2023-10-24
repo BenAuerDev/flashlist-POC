@@ -1,6 +1,8 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/screens/new_body_item_form.dart';
-import 'package:brainstorm_array/widgets/group/group_widget.dart';
+import 'package:brainstorm_array/widgets/avatar_group.dart';
+import 'package:brainstorm_array/widgets/group/group_body.dart';
+import 'package:brainstorm_array/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 
 class GroupWrapper extends StatelessWidget {
@@ -27,9 +29,40 @@ class GroupWrapper extends StatelessWidget {
       ),
       child: Column(
         children: [
+          SizedBox(
+            height: 38,
+            child: Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                Center(
+                  child: Hero(
+                    tag: '${group.uid}-${group.title}',
+                    child: Text(
+                      group.title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: group.color,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AvatarGroup(group: group),
+                    GroupMenu(group: group),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
           Hero(
-            tag: group.uid,
-            child: GroupWidget(
+            tag: '${group.uid}-${group.body.length}',
+            child: GroupBody(
               group: group,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/widgets/group/group_widget.dart';
+import 'package:brainstorm_array/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,7 +11,7 @@ class NewBodyItemForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var color = ref.watch(groupColorProvider(group.uid));
+    var color = group.color;
 
     final bodyItemFormKey = GlobalKey<FormState>();
 
@@ -29,19 +29,31 @@ class NewBodyItemForm extends ConsumerWidget {
       ref
           .read(firestoreServiceProvider)
           .addItemToGroupBody(group.uid, enteredName);
+
+      bodyItemFormKey.currentState!.reset();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Item'),
+        title: Center(
+          child: Text(
+            group.title,
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions: const [SizedBox(width: 50)],
       ),
       body: Container(
         margin: const EdgeInsets.all(4),
         height: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
         decoration: BoxDecoration(
-          border: Border.all(color: Color(color.value)),
-          color: Color(color.value).withOpacity(0.2),
+          border: Border.all(color: color!),
+          color: color.withOpacity(0.2),
         ),
         child: Form(
             key: bodyItemFormKey,
@@ -50,7 +62,7 @@ class NewBodyItemForm extends ConsumerWidget {
                 children: [
                   Hero(
                     tag: group.uid,
-                    child: GroupWidget(group: group),
+                    child: GroupBody(group: group),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
