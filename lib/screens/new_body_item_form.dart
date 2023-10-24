@@ -33,7 +33,17 @@ class NewBodyItemForm extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Item'),
+        title: Center(
+          child: Text(
+            group.title,
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions: const [SizedBox(width: 50)],
       ),
       body: Container(
         margin: const EdgeInsets.all(4),
@@ -50,7 +60,7 @@ class NewBodyItemForm extends ConsumerWidget {
                 children: [
                   Hero(
                     tag: group.uid,
-                    child: GroupWidget(group: group),
+                    child: GroupBody(group: group),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
