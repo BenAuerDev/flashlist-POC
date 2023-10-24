@@ -16,15 +16,3 @@ final groupBodyProvider = StreamProvider.autoDispose.family(
         .asBroadcastStream();
   },
 );
-
-final groupColorProvider = StreamProvider.autoDispose.family(
-  (ref, String uid) {
-    return ref
-        .watch(firestoreServiceProvider)
-        .groupsCollection
-        .doc(uid)
-        .snapshots()
-        .map((snapshot) => snapshot['color'])
-        .asBroadcastStream();
-  },
-);
