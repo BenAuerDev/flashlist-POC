@@ -1,6 +1,6 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/widgets/avatar_group.dart';
-import 'package:brainstorm_array/widgets/dismissible_drag_and_drop_list.dart';
+import 'package:brainstorm_array/widgets/group/group_body.dart';
 import 'package:brainstorm_array/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 
