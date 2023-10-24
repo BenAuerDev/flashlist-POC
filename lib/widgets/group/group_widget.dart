@@ -47,7 +47,7 @@ class GroupWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            DismissibleDragAndDropList(group: group),
+            GroupBody(group: group),
           ],
         ),
       ),

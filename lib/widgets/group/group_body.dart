@@ -6,18 +6,18 @@ import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class DismissibleDragAndDropList extends ConsumerStatefulWidget {
-  const DismissibleDragAndDropList({super.key, required this.group});
+class GroupBody extends ConsumerStatefulWidget {
+  const GroupBody({super.key, required this.group});
 
   final Group group;
 
   @override
-  ConsumerState<DismissibleDragAndDropList> createState() {
+  ConsumerState<GroupBody> createState() {
     return _DragAndDropListState();
   }
 }
 
-class _DragAndDropListState extends ConsumerState<DismissibleDragAndDropList> {
+class _DragAndDropListState extends ConsumerState<GroupBody> {
   @override
   Widget build(BuildContext context) {
     var items = ref.watch(groupBodyProvider(widget.group.uid)).value;
