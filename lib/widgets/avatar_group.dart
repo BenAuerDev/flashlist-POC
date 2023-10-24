@@ -1,5 +1,6 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/widgets/slide_fade_transition.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -81,11 +82,17 @@ class AvatarGroup extends HookConsumerWidget {
                       widthFactor: user == snapshots.data!.first
                           ? 0.9
                           : animationController.value,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundImage: NetworkImage(
-                          user.imageUrl ??
-                              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                      child: SlideFadeTransition(
+                        index: snapshots.data!.indexOf(user),
+                        position: animationController.value,
+                        animationController: animationController,
+                        direction: isExpanded.value ? 1 : -1,
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundImage: NetworkImage(
+                            user.imageUrl ??
+                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                          ),
                         ),
                       ),
                     ),
