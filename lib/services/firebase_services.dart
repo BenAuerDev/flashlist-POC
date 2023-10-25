@@ -332,6 +332,89 @@ class FirestoreService {
     }
   }
 
+  Future<bool> addUserToGroup(String userUid, String groupUid) async {
+    try {
+      final invitee = await getUserByUid(userUid);
+      final group = await getGroup(groupUid);
+
+      final updatedEditors = [
+        ...group.permissions['editors'],
+        invitee!.uid,
+      ];
+
+      groupsCollection.doc(groupUid).update({
+        'permissions': {
+          'owner': group.permissions['owner'],
+          'editors': updatedEditors,
+        }
+      });
+
+      return true;
+    } on FirebaseException catch (error) {
+      print("Error adding user to group: $error");
+
+      return Future.error("Failed to add user to group");
+    }
+  }
+
+  Future<void> removeNotification(
+      String userUid, String notificationUid) async {
+    try {
+      final invitee = await getUserByUid(userUid);
+
+      final updatedNotifications = invitee!.notifications
+          .where((notification) => notification['uid'] != notificationUid)
+          .toList();
+
+      userCollection.doc(userUid).update({
+        'notifications': updatedNotifications,
+      });
+    } on FirebaseException catch (error) {
+      print("Error removing notification: $error");
+
+      return Future.error("Failed to remove notification");
+    }
+  }
+
+  Future<void> markInvitationAsRead(
+      String userUid, String notificationUid) async {
+    try {
+      final invitee = await getUserByUid(userUid);
+
+      final updatedNotifications = invitee!.notifications
+          .map((notification) => {
+                ...notification,
+                'isRead': notification['uid'] == notificationUid
+                    ? true
+                    : notification['isRead'],
+              })
+          .toList();
+
+      userCollection.doc(userUid).update({
+        'notifications': updatedNotifications,
+      });
+    } on FirebaseException catch (error) {
+      print("Error marking invitation as read: $error");
+
+      return Future.error("Failed to mark invitation as read");
+    }
+  }
+
+  Future<void> acceptGroupInvitation(
+      String userUid, String groupUid, String notificationUid) async {
+    try {
+      final wasAdded = await addUserToGroup(userUid, groupUid);
+
+      if (wasAdded == true) {
+        removeNotification(userUid, notificationUid);
+      }
+    } on FirebaseException catch (error) {
+      print("Error accepting group invitation: $error");
+
+      return Future.error("Failed to accept group invitation");
+    }
+  }
+
   Stream<List<UserNotification>> userNotificationsStream() {
     final currentUser = FirebaseAuth.instance.currentUser;
     try {
@@ -351,6 +434,26 @@ class FirestoreService {
           );
         }).toList();
       });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Stream<dynamic> userUnreadNotificationsCountStream() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    try {
+      final userRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .snapshots();
+
+      final count = userRef.map((snapshot) {
+        return snapshot['notifications']
+            .where((notification) => notification['isRead'] == false)
+            .length;
+      });
+
+      return count;
     } catch (error) {
       throw error;
     }
