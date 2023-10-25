@@ -24,11 +24,18 @@ class NotificationItem extends StatelessWidget {
           horizontal: 16,
           vertical: 24,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(notification.message),
+            const Icon(Icons.groups, size: 35),
+            const SizedBox(width: 16),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(notification.title),
+                Text(notification.body),
+              ],
+            ),
           ],
         ),
       ),
