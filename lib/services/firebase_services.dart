@@ -458,4 +458,21 @@ class FirestoreService {
       throw error;
     }
   }
+
+  Stream<dynamic> groupBodyCountStream(String groupUid) {
+    try {
+      final groupRef = FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupUid)
+          .snapshots();
+
+      final count = groupRef.map((snapshot) {
+        return snapshot['body'].length;
+      });
+
+      return count;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

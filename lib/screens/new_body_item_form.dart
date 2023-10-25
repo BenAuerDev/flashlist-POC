@@ -66,22 +66,36 @@ class NewBodyItemForm extends ConsumerWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: TextFormField(
-                      autofocus: true,
-                      onEditingComplete: () {},
-                      onFieldSubmitted: (value) {
-                        submit();
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      onSaved: (newValue) {
-                        enteredName = newValue!;
-                      },
-                    ),
+                    child: StreamBuilder(
+                        stream: ref
+                            .watch(firestoreServiceProvider)
+                            .groupBodyCountStream(group.uid),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox();
+                          }
+                          final countPlusOne = snapshot.data + 1;
+
+                          return TextFormField(
+                            autofocus: true,
+                            onEditingComplete: () {},
+                            decoration:
+                                InputDecoration(labelText: '#$countPlusOne'),
+                            onFieldSubmitted: (value) {
+                              submit();
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            onSaved: (newValue) {
+                              enteredName = newValue!;
+                            },
+                          );
+                        }),
                   ),
                   const SizedBox(height: 12),
                   Row(
