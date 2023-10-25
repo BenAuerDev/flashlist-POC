@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "brainstorm_array" "\0"
+            VALUE "FileDescription", "flash_list" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "brainstorm_array" "\0"
+            VALUE "InternalName", "flash_list" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "brainstorm_array.exe" "\0"
-            VALUE "ProductName", "brainstorm_array" "\0"
+            VALUE "OriginalFilename", "flash_list.exe" "\0"
+            VALUE "ProductName", "flash_list" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -1,5 +1,5 @@
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/screens/notifications.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/screens/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

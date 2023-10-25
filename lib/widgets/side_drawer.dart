@@ -1,6 +1,6 @@
-import 'package:brainstorm_array/screens/profile.dart';
-import 'package:brainstorm_array/screens/settings.dart';
-import 'package:brainstorm_array/utils/context_retriever.dart';
+import 'package:flash_list/screens/profile.dart';
+import 'package:flash_list/screens/settings.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,7 @@ class SideDrawer extends StatelessWidget {
                     color: retrieveColorScheme(context).primary,
                   ),
                   Text(
-                    'Brainstorm Array',
+                    'Flash List',
                     style: TextStyle(
                       fontSize: 24,
                       color: retrieveColorScheme(context).primary,

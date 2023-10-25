@@ -1,10 +1,10 @@
-import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/screens/group_form.dart';
-import 'package:brainstorm_array/utils/context_retriever.dart';
-import 'package:brainstorm_array/widgets/group/group_wrapper.dart';
-import 'package:brainstorm_array/widgets/notification/notification_badge.dart';
-import 'package:brainstorm_array/widgets/side_drawer.dart';
+import 'package:flash_list/models/group.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/screens/group_form.dart';
+import 'package:flash_list/utils/context_retriever.dart';
+import 'package:flash_list/widgets/group/group_wrapper.dart';
+import 'package:flash_list/widgets/notification/notification_badge.dart';
+import 'package:flash_list/widgets/side_drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

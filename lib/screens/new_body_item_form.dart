@@ -1,6 +1,6 @@
-import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/widgets/group/group_body.dart';
+import 'package:flash_list/models/group.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

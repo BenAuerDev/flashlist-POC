@@ -1,7 +1,7 @@
-import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/screens/group_form.dart';
-import 'package:brainstorm_array/screens/share.dart';
+import 'package:flash_list/models/group.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/screens/group_form.dart';
+import 'package:flash_list/screens/share.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

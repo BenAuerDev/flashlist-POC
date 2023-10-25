@@ -1,7 +1,7 @@
-import 'package:brainstorm_array/models/notification.dart';
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/utils/context_retriever.dart';
-import 'package:brainstorm_array/widgets/notification/notification_item.dart';
+import 'package:flash_list/models/notification.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/utils/context_retriever.dart';
+import 'package:flash_list/widgets/notification/notification_item.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
