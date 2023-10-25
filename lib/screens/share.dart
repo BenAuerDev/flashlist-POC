@@ -1,11 +1,11 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/models/user.dart';
 import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/custom_inputs/user_inviter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// create hook consumer widget share-screen receiving the group as a parameter
 class ShareScreen extends HookConsumerWidget {
   const ShareScreen({super.key, required this.group});
 
@@ -13,6 +13,35 @@ class ShareScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void showSnackbar(String message, SnackBarAction? action) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          action: action,
+          backgroundColor: retrieveColorScheme(context).primary,
+          content: Text(message),
+        ),
+      );
+    }
+
+    void removeEditor(editor) {
+      ref
+          .read(firestoreServiceProvider)
+          .removeEditorFromGroup(group.uid, editor.uid);
+
+      showSnackbar(
+        'User has been removed',
+        SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            ref
+                .read(firestoreServiceProvider)
+                .addUserToGroup(editor.uid, group.uid);
+          },
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -71,12 +100,7 @@ class ShareScreen extends HookConsumerWidget {
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            ref
-                                .read(firestoreServiceProvider)
-                                .removeEditorFromGroup(
-                                  group.uid,
-                                  editor.uid,
-                                );
+                            removeEditor(editor);
                           },
                         ),
                       ),
