@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:brainstorm_array/models/notification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brainstorm_array/models/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +64,7 @@ class FirestoreService {
   Future<Group> addGroup(Map<String, dynamic> newGroup) async {
     final newPermissions = {
       'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': newGroup['editors'],
+      'editors': [],
     };
 
     try {
@@ -92,15 +93,10 @@ class FirestoreService {
 
   Future<Group> editGroup(
       String groupUid, Map<String, dynamic> updatedGroup) async {
-    final updatedPermissions = {
-      'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': updatedGroup['editors'],
-    };
     try {
       await groupsCollection.doc(groupUid).update({
         'title': updatedGroup['title'],
         'color': updatedGroup['color'].value,
-        'permissions': updatedPermissions,
       });
 
       return Group(
@@ -109,7 +105,7 @@ class FirestoreService {
         groupUid,
         updatedGroup['color'],
         [],
-        updatedPermissions,
+        updatedGroup['permissions'],
       );
     } on FirebaseException catch (error) {
       print("Error editing group: $error");
@@ -184,6 +180,40 @@ class FirestoreService {
     }
   }
 
+  Stream<List<CustomUser>> getGroupEditors(String groupUid) {
+    try {
+      return groupsCollection
+          .doc(groupUid)
+          .snapshots()
+          .map((snapshot) => snapshot['permissions']['editors'])
+          .asyncMap((userUids) => getUsersByUid(userUids));
+    } on FirebaseException catch (error) {
+      print("Error fetching group editors: $error");
+
+      return Stream.error("Failed to fetch group editors");
+    }
+  }
+
+  Future<void> removeEditorFromGroup(String groupUid, String editorUid) async {
+    try {
+      final group = await getGroup(groupUid);
+
+      final updatedEditors =
+          group.permissions['editors'].where((uid) => uid != editorUid);
+
+      groupsCollection.doc(groupUid).update({
+        'permissions': {
+          'owner': group.permissions['owner'],
+          'editors': updatedEditors.toList(),
+        }
+      });
+    } on FirebaseException catch (error) {
+      print("Error removing editor from group: $error");
+
+      return Future.error("Failed to remove editor from group");
+    }
+  }
+
   // User
   Future<CustomUser?> getUserByUid(String userUid) async {
     try {
@@ -196,6 +226,7 @@ class FirestoreService {
           documentSnapshot['username'],
           documentSnapshot['uid'],
           documentSnapshot['image_url'],
+          documentSnapshot['notifications'],
         );
       } else {
         return null;
@@ -219,6 +250,7 @@ class FirestoreService {
           documentSnapshot['username'],
           documentSnapshot['uid'],
           documentSnapshot['image_url'],
+          documentSnapshot['notifications'],
         );
       } else {
         return null;
@@ -241,6 +273,7 @@ class FirestoreService {
                   doc['username'],
                   doc['uid'],
                   doc['image_url'],
+                  doc['notifications'],
                 );
               }).toList());
     } on FirebaseException catch (error) {
@@ -266,6 +299,60 @@ class FirestoreService {
       });
     } catch (error) {
       print(error);
+    }
+  }
+
+  Future<void> inviteUserToGroup(Group group, String userUid) async {
+    try {
+      final inviter =
+          await getUserByUid(FirebaseAuth.instance.currentUser!.uid);
+
+      final invitee = await getUserByUid(userUid);
+      var uuid = const Uuid().v4();
+
+      userCollection.doc(userUid).update({
+        'notifications': {
+          ...invitee!.notifications,
+          {
+            'title': 'Group Invitation',
+            'body': '${inviter!.username} invited you to ${group.title}',
+            'uid': uuid,
+            'data': {
+              'groupUid': group.uid,
+            },
+            'createdAt': Timestamp.now(),
+            'isRead': false,
+          }
+        }
+      });
+    } on FirebaseException catch (error) {
+      print("Error inviting user to group: $error");
+
+      return Future.error("Failed to invite user to group");
+    }
+  }
+
+  Stream<List<UserNotification>> userNotificationsStream() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    try {
+      return FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot['notifications'].map<UserNotification>((notification) {
+          return UserNotification(
+            notification['title'],
+            notification['body'],
+            notification['uid'],
+            notification['data'],
+            notification['createdAt'],
+            notification['isRead'],
+          );
+        }).toList();
+      });
+    } catch (error) {
+      throw error;
     }
   }
 }

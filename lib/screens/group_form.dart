@@ -2,7 +2,6 @@ import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/custom_inputs/color_input.dart';
-import 'package:brainstorm_array/widgets/custom_inputs/user_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,13 +16,11 @@ class GroupForm extends ConsumerWidget {
 
     var enteredTitle = group?.title ?? '';
     Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
-    List enteredEditors = group?.permissions['editors'] ?? [];
 
     Future createGroup() async {
       final res = await ref.read(firestoreServiceProvider).addGroup({
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
-        'editors': enteredEditors,
       });
       return res;
     }
@@ -33,17 +30,8 @@ class GroupForm extends ConsumerWidget {
           await ref.read(firestoreServiceProvider).editGroup(group!.uid, {
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
-        'editors': enteredEditors,
       });
       return res;
-    }
-
-    void onSelectEditor(String uid) {
-      enteredEditors.add(uid);
-    }
-
-    void onRemoveEditor(String uid) {
-      enteredEditors.remove(uid);
     }
 
     void submit() {
@@ -97,12 +85,6 @@ class GroupForm extends ConsumerWidget {
                   onSelectColor: (Color color) {
                     enteredColor = color;
                   },
-                ),
-                const SizedBox(height: 12),
-                UserPicker(
-                  group: group,
-                  onSelectEditor: onSelectEditor,
-                  onRemoveEditor: onRemoveEditor,
                 ),
                 const SizedBox(height: 12),
                 Row(

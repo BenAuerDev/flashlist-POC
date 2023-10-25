@@ -1,6 +1,7 @@
 import 'package:brainstorm_array/models/group.dart';
 import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/screens/group_form.dart';
+import 'package:brainstorm_array/screens/share.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,11 @@ class GroupMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bool isCurrentUserOwner =
+        group.permissions['owner'] == currentUser!.uid;
+    final bool isCurrentUserInEditors =
+        group.permissions['editors'].contains(currentUser!.uid);
+
     AlertDialog deleteDialog = AlertDialog(
       title: const Text('Delete List'),
       content: Text('Are you sure you want to delete ${group.title}?'),
@@ -52,7 +58,15 @@ class GroupMenu extends ConsumerWidget {
       );
     }
 
-    void onRemoveEditor() {
+    void onShareGroup() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ShareScreen(group: group),
+        ),
+      );
+    }
+
+    void removeCurrentUserFromEditors() {
       FirebaseFirestore.instance.collection('groups').doc(group.uid).update({
         'title': group.title,
         'color': group.color!.value,
@@ -70,22 +84,27 @@ class GroupMenu extends ConsumerWidget {
     return PopupMenuButton(
       itemBuilder: (context) => [
         // Owner
-        if (group.permissions['owner'] == currentUser!.uid)
+        if (isCurrentUserOwner)
+          PopupMenuItem(
+            onTap: onShareGroup,
+            child: const Text('Share'),
+          ),
+
+        if (isCurrentUserOwner)
           PopupMenuItem(
             onTap: onEditGroup,
             child: const Text('Edit'),
           ),
-        if (group.permissions['owner'] == currentUser!.uid)
+        if (isCurrentUserOwner)
           PopupMenuItem(
             onTap: removeGroup,
             child: const Text('Delete'),
           ),
 
         // Editors
-        if (group.permissions['editors'].contains(currentUser!.uid) &&
-            group.permissions['owner'] != currentUser!.uid)
+        if (isCurrentUserInEditors && !isCurrentUserOwner)
           PopupMenuItem(
-            onTap: onRemoveEditor,
+            onTap: removeCurrentUserFromEditors,
             child: const Text('Remove'),
           ),
       ],
