@@ -1,8 +1,8 @@
-import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/screens/new_body_item_form.dart';
-import 'package:brainstorm_array/widgets/avatar_group.dart';
-import 'package:brainstorm_array/widgets/group/group_body.dart';
-import 'package:brainstorm_array/widgets/group/group_menu.dart';
+import 'package:flash_list/models/group.dart';
+import 'package:flash_list/screens/new_body_item_form.dart';
+import 'package:flash_list/widgets/avatar_group.dart';
+import 'package:flash_list/widgets/group/group_body.dart';
+import 'package:flash_list/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 
 class GroupWrapper extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/providers/users.dart';
-import 'package:brainstorm_array/widgets/custom_inputs/avatar_picker.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/users.dart';
+import 'package:flash_list/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

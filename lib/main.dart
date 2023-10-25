@@ -1,7 +1,7 @@
-import 'package:brainstorm_array/screens/auth.dart';
-import 'package:brainstorm_array/screens/home.dart';
-import 'package:brainstorm_array/screens/splash.dart';
-import 'package:brainstorm_array/utils/context_retriever.dart';
+import 'package:flash_list/screens/auth.dart';
+import 'package:flash_list/screens/home.dart';
+import 'package:flash_list/screens/splash.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

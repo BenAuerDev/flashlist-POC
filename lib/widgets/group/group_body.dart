@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:brainstorm_array/models/group.dart';
-import 'package:brainstorm_array/providers/providers.dart';
-import 'package:brainstorm_array/utils/context_retriever.dart';
+import 'package:flash_list/models/group.dart';
+import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

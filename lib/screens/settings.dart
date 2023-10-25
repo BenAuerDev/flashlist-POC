@@ -1,4 +1,4 @@
-import 'package:brainstorm_array/widgets/settings/brightness_radio.dart';
+import 'package:flash_list/widgets/settings/brightness_radio.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {

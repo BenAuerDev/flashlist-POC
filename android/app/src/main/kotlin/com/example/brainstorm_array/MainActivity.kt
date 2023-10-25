@@ -1,4 +1,4 @@
-package com.example.brainstorm_array
+package com.example.flash_list
 
 import io.flutter.embedding.android.FlutterActivity
 
