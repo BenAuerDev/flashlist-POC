@@ -3,7 +3,7 @@ import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/screens/group_form.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
 import 'package:brainstorm_array/widgets/group/group_wrapper.dart';
-import 'package:brainstorm_array/widgets/notification/notification_modal.dart';
+import 'package:brainstorm_array/widgets/notification/notification_badge.dart';
 import 'package:brainstorm_array/widgets/side_drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class HomeScreen extends HookConsumerWidget {
         appBar: AppBar(
           title: const Center(child: Text('Your Lists')),
           actions: const [
-            NotificationModal(),
+            NotificationBadge(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

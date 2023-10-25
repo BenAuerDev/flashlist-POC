@@ -1,18 +1,59 @@
 import 'package:brainstorm_array/models/notification.dart';
+import 'package:brainstorm_array/providers/providers.dart';
 import 'package:brainstorm_array/utils/context_retriever.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NotificationItem extends StatelessWidget {
+class NotificationItem extends ConsumerWidget {
   const NotificationItem({super.key, required this.notification});
 
   final UserNotification notification;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+    final groupUid = notification.data!['groupUid'];
+
+    AlertDialog invitationDialog = AlertDialog(
+      title: Text(notification.title),
+      content: const Text('Would you like to join as an editor?'),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            ref
+                .read(firestoreServiceProvider)
+                .removeNotification(currentUserUid, notification.uid);
+            Navigator.of(context).pop('no');
+          },
+          child: const Text('No'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            ref
+                .read(firestoreServiceProvider)
+                .markInvitationAsRead(currentUserUid, notification.uid);
+            Navigator.of(context).pop('notnow');
+          },
+          child: const Text('Not now'),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            ref.read(firestoreServiceProvider).acceptGroupInvitation(
+                  currentUserUid,
+                  groupUid,
+                  notification.uid,
+                );
+            Navigator.of(context).pop('yes');
+          },
+          child: const Text('Yes'),
+        ),
+      ],
+    );
+
     return GestureDetector(
       onTap: () {
-        notification.isRead = false;
-        Navigator.of(context).pop();
+        showDialog(context: context, builder: (context) => invitationDialog);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 4),

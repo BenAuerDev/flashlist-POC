@@ -1,25 +1,42 @@
+import 'package:brainstorm_array/providers/providers.dart';
+import 'package:brainstorm_array/screens/notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NotificationBadge extends StatelessWidget {
-  const NotificationBadge({
-    super.key,
-    required this.notificationCount,
-    required this.onOpenModal,
-  });
-
-  final int notificationCount;
-  final void Function()? onOpenModal;
+class NotificationBadge extends ConsumerWidget {
+  const NotificationBadge({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
         IconButton(
           icon: const Icon(Icons.notifications),
-          onPressed: onOpenModal,
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const NotificationsScreen(),
+              ),
+            );
+          },
         ),
-        notificationCount > 0
-            ? Positioned(
+        StreamBuilder(
+          stream: ref
+              .watch(firestoreServiceProvider)
+              .userUnreadNotificationsCountStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SizedBox();
+            } else if (snapshot.hasError) {
+              return const SizedBox();
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return const SizedBox();
+            }
+
+            final count = snapshot.data;
+
+            if (count != null && count > 0) {
+              return Positioned(
                 right: 8,
                 top: 6,
                 child: Container(
@@ -29,14 +46,18 @@ class NotificationBadge extends StatelessWidget {
                     color: Colors.red,
                   ),
                   child: Text(
-                    notificationCount.toString(),
+                    count.toString(),
                     style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                 ),
-              )
-            : const SizedBox(),
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        )
       ],
     );
   }
