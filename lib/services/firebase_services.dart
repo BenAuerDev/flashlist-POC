@@ -191,6 +191,7 @@ class FirestoreService {
           documentSnapshot['username'],
           documentSnapshot['uid'],
           documentSnapshot['image_url'],
+          documentSnapshot['notifications'],
         );
       } else {
         return null;
@@ -214,6 +215,7 @@ class FirestoreService {
           documentSnapshot['username'],
           documentSnapshot['uid'],
           documentSnapshot['image_url'],
+          documentSnapshot['notifications'],
         );
       } else {
         return null;
@@ -236,6 +238,7 @@ class FirestoreService {
                   doc['username'],
                   doc['uid'],
                   doc['image_url'],
+                  doc['notifications'],
                 );
               }).toList());
     } on FirebaseException catch (error) {
