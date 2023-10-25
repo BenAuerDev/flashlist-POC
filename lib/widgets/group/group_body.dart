@@ -73,6 +73,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
             key: Key('$index'),
             child: Dismissible(
               key: ValueKey(items[index]['uid']),
+              direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 onDismissItem(items[index]);
               },
