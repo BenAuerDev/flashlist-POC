@@ -75,6 +75,7 @@ class AuthScreen extends HookWidget {
             'email': enteredEmail,
             'image_url': imageUrl,
             'uid': userCredentials.user!.uid,
+            'notifications': [],
           });
         }
       } on FirebaseAuthException catch (error) {
