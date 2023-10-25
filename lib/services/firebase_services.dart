@@ -63,7 +63,7 @@ class FirestoreService {
   Future<Group> addGroup(Map<String, dynamic> newGroup) async {
     final newPermissions = {
       'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': newGroup['editors'],
+      'editors': [],
     };
 
     try {
@@ -92,15 +92,10 @@ class FirestoreService {
 
   Future<Group> editGroup(
       String groupUid, Map<String, dynamic> updatedGroup) async {
-    final updatedPermissions = {
-      'owner': FirebaseAuth.instance.currentUser!.uid,
-      'editors': updatedGroup['editors'],
-    };
     try {
       await groupsCollection.doc(groupUid).update({
         'title': updatedGroup['title'],
         'color': updatedGroup['color'].value,
-        'permissions': updatedPermissions,
       });
 
       return Group(
@@ -109,7 +104,7 @@ class FirestoreService {
         groupUid,
         updatedGroup['color'],
         [],
-        updatedPermissions,
+        updatedGroup['permissions'],
       );
     } on FirebaseException catch (error) {
       print("Error editing group: $error");
