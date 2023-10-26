@@ -64,18 +64,21 @@ class MyApp extends StatelessWidget {
         theme: theme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SplashScreen();
-            }
+        home: DefaultTabController(
+          length: 2,
+          child: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SplashScreen();
+              }
 
-            if (snapshot.hasData) {
-              return const HomeScreen();
-            }
-            return const AuthScreen();
-          },
+              if (snapshot.hasData) {
+                return const HomeScreen();
+              }
+              return const AuthScreen();
+            },
+          ),
         ),
       ),
     );
