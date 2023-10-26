@@ -38,8 +38,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        child: const TabBar(
-          tabs: [
+        child: TabBar(
+          indicatorColor: retrieveColorScheme(context).onBackground,
+          labelColor: retrieveColorScheme(context).onBackground,
+          tabs: const [
             Tab(
               icon: Icon(Icons.list_alt),
             ),
