@@ -34,20 +34,29 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    final themeData = ThemeData(
-      textTheme: GoogleFonts.latoTextTheme(
-        textTheme.apply(bodyColor: Colors.black),
-      ),
-      useMaterial3: true,
-      colorSchemeSeed: Colors.blue,
-      cardTheme: cardTheme,
-    );
-
     return AdaptiveTheme(
-      light: themeData.copyWith(brightness: Brightness.light),
-      dark: themeData.copyWith(
+      light: ThemeData(
+        textTheme: GoogleFonts.latoTextTheme(
+          textTheme.apply(bodyColor: Colors.black),
+        ),
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.light,
+        cardTheme: cardTheme.copyWith(
+          margin: const EdgeInsets.all(4),
+        ),
+      ),
+      dark: ThemeData(
+        textTheme: GoogleFonts.latoTextTheme(
+          textTheme.apply(bodyColor: Colors.white),
+        ),
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
         brightness: Brightness.dark,
-        cardTheme: cardTheme.copyWith(color: Colors.black38),
+        cardTheme: cardTheme.copyWith(
+          margin: const EdgeInsets.all(4),
+          color: Colors.black38,
+        ),
       ),
       initial: savedThemeMode ?? AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
