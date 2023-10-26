@@ -25,33 +25,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = retrieveTextTheme(context);
 
+    final cardTheme = const CardTheme().copyWith(
+      margin: const EdgeInsets.all(4),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(4),
+        ),
+      ),
+    );
+
+    final themeData = ThemeData(
+      textTheme: GoogleFonts.latoTextTheme(
+        textTheme.apply(bodyColor: Colors.black),
+      ),
+      useMaterial3: true,
+      colorSchemeSeed: Colors.blue,
+      cardTheme: cardTheme,
+    );
+
     return AdaptiveTheme(
-      light: ThemeData(
-        textTheme: GoogleFonts.latoTextTheme(
-          textTheme.apply(bodyColor: Colors.black),
-        ),
-        useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
-        brightness: Brightness.light,
-        cardTheme: const CardTheme().copyWith(
-          margin: const EdgeInsets.all(4),
-        ),
-      ),
-      dark: ThemeData(
-        textTheme: GoogleFonts.latoTextTheme(
-          textTheme.apply(bodyColor: Colors.white),
-        ),
-        useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+      light: themeData.copyWith(brightness: Brightness.light),
+      dark: themeData.copyWith(
         brightness: Brightness.dark,
-        cardTheme: const CardTheme().copyWith(
-          margin: const EdgeInsets.all(4),
-          color: Colors.black38,
-        ),
+        cardTheme: cardTheme.copyWith(color: Colors.black38),
       ),
-      initial: savedThemeMode ?? AdaptiveThemeMode.light,
+      initial: savedThemeMode ?? AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
-        title: 'Brainstorm Array',
+        title: 'Flashlist',
         theme: theme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
