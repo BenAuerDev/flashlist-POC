@@ -8,7 +8,14 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Center(
+            child: Text(
+          'Settings',
+          textAlign: TextAlign.center,
+        )),
+        actions: const [
+          SizedBox(width: 60),
+        ],
       ),
       body: ListView(
         children: const [

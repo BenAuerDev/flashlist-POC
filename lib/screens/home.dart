@@ -21,7 +21,12 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Your Lists')),
+        title: const Center(
+          child: Text(
+            'Your Lists',
+            textAlign: TextAlign.center,
+          ),
+        ),
         actions: const [
           SizedBox(width: 50),
         ],
