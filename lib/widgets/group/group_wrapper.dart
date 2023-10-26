@@ -25,6 +25,7 @@ class GroupWrapper extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(color: group.color!),
+        borderRadius: BorderRadius.circular(8),
         color: group.color!.withOpacity(0.2),
       ),
       child: Column(

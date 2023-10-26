@@ -78,14 +78,18 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
                 onDismissItem(items[index]);
               },
               background: Container(
-                color: retrieveColorScheme(context).error.withOpacity(0.5),
+                decoration: BoxDecoration(
+                  color: retrieveColorScheme(context).error.withOpacity(0.5),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(4),
+                  ),
+                ),
                 margin: EdgeInsets.symmetric(
                   vertical:
                       retrieveTheme(context).cardTheme.margin!.vertical / 2,
                 ),
               ),
               child: Card(
-                shape: const ContinuousRectangleBorder(),
                 child: Container(
                   width: double.infinity,
                   height: 40,
