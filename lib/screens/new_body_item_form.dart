@@ -2,20 +2,31 @@ import 'package:flash_list/models/group.dart';
 import 'package:flash_list/providers/providers.dart';
 import 'package:flash_list/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewBodyItemForm extends ConsumerWidget {
+class NewBodyItemForm extends HookConsumerWidget {
   const NewBodyItemForm({super.key, required this.group});
 
   final Group group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ScrollController scrollController = useScrollController();
+
     var color = group.color;
 
     final bodyItemFormKey = GlobalKey<FormState>();
 
     var enteredName = '';
+
+    void scrollToEnd() {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
 
     void submit() async {
       final isValid = bodyItemFormKey.currentState!.validate();
@@ -31,6 +42,8 @@ class NewBodyItemForm extends ConsumerWidget {
           .addItemToGroupBody(group.uid, enteredName);
 
       bodyItemFormKey.currentState!.reset();
+
+      scrollToEnd();
     }
 
     return Scaffold(
@@ -59,6 +72,7 @@ class NewBodyItemForm extends ConsumerWidget {
         child: Form(
             key: bodyItemFormKey,
             child: SingleChildScrollView(
+              controller: scrollController,
               child: Column(
                 children: [
                   Hero(
@@ -81,6 +95,7 @@ class NewBodyItemForm extends ConsumerWidget {
                           return TextFormField(
                             autofocus: true,
                             onEditingComplete: () {},
+                            maxLength: 40,
                             decoration:
                                 InputDecoration(labelText: '#$countPlusOne'),
                             onFieldSubmitted: (value) {
