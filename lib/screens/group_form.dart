@@ -53,7 +53,19 @@ class GroupForm extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(group == null ? 'Add new List' : 'Edit your List'),
+        title: Center(
+          child: Text(
+            group == null ? '' : group!.title,
+            style: TextStyle(
+              color: group == null
+                  ? retrieveColorScheme(context).onBackground
+                  : group!.color,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions: const [SizedBox(width: 50)],
       ),
       body: SingleChildScrollView(
         child: Container(
