@@ -2,7 +2,6 @@ import 'package:flash_list/models/group.dart';
 import 'package:flash_list/providers/providers.dart';
 import 'package:flash_list/screens/group_form.dart';
 import 'package:flash_list/screens/share.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,30 +20,37 @@ class GroupMenu extends ConsumerWidget {
     final bool isCurrentUserInEditors =
         group.permissions['editors'].contains(currentUser!.uid);
 
-    AlertDialog deleteDialog = AlertDialog(
-      title: const Text('Delete List'),
-      content: Text('Are you sure you want to delete ${group.title}?'),
-      actions: [
-        ElevatedButton.icon(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          icon: const Icon(Icons.cancel),
-          label: const Text('No'),
-        ),
-        ElevatedButton.icon(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-          },
-          icon: const Icon(Icons.delete),
-          label: const Text('Yes'),
-        ),
-      ],
-    );
+    AlertDialog showConfirmDialog(String title, String content) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            icon: const Icon(Icons.cancel),
+            label: const Text('No'),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            icon: const Icon(Icons.delete),
+            label: const Text('Yes'),
+          ),
+        ],
+      );
+    }
 
     void removeGroup() async {
       final wantToDelete = await showDialog(
-          context: context, builder: (context) => deleteDialog);
+        context: context,
+        builder: (context) => showConfirmDialog(
+          'Delete Group',
+          'Are you sure you want to delete ${group.title}?',
+        ),
+      );
       if (wantToDelete) {
         ref.watch(firestoreServiceProvider).removeGroup(group.uid);
       }
@@ -66,19 +72,19 @@ class GroupMenu extends ConsumerWidget {
       );
     }
 
-    void removeCurrentUserFromEditors() {
-      FirebaseFirestore.instance.collection('groups').doc(group.uid).update({
-        'title': group.title,
-        'color': group.color!.value,
-        'uid': group.uid,
-        'body': group.body,
-        'permissions': {
-          'owner': group.permissions['owner'],
-          'editors': group.permissions['editors']
-              .where((editor) => editor != currentUser!.uid)
-              .toList(),
-        },
-      });
+    void removeCurrentUserFromEditors() async {
+      final wantToDelete = await showDialog(
+        context: context,
+        builder: (context) => showConfirmDialog(
+          'Remove list for you',
+          'Are you sure you want to remove yourself from ${group.title}?',
+        ),
+      );
+      if (wantToDelete) {
+        ref
+            .read(firestoreServiceProvider)
+            .removeEditorFromGroup(group.uid, currentUser!.uid);
+      }
     }
 
     return PopupMenuButton(
