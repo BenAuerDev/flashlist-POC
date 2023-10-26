@@ -40,7 +40,13 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Center(
+          child: Text(
+            'Profile',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        actions: const [SizedBox(width: 50)],
       ),
       body: test,
     );
