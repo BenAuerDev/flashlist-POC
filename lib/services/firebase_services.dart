@@ -20,7 +20,7 @@ class FirestoreService {
   Stream<List<Group>> groupsForUserStream() {
     final currentUser = FirebaseAuth.instance.currentUser;
     try {
-      return groupsCollection.snapshots().map((snapshot) {
+      return groupsCollection.orderBy('createdAt').snapshots().map((snapshot) {
         return snapshot.docs.where((doc) {
           final permissions = doc['permissions'];
           final owner = permissions['owner'];
@@ -91,10 +91,9 @@ class FirestoreService {
     }
   }
 
-  Future<Group> editGroup(
-      String groupUid, Map<String, dynamic> updatedGroup) async {
+  Future<Group> editGroup(Map<String, dynamic> updatedGroup) async {
     try {
-      await groupsCollection.doc(groupUid).update({
+      await groupsCollection.doc(updatedGroup['uid']).update({
         'title': updatedGroup['title'],
         'color': updatedGroup['color'].value,
       });
@@ -102,7 +101,7 @@ class FirestoreService {
       return Group(
         updatedGroup['title'],
         Timestamp.now(),
-        groupUid,
+        updatedGroup['uid'],
         updatedGroup['color'],
         [],
         updatedGroup['permissions'],
@@ -124,7 +123,6 @@ class FirestoreService {
     }
   }
 
-  FutureOr<String> addItemToGroupBody(String groupUid, String item) async {
   Stream<List<dynamic>> groupBodyStream(String groupUid) {
     try {
       return groupsCollection
@@ -137,6 +135,8 @@ class FirestoreService {
       return Stream.error("Failed to fetch group body");
     }
   }
+
+  Future<String> addItemToGroupBody(String groupUid, String item) async {
     try {
       final group = await getGroup(groupUid);
 
@@ -160,18 +160,18 @@ class FirestoreService {
     }
   }
 
-  Future<bool> removeItemFromGroupBody(
-      String groupUid, Map<String, dynamic> items) async {
+  Future<void> removeItemFromGroupBody(String groupUid, String itemUid) async {
     try {
       final group = await getGroup(groupUid);
+      print('group uid $groupUid services');
+      print('items $itemUid services');
 
       final updatedBody =
-          group.body.where((element) => element['uid'] != items['uid']);
+          group.body.where((element) => element['uid'] != itemUid);
 
       groupsCollection.doc(groupUid).update({
         'body': updatedBody.toList(),
       });
-      return true;
     } on FirebaseException catch (error) {
       print("Error removing item to body: $error");
 
@@ -227,7 +227,7 @@ class FirestoreService {
   }
 
   // User
-  Future<CustomUser?> getUserByUid(String userUid) async {
+  FutureOr<CustomUser> getUserByUid(String userUid) async {
     try {
       DocumentSnapshot documentSnapshot =
           await userCollection.doc(userUid).get();
@@ -241,7 +241,7 @@ class FirestoreService {
           documentSnapshot['notifications'],
         );
       } else {
-        return null;
+        return Future.error("User does not exist");
       }
     } on FirebaseException catch (error) {
       print("Error fetching user: $error");
@@ -250,7 +250,7 @@ class FirestoreService {
     }
   }
 
-  Future<CustomUser?> getUserByEmail(String userEmail) async {
+  FutureOr<CustomUser> getUserByEmail(String userEmail) async {
     try {
       QuerySnapshot querySnapshot =
           await userCollection.where('email', isEqualTo: userEmail).get();
@@ -265,7 +265,7 @@ class FirestoreService {
           documentSnapshot['notifications'],
         );
       } else {
-        return null;
+        return Future.error("User does not exist");
       }
     } on FirebaseException catch (error) {
       print("Error fetching user: $error");
@@ -324,10 +324,10 @@ class FirestoreService {
 
       userCollection.doc(userUid).update({
         'notifications': {
-          ...invitee!.notifications,
+          ...invitee.notifications,
           {
             'title': 'Group Invitation',
-            'body': '${inviter!.username} invited you to ${group.title}',
+            'body': '${inviter.username} invited you to ${group.title}',
             'uid': uuid,
             'data': {
               'groupUid': group.uid,
@@ -344,14 +344,14 @@ class FirestoreService {
     }
   }
 
-  Future<bool> addUserToGroup(String userUid, String groupUid) async {
+  FutureOr<bool> addUserToGroup(String userUid, String groupUid) async {
     try {
       final invitee = await getUserByUid(userUid);
       final group = await getGroup(groupUid);
 
       final updatedEditors = [
         ...group.permissions['editors'],
-        invitee!.uid,
+        invitee.uid,
       ];
 
       groupsCollection.doc(groupUid).update({
@@ -374,7 +374,7 @@ class FirestoreService {
     try {
       final invitee = await getUserByUid(userUid);
 
-      final updatedNotifications = invitee!.notifications
+      final updatedNotifications = invitee.notifications
           .where((notification) => notification['uid'] != notificationUid)
           .toList();
 
@@ -393,7 +393,7 @@ class FirestoreService {
     try {
       final invitee = await getUserByUid(userUid);
 
-      final updatedNotifications = invitee!.notifications
+      final updatedNotifications = invitee.notifications
           .map((notification) => {
                 ...notification,
                 'isRead': notification['uid'] == notificationUid
