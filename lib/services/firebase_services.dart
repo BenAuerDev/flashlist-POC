@@ -125,6 +125,18 @@ class FirestoreService {
   }
 
   FutureOr<String> addItemToGroupBody(String groupUid, String item) async {
+  Stream<List<dynamic>> groupBodyStream(String groupUid) {
+    try {
+      return groupsCollection
+          .doc(groupUid)
+          .snapshots()
+          .map((snapshot) => snapshot['body']);
+    } on FirebaseException catch (error) {
+      print("Error fetching group body: $error");
+
+      return Stream.error("Failed to fetch group body");
+    }
+  }
     try {
       final group = await getGroup(groupUid);
 
