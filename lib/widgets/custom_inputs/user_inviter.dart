@@ -1,5 +1,6 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
+import 'package:flash_list/providers/users.dart';
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,11 +42,10 @@ class UserInviter extends HookConsumerWidget {
         return;
       }
 
-      final user = await ref
-          .read(firestoreServiceProvider)
-          .getUserByEmail(emailController.text);
+      final user = ref.read(getUserByEmailProvider(emailController.text));
 
-      if (user != null && group.permissions['editors'].contains(user.uid)) {
+      if (user.value != null &&
+          group.permissions['editors'].contains(user.value!.uid)) {
         showSnackbar('User already has access to this list', null);
         return;
       }
@@ -57,14 +57,15 @@ class UserInviter extends HookConsumerWidget {
         null,
       );
 
-      if (user == null) {
+      if (user.value == null) {
         emailController.clear();
         return;
       }
 
-      await ref
-          .read(firestoreServiceProvider)
-          .inviteUserToGroup(group, user.uid);
+      ref.read(inviteUserToGroupProvider({
+        'group': group,
+        'userUid': user.value!.uid,
+      }));
 
       emailController.clear();
     }

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,27 +34,41 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
       );
     }
 
+    void reinsertItemIntoDb(List<dynamic> oldState) async {
+      ref.read(
+        setGroupBodyProvider(
+          {
+            'groupUid': widget.group.uid,
+            'body': oldState,
+          },
+        ),
+      );
+    }
+
     void onDismissItem(item) async {
-      final oldState = items.toList();
+      final oldState = items!.toList();
       final index = items.indexOf(item);
 
       setState(() {
         items.remove(item);
       });
 
-      final response = await ref
-          .read(firestoreServiceProvider)
-          .removeItemFromGroupBody(widget.group.uid, item);
+      final response = ref.read(
+        removeItemFromGroupBodyProvider(
+          {
+            'groupUid': widget.group.uid,
+            'itemUid': item['uid'],
+          },
+        ),
+      );
 
-      if (response) {
+      if (!response.hasError) {
         showSnackbar(
           'Item removed',
           SnackBarAction(
             label: 'Undo',
             onPressed: () {
-              ref
-                  .read(firestoreServiceProvider)
-                  .setGroupBody(widget.group.uid, oldState);
+              reinsertItemIntoDb(oldState);
               items.insert(index, item);
             },
           ),
@@ -147,9 +161,10 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
           }
           final item = items.removeAt(oldIndex);
           items.insert(newIndex, item);
-          ref
-              .read(firestoreServiceProvider)
-              .setGroupBody(widget.group.uid, items);
+          ref.read(setGroupBodyProvider({
+            'groupUid': widget.group.uid,
+            'body': items,
+          }));
         });
       },
       children: bodyItems,

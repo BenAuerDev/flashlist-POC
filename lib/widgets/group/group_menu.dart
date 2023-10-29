@@ -1,5 +1,5 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/screens/group_form.dart';
 import 'package:flash_list/screens/share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +52,7 @@ class GroupMenu extends ConsumerWidget {
         ),
       );
       if (wantToDelete) {
-        ref.watch(firestoreServiceProvider).removeGroup(group.uid);
+        ref.watch(removeGroupProvider(group.uid));
       }
     }
 
@@ -81,9 +81,10 @@ class GroupMenu extends ConsumerWidget {
         ),
       );
       if (wantToDelete) {
-        ref
-            .read(firestoreServiceProvider)
-            .removeEditorFromGroup(group.uid, currentUser!.uid);
+        ref.read(removeGroupEditorProvider({
+          'groupUid': group.uid,
+          'editorUid': currentUser!.uid,
+        }));
       }
     }
 
