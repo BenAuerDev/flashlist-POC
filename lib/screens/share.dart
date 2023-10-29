@@ -1,6 +1,5 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/models/user.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/custom_inputs/user_inviter.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +24,20 @@ class ShareScreen extends HookConsumerWidget {
     }
 
     void removeEditor(editor) {
-      ref
-          .read(firestoreServiceProvider)
-          .removeEditorFromGroup(group.uid, editor.uid);
+      ref.read(removeGroupEditorProvider({
+        'groupUid': group.uid,
+        'editorUid': editor.uid,
+      }));
 
       showSnackbar(
         'User has been removed',
         SnackBarAction(
           label: 'Undo',
           onPressed: () {
-            ref
-                .read(firestoreServiceProvider)
-                .addUserToGroup(editor.uid, group.uid);
+            ref.read(addUserToGroupProvider({
+              'editorUid': editor.uid,
+              'groupUid': group.uid,
+            }));
           },
         ),
       );
@@ -62,60 +63,49 @@ class ShareScreen extends HookConsumerWidget {
         child: Column(
           children: [
             UserInviter(group: group),
-            StreamBuilder(
-              stream: ref
-                  .watch(firestoreServiceProvider)
-                  .getGroupEditors(group.uid),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
+            const SizedBox(height: 16),
+            ref.watch(groupEditorsProvider(group.uid)).when(
+                  loading: () => const Center(
                     child: CircularProgressIndicator(),
-                  );
-                }
-
-                if (!snapshot.hasData) {
-                  return const Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(
-                          child: Text(
-                        'Editors will only appear here once they accepted your invitation.',
-                      )),
-                    ),
-                  );
-                }
-
-                final editors = snapshot.data as List<CustomUser>;
-
-                return Expanded(
-                  child: ListView.builder(
-                    key: Key(editors.length.toString()),
-                    shrinkWrap: true,
-                    itemCount: editors.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        key: Key(editors[index].uid),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            editors[index].imageUrl ??
-                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                          ),
-                        ),
-                        title: Text(editors[index].username),
-                        dense: true,
-                        contentPadding: const EdgeInsets.all(0),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            removeEditor(editors[index]);
-                          },
-                        ),
-                      );
-                    },
                   ),
-                );
-              },
-            )
+                  error: (error, stackTrace) => const Center(
+                    child: Text('Error loading editors'),
+                  ),
+                  data: (editors) {
+                    if (editors.isEmpty) {
+                      return const Center(
+                        child: Text('No editors yet'),
+                      );
+                    }
+
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: editors.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            key: Key(editors[index].uid),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                editors[index].imageUrl ??
+                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                              ),
+                            ),
+                            title: Text(editors[index].username),
+                            dense: true,
+                            contentPadding: const EdgeInsets.all(0),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                removeEditor(editors[index]);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
           ],
         ),
       ),

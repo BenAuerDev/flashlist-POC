@@ -1,5 +1,5 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -36,10 +36,12 @@ class NewBodyItemForm extends HookConsumerWidget {
       }
 
       bodyItemFormKey.currentState!.save();
-
-      ref
-          .read(firestoreServiceProvider)
-          .addItemToGroupBody(group.uid, enteredName);
+      ref.read(
+        addItemToGroupBodyProvider({
+          'groupUid': group.uid,
+          'name': enteredName,
+        }),
+      );
 
       bodyItemFormKey.currentState!.reset();
 
@@ -79,40 +81,34 @@ class NewBodyItemForm extends HookConsumerWidget {
                     tag: group.uid,
                     child: GroupBody(group: group),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: StreamBuilder(
-                        stream: ref
-                            .watch(firestoreServiceProvider)
-                            .groupBodyCountStream(group.uid),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const SizedBox();
-                          }
-                          final countPlusOne = snapshot.data + 1;
-
-                          return TextFormField(
-                            autofocus: true,
-                            onEditingComplete: () {},
-                            maxLength: 40,
-                            decoration:
-                                InputDecoration(labelText: '#$countPlusOne'),
-                            onFieldSubmitted: (value) {
-                              submit();
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
-                            onSaved: (newValue) {
-                              enteredName = newValue!;
-                            },
+                  ref.watch(groupBodyCountProvider(group.uid)).when(
+                        data: (count) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: TextFormField(
+                              autofocus: true,
+                              onEditingComplete: () {},
+                              maxLength: 40,
+                              decoration:
+                                  InputDecoration(labelText: '#${count + 1}'),
+                              onFieldSubmitted: (value) {
+                                submit();
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enteredName = newValue!;
+                              },
+                            ),
                           );
-                        }),
-                  ),
+                        },
+                        loading: () => const SizedBox(),
+                        error: (error, stackTrace) => const SizedBox(),
+                      ),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
