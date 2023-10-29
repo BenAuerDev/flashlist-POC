@@ -1,5 +1,5 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/widgets/slide_fade_transition.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -58,49 +58,45 @@ class AvatarGroup extends HookConsumerWidget {
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget? child) {
-        return FutureBuilder(
-          future: ref
-              .read(firestoreServiceProvider)
-              .getUsersByUid(usersWithoutCurrent),
-          builder: (context, snapshots) {
-            if (snapshots.hasError) {
-              return const Text('Error fetching users');
-            }
-
-            return GestureDetector(
-              onTap: usersWithoutCurrent.length > 1 ? expandTemporarily : null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(width: 8),
-                  for (var user in snapshots.data ?? [])
-                    Align(
-                      alignment: isExpanded.value
-                          ? Alignment.bottomRight
-                          : Alignment.bottomRight,
-                      widthFactor: user == snapshots.data!.first
-                          ? 0.9
-                          : animationController.value,
-                      child: SlideFadeTransition(
-                        index: snapshots.data!.indexOf(user),
-                        position: animationController.value,
-                        animationController: animationController,
-                        direction: isExpanded.value ? 1 : -1,
-                        child: CircleAvatar(
-                          radius: 16,
-                          backgroundImage: NetworkImage(
-                            user.imageUrl ??
-                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        return ref.watch(groupEditorsProvider(group.uid)).when(
+              data: (editors) {
+                return GestureDetector(
+                  onTap:
+                      usersWithoutCurrent.length > 1 ? expandTemporarily : null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(width: 8),
+                      for (var user in editors)
+                        Align(
+                          alignment: isExpanded.value
+                              ? Alignment.bottomRight
+                              : Alignment.bottomRight,
+                          widthFactor: user == editors.first
+                              ? 0.9
+                              : animationController.value,
+                          child: SlideFadeTransition(
+                            index: editors.indexOf(user),
+                            position: animationController.value,
+                            animationController: animationController,
+                            direction: isExpanded.value ? 1 : -1,
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundImage: NetworkImage(
+                                user.imageUrl ??
+                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                ],
-              ),
+                    ],
+                  ),
+                );
+              },
+              loading: () => const SizedBox(),
+              error: (error, stackTrace) => const SizedBox(),
             );
-          },
-        );
       },
     );
   }
