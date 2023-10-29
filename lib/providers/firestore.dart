@@ -4,5 +4,3 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final firestoreServiceProvider = Provider<FirestoreService>((ref) {
   return FirestoreService();
 });
-
-);
