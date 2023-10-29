@@ -1,5 +1,5 @@
 import 'package:flash_list/models/notification.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,29 +21,35 @@ class NotificationItem extends ConsumerWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
-            ref
-                .read(firestoreServiceProvider)
-                .removeNotification(currentUserUid, notification.uid);
+            ref.read(removeNotificationProvider(
+              {
+                'userUid': currentUserUid,
+                'notificationUid': notification.uid,
+              },
+            ));
             Navigator.of(context).pop('no');
           },
           child: const Text('No'),
         ),
         ElevatedButton(
           onPressed: () {
-            ref
-                .read(firestoreServiceProvider)
-                .markInvitationAsRead(currentUserUid, notification.uid);
+            ref.read(markNotificationAsReadProvider({
+              'userUid': currentUserUid,
+              'notificationUid': notification.uid
+            }));
             Navigator.of(context).pop('notnow');
           },
           child: const Text('Not now'),
         ),
         ElevatedButton(
           onPressed: () async {
-            ref.read(firestoreServiceProvider).acceptGroupInvitation(
-                  currentUserUid,
-                  groupUid,
-                  notification.uid,
-                );
+            ref.read(acceptGroupInvitationProvider(
+              {
+                'userUid': currentUserUid,
+                'groupUid': groupUid,
+                'notificationUid': notification.uid,
+              },
+            ));
             Navigator.of(context).pop('yes');
           },
           child: const Text('Yes'),

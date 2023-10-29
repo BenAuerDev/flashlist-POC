@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_list/models/notification.dart';
+import 'package:flash_list/models/user.dart';
+import 'package:flash_list/providers/firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final userProvider = StreamProvider<User?>(
@@ -15,5 +18,67 @@ final userDataProvider = StreamProvider((ref) {
     return docRef.snapshots().map((snapshot) => snapshot.data());
   } else {
     return const Stream.empty();
+  }
+});
+
+final userNotificationStreamProvider = StreamProvider<List<UserNotification>>(
+  (ref) async* {
+    try {
+      yield* ref.watch(firestoreServiceProvider).userNotificationsStream();
+    } catch (e) {
+      print(e);
+
+      throw StateError("failed to get user's notifications");
+    }
+  },
+);
+
+final userUnreadNotificationsCountProvider = StreamProvider.autoDispose(
+  (ref) {
+    try {
+      return ref
+          .watch(firestoreServiceProvider)
+          .userUnreadNotificationsCountStream();
+    } catch (e) {
+      print(e);
+
+      throw StateError("failed to get user's unread notifications count");
+    }
+  },
+);
+
+final getUserByUidProvider =
+    FutureProvider.family<CustomUser, String>((ref, userUid) async {
+  try {
+    return ref.watch(firestoreServiceProvider).getUserByUid(userUid);
+  } catch (e) {
+    print(e);
+
+    throw StateError("failed to get user by uid");
+  }
+});
+
+final getUserByEmailProvider =
+    FutureProvider.family<CustomUser?, String>((ref, email) async {
+  try {
+    return ref.watch(firestoreServiceProvider).getUserByEmail(email);
+  } catch (e) {
+    print(e);
+
+    throw StateError("failed to get user by email");
+  }
+});
+
+final uploadUserAvatarProvider =
+    FutureProvider.family<void, Map<String, dynamic>>((ref, data) async {
+  try {
+    return ref.watch(firestoreServiceProvider).uploadUserAvatar(
+          data['pickedImage'],
+          data['userUid'],
+        );
+  } catch (e) {
+    print(e);
+
+    throw StateError("failed to upload user avatar");
   }
 });
