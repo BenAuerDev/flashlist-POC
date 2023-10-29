@@ -1,5 +1,5 @@
 import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/providers.dart';
+import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/custom_inputs/color_input.dart';
 import 'package:flutter/material.dart';
@@ -18,19 +18,20 @@ class GroupForm extends ConsumerWidget {
     Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
 
     Future createGroup() async {
-      final res = await ref.read(firestoreServiceProvider).addGroup({
+      final res = ref.read(addGroupProvider({
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
-      });
+      }));
+
       return res;
     }
 
     Future editGroup() async {
-      final res =
-          await ref.read(firestoreServiceProvider).editGroup(group!.uid, {
+      final res = ref.read(editGroupProvider({
+        'uid': group!.uid,
         'title': enteredTitle,
         'color': enteredColor ?? retrieveColorScheme(context).primary,
-      });
+      }));
       return res;
     }
 
