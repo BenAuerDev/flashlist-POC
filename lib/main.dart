@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_list/providers/users.dart';
 import 'package:flash_list/screens/auth.dart';
 import 'package:flash_list/screens/home.dart';
 import 'package:flash_list/screens/splash.dart';
 import 'package:flash_list/utils/context_retriever.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,12 +18,12 @@ void main() async {
   runApp(ProviderScope(child: MyApp(savedThemeMode: savedThemeMode)));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   final AdaptiveThemeMode? savedThemeMode;
   const MyApp({super.key, this.savedThemeMode});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = retrieveTextTheme(context);
 
     final cardTheme = const CardTheme().copyWith(
@@ -66,19 +67,18 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         home: DefaultTabController(
           length: 2,
-          child: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const SplashScreen();
-              }
-
-              if (snapshot.hasData) {
-                return const HomeScreen();
-              }
-              return const AuthScreen();
-            },
-          ),
+          child: ref.watch(userProvider).when(
+                loading: () => const SplashScreen(),
+                error: (error, stackTrace) {
+                  return const Center(child: Text('Error loading user'));
+                },
+                data: (user) {
+                  if (user != null) {
+                    return const HomeScreen();
+                  }
+                  return const AuthScreen();
+                },
+              ),
         ),
       ),
     );
