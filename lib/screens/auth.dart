@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/custom_inputs/avatar_picker.dart';
+import 'package:flash_list/widgets/custom_inputs/password_input.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -157,18 +158,7 @@ class AuthScreen extends HookWidget {
                                 enteredUsername = newValue!;
                               },
                             ),
-                          TextFormField(
-                            obscureText: true,
-                            decoration:
-                                const InputDecoration(labelText: 'Password'),
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.length <= 6) {
-                                return 'Please enter a valid password, at least 6 characters long';
-                              }
-                              return null;
-                            },
+                          PasswordInput(
                             onSaved: (newValue) {
                               enteredPassword = newValue!;
                             },
