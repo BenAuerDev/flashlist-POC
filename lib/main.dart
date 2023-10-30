@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_list/providers/users.dart';
 import 'package:flash_list/screens/auth.dart';
 import 'package:flash_list/screens/home.dart';
