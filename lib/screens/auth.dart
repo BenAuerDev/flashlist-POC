@@ -128,6 +128,7 @@ class AuthScreen extends HookWidget {
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
+                            textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.none,
                             decoration:
                                 const InputDecoration(labelText: 'Email'),
@@ -159,6 +160,7 @@ class AuthScreen extends HookWidget {
                               },
                             ),
                           PasswordInput(
+                            textInputAction: TextInputAction.done,
                             onSaved: (newValue) {
                               enteredPassword = newValue!;
                             },

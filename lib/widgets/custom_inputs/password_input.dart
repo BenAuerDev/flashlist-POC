@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class PasswordInput extends HookWidget {
-  const PasswordInput({super.key, required this.onSaved});
+  const PasswordInput({
+    super.key,
+    required this.onSaved,
+    required this.textInputAction,
+  });
 
   final Function(String?)? onSaved;
+  final TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
