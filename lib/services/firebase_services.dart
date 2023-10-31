@@ -165,8 +165,6 @@ class FirestoreService {
   Future<void> removeItemFromGroupBody(String groupUid, String itemUid) async {
     try {
       final group = await getGroup(groupUid);
-      print('group uid $groupUid services');
-      print('items $itemUid services');
 
       final updatedBody =
           group.body.where((element) => element['uid'] != itemUid);
