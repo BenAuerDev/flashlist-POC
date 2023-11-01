@@ -27,7 +27,7 @@ class ProfileScreen extends ConsumerWidget {
         ),
         actions: const [SizedBox(width: 50)],
       ),
-      body: ref.watch(userDataProvider).when(
+      body: ref.watch(currentUserDataProvider).when(
             data: (user) {
               return Center(
                 child: Column(
