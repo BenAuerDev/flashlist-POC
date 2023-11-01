@@ -29,21 +29,27 @@ class ProfileScreen extends ConsumerWidget {
       ),
       body: ref.watch(currentUserDataProvider).when(
             data: (user) {
-              return Center(
-                child: Column(
-                  children: [
-                    AvatarPicker(
-                        initialImage: user['image_url'],
-                        onPickImage: (pickedImage) {
-                          uploadNewImage(pickedImage, user['uid']);
-                        }),
-                    const SizedBox(height: 12),
-                    Text(user['username'] ?? 'No username'),
-                    const SizedBox(height: 6),
-                    Text(user['email'] ?? 'No email'),
-                  ],
-                ),
-              );
+              if (user != null) {
+                return Center(
+                  child: Column(
+                    children: [
+                      AvatarPicker(
+                          initialImage: user['image_url'],
+                          onPickImage: (pickedImage) {
+                            uploadNewImage(pickedImage, user['uid']);
+                          }),
+                      const SizedBox(height: 12),
+                      Text(user['username'] ?? 'No username'),
+                      const SizedBox(height: 6),
+                      Text(user['email'] ?? 'No email'),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('No user data'),
+                );
+              }
             },
             loading: () => const CircularProgressIndicator(),
             error: (error, stackTrace) => Text(error.toString()),
