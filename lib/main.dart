@@ -66,7 +66,7 @@ class MyApp extends ConsumerWidget {
         themeMode: ThemeMode.system,
         home: DefaultTabController(
           length: 2,
-          child: ref.watch(userProvider).when(
+          child: ref.watch(authProvider).when(
                 loading: () => const SplashScreen(),
                 error: (error, stackTrace) {
                   return const Center(child: Text('Error loading user'));

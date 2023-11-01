@@ -5,12 +5,12 @@ import 'package:flash_list/models/user.dart';
 import 'package:flash_list/providers/firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final userProvider = StreamProvider<User?>(
+final authProvider = StreamProvider<User?>(
   (ref) => FirebaseAuth.instance.authStateChanges(),
 );
 
-final userDataProvider = StreamProvider((ref) {
-  final userData = ref.watch(userProvider).value;
+final currentUserDataProvider = StreamProvider((ref) {
+  final userData = ref.watch(authProvider).value;
 
   if (userData != null) {
     var docRef =

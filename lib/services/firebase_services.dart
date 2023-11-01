@@ -18,8 +18,8 @@ class FirestoreService {
       FirebaseFirestore.instance.collection('users');
 
   Stream<List<Group>> groupsForUserStream() {
-    final currentUser = FirebaseAuth.instance.currentUser;
     try {
+      final currentUser = FirebaseAuth.instance.currentUser;
       return groupsCollection.orderBy('createdAt').snapshots().map((snapshot) {
         return snapshot.docs.where((doc) {
           final permissions = doc['permissions'];
@@ -435,16 +435,23 @@ class FirestoreService {
           .doc(currentUser!.uid)
           .snapshots()
           .map((snapshot) {
-        return snapshot['notifications'].map<UserNotification>((notification) {
-          return UserNotification(
-            notification['title'],
-            notification['body'],
-            notification['uid'],
-            notification['data'],
-            notification['createdAt'],
-            notification['isRead'],
-          );
-        }).toList();
+        if (snapshot.exists &&
+            snapshot['notifications'] != null &&
+            snapshot['notifications'].isNotEmpty) {
+          return snapshot['notifications']
+              .map<UserNotification>((notification) {
+            return UserNotification(
+              notification['title'],
+              notification['body'],
+              notification['uid'],
+              notification['data'],
+              notification['createdAt'],
+              notification['isRead'],
+            );
+          }).toList();
+        } else {
+          return [];
+        }
       });
     } catch (error) {
       throw error;
@@ -460,9 +467,15 @@ class FirestoreService {
           .snapshots();
 
       final count = userRef.map((snapshot) {
-        return snapshot['notifications']
-            .where((notification) => notification['isRead'] == false)
-            .length;
+        if (snapshot.exists &&
+            snapshot['notifications'] != null &&
+            snapshot['notifications'].isNotEmpty) {
+          return snapshot['notifications']
+              .where((notification) => notification['isRead'] == false)
+              .length;
+        } else {
+          return 0;
+        }
       });
 
       return count;
