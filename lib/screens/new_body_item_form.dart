@@ -1,5 +1,6 @@
 import 'package:flash_list/models/group.dart';
 import 'package:flash_list/providers/group.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -114,14 +115,14 @@ class NewBodyItemForm extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        child: const Text('Cancel'),
+                        child: Text(retrieveAppLocalizations(context).goBack),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       ElevatedButton(
                         onPressed: submit,
-                        child: const Text('Add Item'),
+                        child: Text(retrieveAppLocalizations(context).add),
                       ),
                     ],
                   )

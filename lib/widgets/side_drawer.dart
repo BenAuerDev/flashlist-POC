@@ -46,26 +46,26 @@ class SideDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Row(children: [
-              Icon(Icons.person),
-              SizedBox(width: 10),
-              Text('Profile'),
+            title: Row(children: [
+              const Icon(Icons.person),
+              const SizedBox(width: 10),
+              Text(retrieveAppLocalizations(context).profile),
             ]),
             onTap: () => navigateTo(const ProfileScreen()),
           ),
           ListTile(
-            title: const Row(children: [
-              Icon(Icons.settings),
-              SizedBox(width: 10),
-              Text('Settings'),
+            title: Row(children: [
+              const Icon(Icons.settings),
+              const SizedBox(width: 10),
+              Text(retrieveAppLocalizations(context).settings),
             ]),
             onTap: () => navigateTo(const SettingsScreen()),
           ),
           ListTile(
-            title: const Row(children: [
-              Icon(Icons.logout),
-              SizedBox(width: 10),
-              Text('Sign out'),
+            title: Row(children: [
+              const Icon(Icons.logout),
+              const SizedBox(width: 10),
+              Text(retrieveAppLocalizations(context).signOut),
             ]),
             onTap: () {
               Navigator.of(context).pop();

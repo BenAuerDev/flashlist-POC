@@ -3,6 +3,7 @@ import 'package:flash_list/providers/group.dart';
 import 'package:flash_list/screens/group_form.dart';
 import 'package:flash_list/screens/share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -30,14 +31,14 @@ class GroupMenu extends ConsumerWidget {
               Navigator.of(context).pop(false);
             },
             icon: const Icon(Icons.cancel),
-            label: const Text('No'),
+            label: Text(retrieveAppLocalizations(context).no),
           ),
           ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
             icon: const Icon(Icons.delete),
-            label: const Text('Yes'),
+            label: Text(retrieveAppLocalizations(context).yes),
           ),
         ],
       );
@@ -47,8 +48,8 @@ class GroupMenu extends ConsumerWidget {
       final wantToDelete = await showDialog(
         context: context,
         builder: (context) => showConfirmDialog(
-          'Delete Group',
-          'Are you sure you want to delete ${group.title}?',
+          retrieveAppLocalizations(context).deleteList,
+          retrieveAppLocalizations(context).wantToDeleteList(group.title),
         ),
       );
       if (wantToDelete) {
@@ -76,8 +77,8 @@ class GroupMenu extends ConsumerWidget {
       final wantToDelete = await showDialog(
         context: context,
         builder: (context) => showConfirmDialog(
-          'Remove list for you',
-          'Are you sure you want to remove yourself from ${group.title}?',
+          retrieveAppLocalizations(context).removeListForYou,
+          retrieveAppLocalizations(context).wantToRemoveListForYou(group.title),
         ),
       );
       if (wantToDelete) {
@@ -94,25 +95,25 @@ class GroupMenu extends ConsumerWidget {
         if (isCurrentUserOwner)
           PopupMenuItem(
             onTap: onShareGroup,
-            child: const Text('Share'),
+            child: Text(retrieveAppLocalizations(context).share),
           ),
 
         if (isCurrentUserOwner)
           PopupMenuItem(
             onTap: onEditGroup,
-            child: const Text('Edit'),
+            child: Text(retrieveAppLocalizations(context).edit),
           ),
         if (isCurrentUserOwner)
           PopupMenuItem(
             onTap: removeGroup,
-            child: const Text('Delete'),
+            child: Text(retrieveAppLocalizations(context).delete),
           ),
 
         // Editors
         if (isCurrentUserInEditors && !isCurrentUserOwner)
           PopupMenuItem(
             onTap: removeCurrentUserFromEditors,
-            child: const Text('Remove'),
+            child: Text(retrieveAppLocalizations(context).remove),
           ),
       ],
     );

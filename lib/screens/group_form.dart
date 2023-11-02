@@ -105,11 +105,15 @@ class GroupForm extends ConsumerWidget {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      child: Text(retrieveAppLocalizations(context).goBack),
                     ),
                     ElevatedButton(
                       onPressed: submit,
-                      child: Text(group == null ? 'Add List' : 'Update List'),
+                      child: Text(
+                        group == null
+                            ? retrieveAppLocalizations(context).add
+                            : retrieveAppLocalizations(context).edit,
+                      ),
                     ),
                   ],
                 )

@@ -74,8 +74,8 @@ class UserInviter extends HookConsumerWidget {
       children: [
         TextField(
           controller: emailController,
-          decoration: const InputDecoration(
-            labelText: 'Email Address',
+          decoration: InputDecoration(
+            labelText: retrieveAppLocalizations(context).email,
           ),
         ),
         const SizedBox(
@@ -86,7 +86,7 @@ class UserInviter extends HookConsumerWidget {
           children: [
             ElevatedButton(
               onPressed: inviteUser,
-              child: const Text('Add User'),
+              child: Text(retrieveAppLocalizations(context).inviteUser),
             ),
           ],
         ),

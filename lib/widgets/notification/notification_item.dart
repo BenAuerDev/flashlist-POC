@@ -17,7 +17,7 @@ class NotificationItem extends ConsumerWidget {
 
     AlertDialog invitationDialog = AlertDialog(
       title: Text(notification.title),
-      content: const Text('Would you like to join as an editor?'),
+      content: Text(retrieveAppLocalizations(context).wantToJoin),
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -29,7 +29,7 @@ class NotificationItem extends ConsumerWidget {
             ));
             Navigator.of(context).pop('no');
           },
-          child: const Text('No'),
+          child: Text(retrieveAppLocalizations(context).no),
         ),
         ElevatedButton(
           onPressed: () {
@@ -39,7 +39,7 @@ class NotificationItem extends ConsumerWidget {
             }));
             Navigator.of(context).pop('notnow');
           },
-          child: const Text('Not now'),
+          child: Text(retrieveAppLocalizations(context).notNow),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -52,7 +52,7 @@ class NotificationItem extends ConsumerWidget {
             ));
             Navigator.of(context).pop('yes');
           },
-          child: const Text('Yes'),
+          child: Text(retrieveAppLocalizations(context).yes),
         ),
       ],
     );

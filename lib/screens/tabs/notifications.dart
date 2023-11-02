@@ -1,4 +1,5 @@
 import 'package:flash_list/providers/users.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/notification/notification_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -27,7 +28,9 @@ class NotificationsTab extends HookConsumerWidget {
     return ref.watch(userNotificationStreamProvider).when(
           data: (data) {
             if (data.isEmpty) {
-              return const Center(child: Text('No notifications'));
+              return Center(
+                child: Text(retrieveAppLocalizations(context).noNotifications),
+              );
             }
 
             return SizedBox.expand(
