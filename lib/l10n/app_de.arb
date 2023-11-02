@@ -1,0 +1,69 @@
+{
+  "signIn": "Einloggen",
+  "signUp": "Registrieren",
+  "email": "E-Mail",
+  "username": "Benutzername",
+  "password": "Passwort",
+  "confirmPassword": "Passwort bestätigen",
+  "createNewAccount": "Neuen Account erstellen",
+  "alreadyHaveAccount": "Du hast bereits einen Account?",
+  "uploadNewImage": "Neues Bild hochladen",
+  "addImage": "Bild hinzufügen",
+  "deleteList": "Liste löschen",
+  "wantToDeleteList": "Möchtest du {listTitle} wirklich löschen?",
+  "@wantToDeleteList": {
+    "placeholders": {
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarkt"
+      }
+    }
+  },
+  "removeListForYou": "Liste für dich entfernen",
+  "wantToRemoveListForYou": "Möchtest du {listTitle} wirklich für dich entfernen?",
+  "@wantToRemoveListForYou": {
+    "placeholders": {
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarkt"
+      }
+    }
+  },
+  "noNotifications": "Keine Benachrichtigungen",
+  "userInvitedYouToJoin": "{username} hat dich zu {listTitle} eingeladen",
+  "@userInvitedYouToJoin": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      },
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarkt"
+      }
+    }
+  },
+  "wantToJoin": "Möchtest du der Liste beitreten?",
+  "yourLists": "Deine Listen",
+  "profile": "Profil",
+  "settings": "Einstellungen",
+  "brightness": "Helligkeit",
+  "inviteUser": "User Einladen",
+  "yes": "Yes",
+  "no": "No",
+  "notNow": "Nicht jetzt",
+  "light": "Hell",
+  "dark": "Dunkel",
+  "system": "System",
+  "signOut": "Ausloggen",
+  "share": "Teilen",
+  "edit": "Bearbeiten",
+  "delete": "Löschen",
+  "remove": "Entfernen",
+  "add": "Hinzufügen",
+  "goBack": "Zurück",
+  "pickAColor": "Wähle eine Farbe aus",
+  "pick": "Auswählen",
+  "gallery": "Gallerie",
+  "camera": "Kamera"
+}

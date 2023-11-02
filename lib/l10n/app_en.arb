@@ -1,0 +1,69 @@
+{
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "email": "Email",
+  "username": "Username",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "createNewAccount": "Create new Account",
+  "alreadyHaveAccount": "Already have an account?",
+  "uploadNewImage": "Upload New Image",
+  "addImage": "Add Image",
+  "deleteList": "Delete List",
+  "wantToDeleteList": "Do you want to delete {listTitle}?",
+  "@wantToDeleteList": {
+    "placeholders": {
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarket"
+      }
+    }
+  },
+  "removeListForYou": "Remove List for You",
+  "wantToRemoveListForYou": "Do you want to remove {listTitle} for you?",
+  "@wantToRemoveListForYou": {
+    "placeholders": {
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarket"
+      }
+    }
+  },
+  "noNotifications": "No Notifications",
+  "userInvitedYouToJoin": "{username} invited you to join {listTitle}",
+  "@userInvitedYouToJoin": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      },
+      "listTitle": {
+        "type": "String",
+        "example": "Supermarket"
+      }
+    }
+  },
+  "wantToJoin": "Would you like to join as an editor?",
+  "yourLists": "Your Lists",
+  "profile": "Profile",
+  "settings": "Settings",
+  "brightness": "Brightness",
+  "inviteUser": "Invite User",
+  "yes": "Yes",
+  "no": "No",
+  "notNow": "Not Now",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "signOut": "Sign Out",
+  "share": "Share",
+  "edit": "Edit",
+  "delete": "Delete",
+  "remove": "Remove",
+  "add": "Add",
+  "goBack": "Return",
+  "pickAColor": "Pick a Color",
+  "pick": "Pick!",
+  "gallery": "Gallery",
+  "camera": "Camera"
+}
