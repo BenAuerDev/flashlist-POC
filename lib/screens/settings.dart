@@ -1,6 +1,5 @@
 import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/settings/brightness_radio.dart';
-import 'package:flash_list/widgets/settings/language.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
