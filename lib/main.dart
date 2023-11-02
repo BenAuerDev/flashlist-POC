@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -64,6 +66,16 @@ class MyApp extends ConsumerWidget {
         theme: theme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+          Locale('de'), // German
+        ],
         home: DefaultTabController(
           length: 2,
           child: ref.watch(authProvider).when(

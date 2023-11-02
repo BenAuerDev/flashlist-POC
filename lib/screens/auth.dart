@@ -130,8 +130,10 @@ class AuthScreen extends HookWidget {
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.none,
-                            decoration:
-                                const InputDecoration(labelText: 'Email'),
+                            decoration: InputDecoration(
+                              labelText:
+                                  retrieveAppLocalizations(context).email,
+                            ),
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
@@ -146,8 +148,9 @@ class AuthScreen extends HookWidget {
                           ),
                           if (!isLogin.value)
                             TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Username',
+                              decoration: InputDecoration(
+                                labelText:
+                                    retrieveAppLocalizations(context).username,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -160,6 +163,8 @@ class AuthScreen extends HookWidget {
                               },
                             ),
                           PasswordInput(
+                            labelText:
+                                retrieveAppLocalizations(context).password,
                             textInputAction: TextInputAction.done,
                             onSaved: (newValue) {
                               enteredPassword = newValue!;
@@ -174,8 +179,10 @@ class AuthScreen extends HookWidget {
                             ElevatedButton(
                               onPressed: submit,
                               child: isLogin.value
-                                  ? const Text('Sign In')
-                                  : const Text('Sign Up'),
+                                  ? Text(
+                                      retrieveAppLocalizations(context).signIn)
+                                  : Text(
+                                      retrieveAppLocalizations(context).signUp),
                             ),
                           if (!isAuthenticating.value)
                             TextButton(
@@ -183,8 +190,10 @@ class AuthScreen extends HookWidget {
                                 isLogin.value = !isLogin.value;
                               },
                               child: isLogin.value
-                                  ? const Text('Create new account')
-                                  : const Text('I already have an account'),
+                                  ? Text(retrieveAppLocalizations(context)
+                                      .createNewAccount)
+                                  : Text(retrieveAppLocalizations(context)
+                                      .alreadyHaveAccount),
                             ),
                         ],
                       ),

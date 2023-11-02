@@ -29,7 +29,7 @@ class ColorInput extends HookConsumerWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Pick a color!'),
+                title: Text('${retrieveAppLocalizations(context).pickAColor}!'),
                 content: SingleChildScrollView(
                   child: ColorPicker(
                     pickerColor: pickerColor.value,
@@ -38,7 +38,7 @@ class ColorInput extends HookConsumerWidget {
                 ),
                 actions: <Widget>[
                   ElevatedButton(
-                    child: const Text('Got it'),
+                    child: Text(retrieveAppLocalizations(context).pick),
                     onPressed: () {
                       pickerColor = currentColor;
                       onSelectColor!(pickerColor.value);
@@ -50,7 +50,7 @@ class ColorInput extends HookConsumerWidget {
               ),
             );
           },
-          child: const Text('Pick a color'),
+          child: Text(retrieveAppLocalizations(context).pickAColor),
         ),
         const SizedBox(
           width: 16,

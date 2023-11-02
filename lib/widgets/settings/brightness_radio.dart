@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -37,7 +38,7 @@ class BrightnessRadio extends HookWidget {
                 const Icon(Icons.settings),
               const SizedBox(width: 10),
 
-              const Text('Brightness Theme')
+              Text(retrieveAppLocalizations(context).brightness)
             ],
           ),
           ToggleButtons(
@@ -59,10 +60,10 @@ class BrightnessRadio extends HookWidget {
                   break;
               }
             },
-            children: const [
-              Text('Light'),
-              Text('Dark'),
-              Text('System'),
+            children: [
+              Text(retrieveAppLocalizations(context).light),
+              Text(retrieveAppLocalizations(context).dark),
+              Text(retrieveAppLocalizations(context).system),
             ],
           ),
         ],

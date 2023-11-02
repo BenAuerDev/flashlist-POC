@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,7 +43,7 @@ class AvatarPicker extends HookWidget {
               children: [
                 TextButton.icon(
                   icon: const Icon(Icons.camera_alt),
-                  label: const Text('Camera'),
+                  label: Text(retrieveAppLocalizations(context).camera),
                   onPressed: () async {
                     pickImageFromSource('camera');
                     Navigator.of(context).pop();
@@ -51,7 +52,7 @@ class AvatarPicker extends HookWidget {
                 const SizedBox(height: 12),
                 TextButton.icon(
                   icon: const Icon(Icons.image),
-                  label: const Text('Gallery'),
+                  label: Text(retrieveAppLocalizations(context).gallery),
                   onPressed: () async {
                     pickImageFromSource('gallery');
                     Navigator.of(context).pop();
@@ -85,7 +86,11 @@ class AvatarPicker extends HookWidget {
           ),
         TextButton.icon(
           icon: const Icon(Icons.image),
-          label: Text(initialImage != null ? 'Upload new Image' : 'Add Image'),
+          label: Text(
+            initialImage != null
+                ? retrieveAppLocalizations(context).uploadNewImage
+                : retrieveAppLocalizations(context).addImage,
+          ),
           onPressed: useImagePicker,
         )
       ],

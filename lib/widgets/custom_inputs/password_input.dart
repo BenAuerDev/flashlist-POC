@@ -4,10 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class PasswordInput extends HookWidget {
   const PasswordInput({
     super.key,
+    this.labelText,
     required this.onSaved,
     required this.textInputAction,
   });
 
+  final String? labelText;
   final Function(String?)? onSaved;
   final TextInputAction textInputAction;
 
@@ -19,7 +21,7 @@ class PasswordInput extends HookWidget {
       children: [
         TextFormField(
           obscureText: isObscured.value,
-          decoration: const InputDecoration(labelText: 'Password'),
+          decoration: InputDecoration(labelText: labelText ?? 'Password'),
           validator: (value) {
             // TODO: add stricter password validation
             if (value == null || value.isEmpty || value.length <= 6) {

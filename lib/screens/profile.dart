@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flash_list/providers/users.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,9 +20,9 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Center(
           child: Text(
-            'Profile',
+            retrieveAppLocalizations(context).profile,
             textAlign: TextAlign.center,
           ),
         ),
