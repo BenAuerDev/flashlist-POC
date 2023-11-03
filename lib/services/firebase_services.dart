@@ -198,7 +198,12 @@ class FirestoreService {
           .doc(groupUid)
           .snapshots()
           .map((snapshot) => snapshot['permissions']['editors'])
-          .asyncMap((userUids) => getUsersByUid(userUids));
+          .asyncMap((userUids) {
+        if (userUids == null || userUids.isEmpty) {
+          return [];
+        }
+        return getUsersByUid(userUids);
+      });
     } on FirebaseException catch (error) {
       print("Error fetching group editors: $error");
 
