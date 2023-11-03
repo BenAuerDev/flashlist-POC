@@ -47,11 +47,34 @@
   "yourLists": "Your Lists",
   "profile": "Profile",
   "settings": "Settings",
-  "brightness": "Brightness",
   "inviteUser": "Invite User",
+  "noEditorsYet": "No editors yet",
+  "userHasBeenRemoved": "{username} has been removed",
+  "@userHasBeenRemoved": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "ifUserExistsWillBeInvited": "If a user with this email exists, he/she will receive an invitation",
+  "userAlreadyHasAccess": "{username} already has access",
+  "@userAlreadyHasAccess": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "pleaseEnterValidEmail": "Please enter a valid email address",
+  "yourOwnEmail": "Dude that's your own email address ;-)",
+  "undo": "Undo",
   "yes": "Yes",
   "no": "No",
   "notNow": "Not Now",
+  "brightness": "Brightness",
   "light": "Light",
   "dark": "Dark",
   "system": "System",

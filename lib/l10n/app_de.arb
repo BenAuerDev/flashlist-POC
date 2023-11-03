@@ -47,11 +47,34 @@
   "yourLists": "Deine Listen",
   "profile": "Profil",
   "settings": "Einstellungen",
-  "brightness": "Helligkeit",
   "inviteUser": "User Einladen",
+  "noEditorsYet": "Noch keine Mitbearbeiter",
+  "userHasBeenRemoved": "{username} wurde entfernt",
+  "@userHasBeenRemoved": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "ifUserExistsWillBeInvited": "Sollte ein User mit dieser E-mail existieren, wird er/sie eine Einladung erhalten",
+  "userAlreadyHasAccess": "{username} hat bereits Zugriff auf diese Liste",
+  "@userAlreadyHasAccess": {
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "pleaseEnterValidEmail": "Bitte gib eine gültige E-Mail Adresse ein",
+  "yourOwnEmail": "Das ist deine eigene E-Mail Adresse ;-)",
+  "undo": "Rückgängig",
   "yes": "Yes",
   "no": "No",
   "notNow": "Nicht jetzt",
+  "brightness": "Helligkeit",
   "light": "Hell",
   "dark": "Dunkel",
   "system": "System",

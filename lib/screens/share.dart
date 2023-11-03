@@ -30,9 +30,9 @@ class ShareScreen extends HookConsumerWidget {
       }));
 
       showSnackbar(
-        'User has been removed',
+        retrieveAppLocalizations(context).userHasBeenRemoved(editor.username),
         SnackBarAction(
-          label: 'Undo',
+          label: retrieveAppLocalizations(context).undo,
           onPressed: () {
             ref.read(addUserToGroupProvider({
               'editorUid': editor.uid,
@@ -73,8 +73,10 @@ class ShareScreen extends HookConsumerWidget {
                   ),
                   data: (editors) {
                     if (editors.isEmpty) {
-                      return const Center(
-                        child: Text('No editors yet'),
+                      return Center(
+                        child: Text(
+                          retrieveAppLocalizations(context).noEditorsYet,
+                        ),
                       );
                     }
 
