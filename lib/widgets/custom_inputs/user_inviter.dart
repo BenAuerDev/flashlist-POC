@@ -33,12 +33,18 @@ class UserInviter extends HookConsumerWidget {
 
     void inviteUser() async {
       if (emailController.text.isEmpty || !emailController.text.contains('@')) {
-        showSnackbar('Please enter an email address', null);
+        showSnackbar(
+          retrieveAppLocalizations(context).pleaseEnterValidEmail,
+          null,
+        );
         return;
       }
 
       if (emailController.text == currentUser!.email) {
-        showSnackbar('Dude that\'s your own email address ;-)', null);
+        showSnackbar(
+          retrieveAppLocalizations(context).yourOwnEmail,
+          null,
+        );
         return;
       }
 
@@ -46,14 +52,18 @@ class UserInviter extends HookConsumerWidget {
 
       if (user.value != null &&
           group.permissions['editors'].contains(user.value!.uid)) {
-        showSnackbar('User already has access to this list', null);
+        showSnackbar(
+          retrieveAppLocalizations(context)
+              .userAlreadyHasAccess(user.value!.username),
+          null,
+        );
         return;
       }
 
       // For Security reasons the user doesn't get
       // any direct feedback if a user with this email address exists.
       showSnackbar(
-        'If a user with this email address exists, he received your invitation.',
+        retrieveAppLocalizations(context).ifUserExistsWillBeInvited,
         null,
       );
 
