@@ -149,7 +149,7 @@ final addUserToGroupProvider =
     FutureProvider.family<bool, Map<String, dynamic>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).addUserToGroup(
-          data['userUid'],
+          data['editorUid'],
           data['groupUid'],
         );
   } catch (e) {
