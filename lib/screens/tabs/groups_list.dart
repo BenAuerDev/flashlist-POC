@@ -1,4 +1,5 @@
 import 'package:flash_list/providers/group.dart';
+import 'package:flash_list/utils/context_retriever.dart';
 import 'package:flash_list/widgets/group/group_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,7 +16,7 @@ class GroupsList extends HookConsumerWidget {
     }
 
     if (groups.value!.isEmpty) {
-      return const Center(child: Text('No lists yet...'));
+      return Center(child: Text(retrieveAppLocalizations(context).noListsYet));
     }
 
     if (groups.hasError) {

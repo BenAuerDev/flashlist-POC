@@ -29,6 +29,8 @@
       }
     }
   },
+  "itemRemoved": "Artikel entfernt",
+  "encounteredError": "Ein Fehler ist aufgetreten",
   "noNotifications": "Keine Benachrichtigungen",
   "userInvitedYouToJoin": "{username} hat dich zu {listTitle} eingeladen",
   "@userInvitedYouToJoin": {
@@ -45,6 +47,7 @@
   },
   "wantToJoin": "Möchtest du der Liste beitreten?",
   "yourLists": "Deine Listen",
+  "noListsYet": "Noch keine Listen",
   "profile": "Profil",
   "settings": "Einstellungen",
   "inviteUser": "User Einladen",
@@ -68,6 +71,8 @@
       }
     }
   },
+  "pleaseEnterValidListTitle": "Bitte gib einen gültigen Titel für die Liste ein",
+  "pleaseEnterValidUsername": "Bitte gib einen gültigen Benutzernamen ein",
   "pleaseEnterValidEmail": "Bitte gib eine gültige E-Mail Adresse ein",
   "yourOwnEmail": "Das ist deine eigene E-Mail Adresse ;-)",
   "undo": "Rückgängig",

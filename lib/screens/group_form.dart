@@ -80,11 +80,12 @@ class GroupForm extends ConsumerWidget {
                   maxLength: 20,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
-                    labelText: 'List Name',
+                    labelText: 'Name',
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter a list name';
+                      return retrieveAppLocalizations(context)
+                          .pleaseEnterValidListTitle;
                     }
                     return null;
                   },

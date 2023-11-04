@@ -29,6 +29,8 @@
       }
     }
   },
+  "itemRemoved": "Item removed",
+  "encounteredError": "Encountered an error",
   "noNotifications": "No Notifications",
   "userInvitedYouToJoin": "{username} invited you to join {listTitle}",
   "@userInvitedYouToJoin": {
@@ -45,6 +47,7 @@
   },
   "wantToJoin": "Would you like to join as an editor?",
   "yourLists": "Your Lists",
+  "noListsYet": "No lists yet",
   "profile": "Profile",
   "settings": "Settings",
   "inviteUser": "Invite User",
@@ -68,6 +71,8 @@
       }
     }
   },
+  "pleaseEnterValidListTitle": "Please enter a valid list title",
+  "pleaseEnterValidUsername": "Please enter a valid username",
   "pleaseEnterValidEmail": "Please enter a valid email address",
   "yourOwnEmail": "Dude that's your own email address ;-)",
   "undo": "Undo",

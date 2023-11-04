@@ -64,9 +64,9 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
 
       if (!response.hasError) {
         showSnackbar(
-          'Item removed',
+          retrieveAppLocalizations(context).itemRemoved,
           SnackBarAction(
-            label: 'Undo',
+            label: retrieveAppLocalizations(context).undo,
             onPressed: () {
               reinsertItemIntoDb(oldState);
               items.insert(index, item);
@@ -74,7 +74,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
           ),
         );
       } else {
-        showSnackbar('Error removing item please try again', null);
+        showSnackbar(retrieveAppLocalizations(context).encounteredError, null);
       }
     }
 

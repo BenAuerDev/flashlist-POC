@@ -30,7 +30,8 @@ class AuthScreen extends HookWidget {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(error.message ?? 'An error occurred!'),
+          content: Text(error.message ??
+              '${retrieveAppLocalizations(context).encounteredError}!'),
           backgroundColor: retrieveColorScheme(context).error,
         ),
       );
@@ -138,7 +139,8 @@ class AuthScreen extends HookWidget {
                               if (value == null ||
                                   value.isEmpty ||
                                   !value.contains('@')) {
-                                return 'Please enter a valid email address';
+                                return retrieveAppLocalizations(context)
+                                    .pleaseEnterValidEmail;
                               }
                               return null;
                             },
@@ -154,7 +156,8 @@ class AuthScreen extends HookWidget {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter a valid username';
+                                  return retrieveAppLocalizations(context)
+                                      .pleaseEnterValidUsername;
                                 }
                                 return null;
                               },
