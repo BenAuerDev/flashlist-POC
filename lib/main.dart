@@ -1,7 +1,6 @@
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/screens/auth.dart';
 import 'package:flashlist/screens/home.dart';
-import 'package:flashlist/screens/splash.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(ProviderScope(child: MyApp(savedThemeMode: savedThemeMode)));
@@ -79,11 +81,12 @@ class MyApp extends ConsumerWidget {
         home: DefaultTabController(
           length: 2,
           child: ref.watch(authProvider).when(
-                loading: () => const SplashScreen(),
+                loading: () => const Text('Loading...'),
                 error: (error, stackTrace) {
                   return const Center(child: Text('Error loading user'));
                 },
                 data: (user) {
+                  FlutterNativeSplash.remove();
                   if (user != null) {
                     return const HomeScreen();
                   }
