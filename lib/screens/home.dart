@@ -1,9 +1,9 @@
-import 'package:flash_list/screens/group_form.dart';
-import 'package:flash_list/screens/tabs/groups_list.dart';
-import 'package:flash_list/screens/tabs/notifications.dart';
-import 'package:flash_list/utils/context_retriever.dart';
-import 'package:flash_list/widgets/notification/notification_badge.dart';
-import 'package:flash_list/widgets/side_drawer.dart';
+import 'package:flashlist/screens/group_form.dart';
+import 'package:flashlist/screens/tabs/groups_list.dart';
+import 'package:flashlist/screens/tabs/notifications.dart';
+import 'package:flashlist/utils/context_retriever.dart';
+import 'package:flashlist/widgets/notification/notification_badge.dart';
+import 'package:flashlist/widgets/side_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

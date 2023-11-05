@@ -1,6 +1,6 @@
 {
-  "name": "flash_list",
-  "short_name": "flash_list",
+  "name": "flashlist",
+  "short_name": "flashlist",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0175C2",

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/firestore.dart';
+import 'package:flashlist/models/group.dart';
+import 'package:flashlist/providers/firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final userGroupsProvider = StreamProvider<List<Group>>((ref) async* {

@@ -1,7 +1,7 @@
-import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/group.dart';
-import 'package:flash_list/utils/context_retriever.dart';
-import 'package:flash_list/widgets/custom_inputs/color_input.dart';
+import 'package:flashlist/models/group.dart';
+import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/utils/context_retriever.dart';
+import 'package:flashlist/widgets/custom_inputs/color_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

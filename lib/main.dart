@@ -1,8 +1,8 @@
-import 'package:flash_list/providers/users.dart';
-import 'package:flash_list/screens/auth.dart';
-import 'package:flash_list/screens/home.dart';
-import 'package:flash_list/screens/splash.dart';
-import 'package:flash_list/utils/context_retriever.dart';
+import 'package:flashlist/providers/users.dart';
+import 'package:flashlist/screens/auth.dart';
+import 'package:flashlist/screens/home.dart';
+import 'package:flashlist/screens/splash.dart';
+import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_list/models/notification.dart';
-import 'package:flash_list/models/user.dart';
-import 'package:flash_list/providers/firestore.dart';
+import 'package:flashlist/models/notification.dart';
+import 'package:flashlist/models/user.dart';
+import 'package:flashlist/providers/firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authProvider = StreamProvider<User?>(
