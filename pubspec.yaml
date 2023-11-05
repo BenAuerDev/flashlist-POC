@@ -49,6 +49,7 @@ dependencies:
   google_fonts: ^6.1.0
   firebase_messaging: ^14.7.1
   adaptive_theme: ^3.4.1
+  flutter_native_splash: ^2.3.5
 
 dev_dependencies:
   flutter_test:
@@ -75,8 +76,9 @@ flutter:
   generate: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  # - assets/images/map.png
+  assets:
+    - assets/favicon/logo.png
+    - assets/favicon/logo_dark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
