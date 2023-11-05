@@ -1,8 +1,8 @@
-import 'package:flash_list/models/group.dart';
-import 'package:flash_list/screens/new_body_item_form.dart';
-import 'package:flash_list/widgets/avatar_group.dart';
-import 'package:flash_list/widgets/group/group_body.dart';
-import 'package:flash_list/widgets/group/group_menu.dart';
+import 'package:flashlist/models/group.dart';
+import 'package:flashlist/screens/new_body_item_form.dart';
+import 'package:flashlist/widgets/avatar_group.dart';
+import 'package:flashlist/widgets/group/group_body.dart';
+import 'package:flashlist/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
 
 class GroupWrapper extends StatelessWidget {

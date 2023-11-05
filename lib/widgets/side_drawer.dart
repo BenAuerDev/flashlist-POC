@@ -1,6 +1,6 @@
-import 'package:flash_list/screens/profile.dart';
-import 'package:flash_list/screens/settings.dart';
-import 'package:flash_list/utils/context_retriever.dart';
+import 'package:flashlist/screens/profile.dart';
+import 'package:flashlist/screens/settings.dart';
+import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

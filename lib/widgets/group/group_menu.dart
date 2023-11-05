@@ -1,9 +1,9 @@
-import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/group.dart';
-import 'package:flash_list/screens/group_form.dart';
-import 'package:flash_list/screens/share.dart';
+import 'package:flashlist/models/group.dart';
+import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/screens/group_form.dart';
+import 'package:flashlist/screens/share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_list/utils/context_retriever.dart';
+import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

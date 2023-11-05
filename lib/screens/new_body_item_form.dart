@@ -1,7 +1,7 @@
-import 'package:flash_list/models/group.dart';
-import 'package:flash_list/providers/group.dart';
-import 'package:flash_list/utils/context_retriever.dart';
-import 'package:flash_list/widgets/group/group_body.dart';
+import 'package:flashlist/models/group.dart';
+import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/utils/context_retriever.dart';
+import 'package:flashlist/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

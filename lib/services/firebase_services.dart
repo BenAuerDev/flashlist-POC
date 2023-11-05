@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flash_list/models/notification.dart';
+import 'package:flashlist/models/notification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flash_list/models/group.dart';
+import 'package:flashlist/models/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flash_list/models/user.dart';
+import 'package:flashlist/models/user.dart';
 
 class FirestoreService {
   final CollectionReference groupsCollection =
