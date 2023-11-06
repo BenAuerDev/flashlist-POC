@@ -29,16 +29,20 @@ class SideDrawer extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.list_alt,
-                    size: 50,
-                    color: retrieveColorScheme(context).primary,
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    child: Image.asset(
+                      'assets/favicon/logo.png',
+                      width: 70,
+                      height: 70,
+                    ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
-                    'Flash List',
+                    'Flashlist',
                     style: TextStyle(
-                      fontSize: 24,
-                      color: retrieveColorScheme(context).primary,
+                      fontSize: 18,
+                      color: retrieveColorScheme(context).onBackground,
                     ),
                   ),
                 ],
