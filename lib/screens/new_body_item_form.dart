@@ -73,62 +73,64 @@ class NewBodyItemForm extends HookConsumerWidget {
           color: color.withOpacity(0.2),
         ),
         child: Form(
-            key: bodyItemFormKey,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                children: [
-                  Hero(
-                    tag: group.uid,
-                    child: GroupBody(group: group),
-                  ),
-                  ref.watch(groupBodyCountProvider(group.uid)).when(
-                        data: (count) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: TextFormField(
-                              autofocus: true,
-                              onEditingComplete: () {},
-                              maxLength: 40,
-                              decoration:
-                                  InputDecoration(labelText: '#${count + 1}'),
-                              onFieldSubmitted: (value) {
-                                submit();
-                              },
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onSaved: (newValue) {
-                                enteredName = newValue!;
-                              },
-                            ),
-                          );
-                        },
-                        loading: () => const SizedBox(),
-                        error: (error, stackTrace) => const SizedBox(),
-                      ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        child: Text(retrieveAppLocalizations(context).goBack),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      ElevatedButton(
-                        onPressed: submit,
-                        child: Text(retrieveAppLocalizations(context).add),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )),
+          key: bodyItemFormKey,
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              children: [
+                Hero(
+                  tag: group.uid,
+                  child: GroupBody(group: group),
+                ),
+                ref.watch(groupBodyCountProvider(group.uid)).when(
+                      data: (count) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: TextFormField(
+                            autofocus: true,
+                            onEditingComplete: () {},
+                            maxLength: 40,
+                            decoration:
+                                InputDecoration(labelText: '#${count + 1}'),
+                            onFieldSubmitted: (value) {
+                              submit();
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                // TODO: Add localization
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            onSaved: (newValue) {
+                              enteredName = newValue!;
+                            },
+                          ),
+                        );
+                      },
+                      loading: () => const SizedBox(),
+                      error: (error, stackTrace) => const SizedBox(),
+                    ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      child: Text(retrieveAppLocalizations(context).goBack),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ElevatedButton(
+                      onPressed: submit,
+                      child: Text(retrieveAppLocalizations(context).add),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

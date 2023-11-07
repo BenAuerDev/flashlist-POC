@@ -44,6 +44,7 @@ class ProfileScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
+                      // TODO add localization
                       Row(
                         children: [
                           Text(

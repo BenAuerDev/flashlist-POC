@@ -193,10 +193,14 @@ class AuthScreen extends HookWidget {
                                 isLogin.value = !isLogin.value;
                               },
                               child: isLogin.value
-                                  ? Text(retrieveAppLocalizations(context)
-                                      .createNewAccount)
-                                  : Text(retrieveAppLocalizations(context)
-                                      .alreadyHaveAccount),
+                                  ? Text(
+                                      retrieveAppLocalizations(context)
+                                          .createNewAccount,
+                                    )
+                                  : Text(
+                                      retrieveAppLocalizations(context)
+                                          .alreadyHaveAccount,
+                                    ),
                             ),
                         ],
                       ),
