@@ -26,7 +26,7 @@ final groupProvider =
 });
 
 final addGroupProvider = FutureProvider.family
-    .autoDispose<Future<Group>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<Future<Group>, GroupDTO>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).addGroup(data);
   } catch (e) {
@@ -37,7 +37,7 @@ final addGroupProvider = FutureProvider.family
 });
 
 final editGroupProvider = FutureProvider.family
-    .autoDispose<Future<Group>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<Future<Group>, GroupDTO>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).editGroup(data);
   } catch (e) {
