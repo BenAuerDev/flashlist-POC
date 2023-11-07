@@ -18,20 +18,24 @@ class GroupForm extends ConsumerWidget {
     Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
 
     Future createGroup() async {
-      final res = ref.read(addGroupProvider({
-        'title': enteredTitle,
-        'color': enteredColor ?? retrieveColorScheme(context).primary,
-      }));
+      final res = ref.read(
+        addGroupProvider(
+          GroupDTO(
+            enteredTitle,
+            enteredColor ?? retrieveColorScheme(context).primary,
+          ),
+        ),
+      );
 
       return res;
     }
 
     Future editGroup() async {
-      final res = ref.read(editGroupProvider({
-        'uid': group!.uid,
-        'title': enteredTitle,
-        'color': enteredColor ?? retrieveColorScheme(context).primary,
-      }));
+      final res = ref.read(
+        editGroupProvider(
+          GroupDTO(enteredTitle, enteredColor, group!.uid),
+        ),
+      );
       return res;
     }
 

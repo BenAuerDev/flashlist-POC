@@ -61,7 +61,7 @@ class FirestoreService {
     }
   }
 
-  Future<Group> addGroup(Map<String, dynamic> newGroup) async {
+  Future<Group> addGroup(GroupDTO newGroup) async {
     final newPermissions = {
       'owner': FirebaseAuth.instance.currentUser!.uid,
       'editors': [],
@@ -69,18 +69,18 @@ class FirestoreService {
 
     try {
       final groupReference = await groupsCollection.add({
-        'title': newGroup['title'],
+        'title': newGroup.title,
         'createdAt': Timestamp.now(),
-        'color': newGroup['color'].value,
+        'color': newGroup.color!.value,
         'body': [],
         'permissions': newPermissions,
       });
 
       return Group(
-        newGroup['title'],
+        newGroup.title,
         Timestamp.now(),
         groupReference.id,
-        newGroup['color'],
+        newGroup.color,
         [],
         newPermissions,
       );
@@ -91,20 +91,20 @@ class FirestoreService {
     }
   }
 
-  Future<Group> editGroup(Map<String, dynamic> updatedGroup) async {
+  Future<Group> editGroup(GroupDTO updatedGroup) async {
     try {
-      final group = await getGroup(updatedGroup['uid']);
+      final group = await getGroup(updatedGroup.uid!);
 
-      await groupsCollection.doc(updatedGroup['uid']).update({
-        'title': updatedGroup['title'],
-        'color': updatedGroup['color'].value,
+      await groupsCollection.doc(updatedGroup.uid).update({
+        'title': updatedGroup.title,
+        'color': updatedGroup.color!.value,
       });
 
       return Group(
-        updatedGroup['title'],
+        updatedGroup.title,
         Timestamp.now(),
-        updatedGroup['uid'],
-        updatedGroup['color'],
+        updatedGroup.uid!,
+        updatedGroup.color,
         [],
         group.permissions,
       );

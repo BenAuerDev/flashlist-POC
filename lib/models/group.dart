@@ -18,3 +18,11 @@ class Group {
     this.permissions,
   );
 }
+
+class GroupDTO {
+  final String title;
+  final Color? color;
+  final String? uid;
+
+  GroupDTO(this.title, this.color, [this.uid]);
+}
