@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flashlist/widgets/custom_inputs/password_input.dart';
@@ -87,28 +88,17 @@ class AuthScreen extends HookWidget {
     }
 
     return Scaffold(
-      backgroundColor: retrieveColorScheme(context).primary,
+      backgroundColor: retrieveColorScheme(context).background,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                width: 200,
-                child: Text(
-                  'Logo',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: retrieveColorScheme(context).primaryContainer,
-                  ),
-                ),
+              Image.asset(
+                AdaptiveTheme.of(context).mode.isDark
+                    ? 'assets/favicon/logo_white_no_background.png'
+                    : 'assets/favicon/logo_black_no_background.png',
+                width: 120,
+                height: 120,
               ),
               Card(
                 margin: const EdgeInsets.all(10),

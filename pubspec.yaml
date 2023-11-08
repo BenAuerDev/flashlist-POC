@@ -80,6 +80,8 @@ flutter:
   assets:
     - assets/favicon/logo.png
     - assets/favicon/logo_dark.png
+    - assets/favicon/logo_black_no_background.png
+    - assets/favicon/logo_white_no_background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
