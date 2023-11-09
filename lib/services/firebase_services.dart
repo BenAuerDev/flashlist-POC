@@ -24,6 +24,26 @@ class FirestoreService {
     );
   }
 
+  List<GroupBodyItem> buildGroupBody(doc) {
+    return List<GroupBodyItem>.from(
+      doc['body'].map(
+        (item) => GroupBodyItem(
+          name: item['name'],
+          uid: item['uid'],
+        ),
+      ),
+    );
+  }
+
+  List<Map<String, String>> destructureGroupBody(List<GroupBodyItem> body) {
+    return body.map((item) {
+      return {
+        'name': item.name,
+        'uid': item.uid,
+      };
+    }).toList();
+  }
+
   Stream<List<Group>> groupsForUserStream() {
     try {
       final currentUser = FirebaseAuth.instance.currentUser;
@@ -40,7 +60,7 @@ class FirestoreService {
             doc['createdAt'],
             doc.id,
             Color(doc['color']),
-            doc['body'],
+            buildGroupBody(doc),
             buildGroupPermission(doc),
           );
         }).toList();
@@ -58,7 +78,7 @@ class FirestoreService {
         snapshot['createdAt'],
         snapshot.id,
         Color(snapshot['color']),
-        snapshot['body'],
+        buildGroupBody(snapshot),
         buildGroupPermission(snapshot),
       );
     } on FirebaseException catch (error) {
@@ -135,12 +155,12 @@ class FirestoreService {
     }
   }
 
-  Stream<List<dynamic>> groupBodyStream(String groupUid) {
+  Stream<List<GroupBodyItem>> groupBodyStream(String groupUid) {
     try {
       return groupsCollection
           .doc(groupUid)
           .snapshots()
-          .map((snapshot) => snapshot['body']);
+          .map((snapshot) => buildGroupBody(snapshot));
     } on FirebaseException catch (error) {
       print("Error fetching group body: $error");
 
@@ -156,7 +176,10 @@ class FirestoreService {
 
       groupsCollection.doc(groupUid).update({
         'body': [
-          ...group.body,
+          ...group.body.map((GroupBodyItem item) => {
+                'name': item.name,
+                'uid': item.uid,
+              }),
           {
             'name': item,
             'uid': uuid,
@@ -177,10 +200,10 @@ class FirestoreService {
       final group = await getGroup(groupUid);
 
       final updatedBody =
-          group.body.where((element) => element['uid'] != itemUid);
+          group.body.where((element) => element.uid != itemUid).toList();
 
       groupsCollection.doc(groupUid).update({
-        'body': updatedBody.toList(),
+        'body': destructureGroupBody(updatedBody),
       });
     } on FirebaseException catch (error) {
       print("Error removing item to body: $error");
@@ -189,10 +212,10 @@ class FirestoreService {
     }
   }
 
-  Future<bool> setGroupBody(String groupUid, List<dynamic> items) async {
+  Future<bool> setGroupBody(String groupUid, List<GroupBodyItem> items) async {
     try {
       groupsCollection.doc(groupUid).update({
-        'body': items,
+        'body': destructureGroupBody(items),
       });
       return true;
     } on FirebaseException catch (error) {
