@@ -219,7 +219,7 @@ class FirestoreService {
         if (userUids == null || userUids.isEmpty) {
           return [];
         }
-        return getUsersByUid(userUids);
+        return getUsersByUid(List<String>.from(userUids));
       });
     } on FirebaseException catch (error) {
       return Stream.error("Failed to fetch group editors: $error");
@@ -288,7 +288,7 @@ class FirestoreService {
     }
   }
 
-  Future<List<CustomUser>> getUsersByUid(List<dynamic> userUids) {
+  Future<List<CustomUser>> getUsersByUid(List<String> userUids) {
     try {
       return userCollection
           .where('uid', whereIn: userUids)

@@ -65,11 +65,11 @@ final groupBodyProvider = StreamProvider.autoDispose.family(
 );
 
 final addItemToGroupBodyProvider = FutureProvider.family
-    .autoDispose<Future<void>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<Future<void>, Map<String, String>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).addItemToGroupBody(
-          data['groupUid'],
-          data['name'],
+          data['groupUid']!,
+          data['name']!,
         );
   } catch (e) {
     print(e);
@@ -79,11 +79,11 @@ final addItemToGroupBodyProvider = FutureProvider.family
 });
 
 final removeItemFromGroupBodyProvider = FutureProvider.family
-    .autoDispose<FutureOr<void>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<FutureOr<void>, Map<String, String>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).removeItemFromGroupBody(
-          data['groupUid'],
-          data['itemUid'],
+          data['groupUid']!,
+          data['itemUid']!,
         );
   } catch (e) {
     print(e);
@@ -119,11 +119,11 @@ final groupBodyCountProvider = StreamProvider.autoDispose.family(
 );
 
 final removeGroupEditorProvider = Provider.family
-    .autoDispose<Future<void>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<Future<void>, Map<String, String>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).removeEditorFromGroup(
-          data['groupUid'],
-          data['editorUid'],
+          data['groupUid']!,
+          data['editorUid']!,
         );
   } catch (e) {
     print(e);
@@ -146,11 +146,11 @@ final inviteUserToGroupProvider =
 });
 
 final addUserToGroupProvider =
-    FutureProvider.family<bool, Map<String, dynamic>>((ref, data) async {
+    FutureProvider.family<bool, Map<String, String>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).addUserToGroup(
-          data['editorUid'],
-          data['groupUid'],
+          data['editorUid']!,
+          data['groupUid']!,
         );
   } catch (e) {
     print(e);
@@ -160,12 +160,13 @@ final addUserToGroupProvider =
 });
 
 final removeNotificationProvider =
-    FutureProvider.family<void, Map<String, dynamic>>(
+    FutureProvider.family<void, Map<String, String>>(
   (ref, data) async {
     try {
-      return ref
-          .watch(firestoreServiceProvider)
-          .removeNotification(data['userUid'], data['notificationUid']);
+      return ref.watch(firestoreServiceProvider).removeNotification(
+            data['userUid']!,
+            data['notificationUid']!,
+          );
     } catch (e) {
       print(e);
 
@@ -175,12 +176,12 @@ final removeNotificationProvider =
 );
 
 final markNotificationAsReadProvider =
-    FutureProvider.family<void, Map<String, dynamic>>(
+    FutureProvider.family<void, Map<String, String>>(
   (ref, data) async {
     try {
       return ref
           .watch(firestoreServiceProvider)
-          .markInvitationAsRead(data['userUid'], data['notificationUid']);
+          .markInvitationAsRead(data['userUid']!, data['notificationUid']!);
     } catch (e) {
       print(e);
 
@@ -190,13 +191,13 @@ final markNotificationAsReadProvider =
 );
 
 final acceptGroupInvitationProvider =
-    FutureProvider.family<void, Map<String, dynamic>>(
+    FutureProvider.family<void, Map<String, String>>(
   (ref, data) async {
     try {
       return ref.watch(firestoreServiceProvider).acceptGroupInvitation(
-            data['userUid'],
-            data['groupUid'],
-            data['notificationUid'],
+            data['userUid']!,
+            data['groupUid']!,
+            data['notificationUid']!,
           );
     } catch (e) {
       print(e);

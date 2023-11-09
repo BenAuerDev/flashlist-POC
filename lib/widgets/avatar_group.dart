@@ -17,7 +17,7 @@ class AvatarGroup extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var isExpanded = useState(false);
 
-    List<dynamic> usersWithoutCurrent = [
+    List<String> usersWithoutCurrent = [
       ...group.permissions.editors,
       group.permissions.owner,
     ].where((userUid) => userUid != currentUser!.uid).toList();
