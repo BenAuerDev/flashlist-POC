@@ -1,6 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+class GroupBodyItem {
+  final String name;
+  final String uid;
+
+  GroupBodyItem({required this.name, required this.uid});
+
+  @override
+  String toString() => name;
+}
+
 class GroupPermissions {
   final String owner;
   final List<String> editors;
@@ -13,7 +23,7 @@ class Group {
   final Timestamp createdAt;
   final String uid;
   final Color? color;
-  final List<dynamic> body;
+  final List<GroupBodyItem> body;
   final GroupPermissions permissions;
 
   Group(
@@ -24,6 +34,9 @@ class Group {
     this.body,
     this.permissions,
   );
+
+  @override
+  String toString() => title;
 }
 
 class GroupDTO {
