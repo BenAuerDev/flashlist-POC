@@ -17,6 +17,13 @@ class FirestoreService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
+  GroupPermissions buildGroupPermission(doc) {
+    return GroupPermissions(
+      doc['permissions']['owner'] as String,
+      List<String>.from(doc['permissions']['editors']),
+    );
+  }
+
   Stream<List<Group>> groupsForUserStream() {
     try {
       final currentUser = FirebaseAuth.instance.currentUser;
@@ -34,7 +41,7 @@ class FirestoreService {
             doc.id,
             Color(doc['color']),
             doc['body'],
-            doc['permissions'],
+            buildGroupPermission(doc),
           );
         }).toList();
       });
@@ -52,7 +59,7 @@ class FirestoreService {
         snapshot.id,
         Color(snapshot['color']),
         snapshot['body'],
-        snapshot['permissions'],
+        buildGroupPermission(snapshot),
       );
     } on FirebaseException catch (error) {
       print("Error fetching group: $error");
@@ -82,7 +89,10 @@ class FirestoreService {
         groupReference.id,
         newGroup.color,
         [],
-        newPermissions,
+        GroupPermissions(
+          newPermissions['owner'] as String,
+          newPermissions['editors'] as List<String>,
+        ),
       );
     } on FirebaseException catch (error) {
       print("Error creating group: $error");
@@ -216,11 +226,11 @@ class FirestoreService {
       final group = await getGroup(groupUid);
 
       final updatedEditors =
-          group.permissions['editors'].where((uid) => uid != editorUid);
+          group.permissions.editors.where((uid) => uid != editorUid);
 
       groupsCollection.doc(groupUid).update({
         'permissions': {
-          'owner': group.permissions['owner'],
+          'owner': group.permissions.owner,
           'editors': updatedEditors.toList(),
         }
       });
@@ -355,13 +365,13 @@ class FirestoreService {
       final group = await getGroup(groupUid);
 
       final updatedEditors = [
-        ...group.permissions['editors'],
+        ...group.permissions.editors,
         invitee.uid,
       ];
 
       groupsCollection.doc(groupUid).update({
         'permissions': {
-          'owner': group.permissions['owner'],
+          'owner': group.permissions.owner,
           'editors': updatedEditors,
         }
       });
