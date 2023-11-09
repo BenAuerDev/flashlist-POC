@@ -16,10 +16,9 @@ class GroupMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isCurrentUserOwner =
-        group.permissions['owner'] == currentUser!.uid;
+    final bool isCurrentUserOwner = group.permissions.owner == currentUser!.uid;
     final bool isCurrentUserInEditors =
-        group.permissions['editors'].contains(currentUser!.uid);
+        group.permissions.editors.contains(currentUser!.uid);
 
     AlertDialog showConfirmDialog(String title, String content) {
       return AlertDialog(
