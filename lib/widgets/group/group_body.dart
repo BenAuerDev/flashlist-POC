@@ -45,7 +45,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
       );
     }
 
-    void onDismissItem(item) async {
+    void onDismissItem(GroupBodyItem item) async {
       final oldState = items!.toList();
       final index = items.indexOf(item);
 
@@ -57,7 +57,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
         removeItemFromGroupBodyProvider(
           {
             'groupUid': widget.group.uid,
-            'itemUid': item['uid'],
+            'itemUid': item.uid,
           },
         ),
       );
@@ -86,7 +86,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
             index: index,
             key: Key('$index'),
             child: Dismissible(
-              key: ValueKey(items[index]['uid']),
+              key: ValueKey(items[index].uid),
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 onDismissItem(items[index]);
@@ -109,7 +109,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
                   height: 40,
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${items[index]['name']}',
+                    items[index].name,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
