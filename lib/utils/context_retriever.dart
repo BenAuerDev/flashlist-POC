@@ -16,3 +16,11 @@ ColorScheme retrieveColorScheme(context) {
 AppLocalizations retrieveAppLocalizations(context) {
   return AppLocalizations.of(context)!;
 }
+
+Brightness retrieveBrightness(context) {
+  return retrieveTheme(context).brightness;
+}
+
+bool retrieveIsDarkTheme(context) {
+  return retrieveBrightness(context) == Brightness.dark;
+}

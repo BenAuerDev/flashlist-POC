@@ -23,30 +23,26 @@ class SideDrawer extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
-                color: retrieveColorScheme(context).primaryContainer),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: Image.asset(
-                      'assets/favicon/logo.png',
-                      width: 70,
-                      height: 70,
-                    ),
+            decoration:
+                BoxDecoration(color: retrieveColorScheme(context).background),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  retrieveIsDarkTheme(context)
+                      ? 'assets/favicon/logo_white_no_background.png'
+                      : 'assets/favicon/logo_black_no_background.png',
+                  width: 120,
+                  height: 100,
+                ),
+                Text(
+                  'Flashlist',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: retrieveColorScheme(context).onBackground,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Flashlist',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: retrieveColorScheme(context).onBackground,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           ListTile(
