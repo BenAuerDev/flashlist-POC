@@ -66,7 +66,7 @@ class FirestoreService {
         }).toList();
       });
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -82,9 +82,7 @@ class FirestoreService {
         buildGroupPermission(snapshot),
       );
     } on FirebaseException catch (error) {
-      print("Error fetching group: $error");
-
-      return Future.error("Failed to fetch group");
+      return Future.error("Failed to fetch group: $error");
     }
   }
 
@@ -115,9 +113,7 @@ class FirestoreService {
         ),
       );
     } on FirebaseException catch (error) {
-      print("Error creating group: $error");
-
-      return Future.error("Failed to create group");
+      return Future.error("Failed to create group: $error");
     }
   }
 
@@ -139,9 +135,7 @@ class FirestoreService {
         group.permissions,
       );
     } on FirebaseException catch (error) {
-      print("Error editing group: $error");
-
-      return Future.error("Failed to edit group");
+      return Future.error("Failed to edit group: $error");
     }
   }
 
@@ -149,9 +143,7 @@ class FirestoreService {
     try {
       await groupsCollection.doc(groupUid).delete();
     } on FirebaseException catch (error) {
-      print("Error deleting group: $error");
-
-      return Future.error("Failed to delete group");
+      return Future.error("Failed to delete group: $error");
     }
   }
 
@@ -162,9 +154,7 @@ class FirestoreService {
           .snapshots()
           .map((snapshot) => buildGroupBody(snapshot));
     } on FirebaseException catch (error) {
-      print("Error fetching group body: $error");
-
-      return Stream.error("Failed to fetch group body");
+      return Stream.error("Failed to fetch group body: $error");
     }
   }
 
@@ -189,9 +179,7 @@ class FirestoreService {
 
       return uuid;
     } on FirebaseException catch (error) {
-      print("Error add item to body: $error");
-
-      return Future.error("Failed to add item");
+      return Future.error("Failed to add item: $error");
     }
   }
 
@@ -206,9 +194,7 @@ class FirestoreService {
         'body': destructureGroupBody(updatedBody),
       });
     } on FirebaseException catch (error) {
-      print("Error removing item to body: $error");
-
-      return Future.error("Failed to remove item");
+      return Future.error("Failed to remove item: $error");
     }
   }
 
@@ -219,9 +205,7 @@ class FirestoreService {
       });
       return true;
     } on FirebaseException catch (error) {
-      print("Error setting body: $error");
-
-      return Future.error("Failed to set body");
+      return Future.error("Failed to set body: $error");
     }
   }
 
@@ -238,9 +222,7 @@ class FirestoreService {
         return getUsersByUid(userUids);
       });
     } on FirebaseException catch (error) {
-      print("Error fetching group editors: $error");
-
-      return Stream.error("Failed to fetch group editors");
+      return Stream.error("Failed to fetch group editors: $error");
     }
   }
 
@@ -258,9 +240,7 @@ class FirestoreService {
         }
       });
     } on FirebaseException catch (error) {
-      print("Error removing editor from group: $error");
-
-      return Future.error("Failed to remove editor from group");
+      return Future.error("Failed to remove editor from group: $error");
     }
   }
 
@@ -282,9 +262,7 @@ class FirestoreService {
         return Future.error("User does not exist");
       }
     } on FirebaseException catch (error) {
-      print("Error fetching user: $error");
-
-      return Future.error("Failed to fetch user");
+      return Future.error("Failed to fetch user: $error");
     }
   }
 
@@ -306,9 +284,7 @@ class FirestoreService {
         return Future.error("User does not exist");
       }
     } on FirebaseException catch (error) {
-      print("Error fetching user: $error");
-
-      return Future.error("Failed to fetch user");
+      return Future.error("Failed to fetch user: $error");
     }
   }
 
@@ -327,9 +303,7 @@ class FirestoreService {
                 );
               }).toList());
     } on FirebaseException catch (error) {
-      print("Error fetching users: $error");
-
-      return Future.error("Failed to fetch users");
+      return Future.error("Failed to fetch users: $error");
     }
   }
 
@@ -348,7 +322,7 @@ class FirestoreService {
         'image_url': imageUrl,
       });
     } catch (error) {
-      print(error);
+      return Future.error('Failed to upload user avatar: $error');
     }
   }
 
@@ -376,9 +350,7 @@ class FirestoreService {
         }
       });
     } on FirebaseException catch (error) {
-      print("Error inviting user to group: $error");
-
-      return Future.error("Failed to invite user to group");
+      return Future.error("Failed to invite user to group: $error");
     }
   }
 
@@ -401,9 +373,7 @@ class FirestoreService {
 
       return true;
     } on FirebaseException catch (error) {
-      print("Error adding user to group: $error");
-
-      return Future.error("Failed to add user to group");
+      return Future.error("Failed to add user to group: $error");
     }
   }
 
@@ -420,9 +390,7 @@ class FirestoreService {
         'notifications': updatedNotifications,
       });
     } on FirebaseException catch (error) {
-      print("Error removing notification: $error");
-
-      return Future.error("Failed to remove notification");
+      return Future.error("Failed to remove notification: $error");
     }
   }
 
@@ -444,9 +412,7 @@ class FirestoreService {
         'notifications': updatedNotifications,
       });
     } on FirebaseException catch (error) {
-      print("Error marking invitation as read: $error");
-
-      return Future.error("Failed to mark invitation as read");
+      return Future.error("Failed to mark invitation as read: $error");
     }
   }
 
@@ -459,9 +425,7 @@ class FirestoreService {
         removeNotification(userUid, notificationUid);
       }
     } on FirebaseException catch (error) {
-      print("Error accepting group invitation: $error");
-
-      return Future.error("Failed to accept group invitation");
+      return Future.error("Failed to accept group invitation: $error");
     }
   }
 
@@ -492,7 +456,7 @@ class FirestoreService {
         }
       });
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -518,7 +482,7 @@ class FirestoreService {
 
       return count;
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -535,7 +499,7 @@ class FirestoreService {
 
       return count;
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 }
