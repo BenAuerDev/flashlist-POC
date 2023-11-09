@@ -1,10 +1,4 @@
 class CustomUser {
-  final String email;
-  final String username;
-  final String uid;
-  final String? imageUrl;
-  final List<dynamic> notifications;
-
   CustomUser(
     this.email,
     this.username,
@@ -12,4 +6,10 @@ class CustomUser {
     this.imageUrl,
     this.notifications,
   );
+
+  final String email;
+  final String username;
+  final String uid;
+  final String? imageUrl;
+  final List<dynamic> notifications;
 }
