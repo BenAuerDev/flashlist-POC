@@ -18,8 +18,8 @@ class AvatarGroup extends HookConsumerWidget {
     var isExpanded = useState(false);
 
     List<dynamic> usersWithoutCurrent = [
-      ...group.permissions['editors'],
-      group.permissions['owner']
+      ...group.permissions.editors,
+      group.permissions.owner,
     ].where((userUid) => userUid != currentUser!.uid).toList();
 
     AnimationController animationController = useAnimationController(

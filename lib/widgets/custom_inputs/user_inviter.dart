@@ -51,7 +51,7 @@ class UserInviter extends HookConsumerWidget {
       final user = ref.read(getUserByEmailProvider(emailController.text));
 
       if (user.value != null &&
-          group.permissions['editors'].contains(user.value!.uid)) {
+          group.permissions.editors.contains(user.value!.uid)) {
         showSnackbar(
           retrieveAppLocalizations(context)
               .userAlreadyHasAccess(user.value!.username),
