@@ -1,13 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+class GroupPermissions {
+  final String owner;
+  final List<String> editors;
+
+  GroupPermissions(this.owner, this.editors);
+}
+
 class Group {
   final String title;
   final Timestamp createdAt;
   final String uid;
   final Color? color;
   final List<dynamic> body;
-  final Map<String, dynamic> permissions;
+  final GroupPermissions permissions;
 
   Group(
     this.title,
