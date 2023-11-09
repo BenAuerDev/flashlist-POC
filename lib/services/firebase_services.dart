@@ -111,7 +111,7 @@ class FirestoreService {
         [],
         GroupPermissions(
           newPermissions['owner'] as String,
-          newPermissions['editors'] as List<String>,
+          List<String>.from(newPermissions['editors'] as List),
         ),
       );
     } on FirebaseException catch (error) {
