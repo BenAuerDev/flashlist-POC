@@ -7,10 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final userGroupsProvider = StreamProvider<List<Group>>((ref) async* {
   try {
     yield* ref.watch(firestoreServiceProvider).groupsForUserStream();
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to get user's groups");
+  } catch (error) {
+    throw StateError("failed to get user's groups: $error");
   }
 });
 
@@ -18,10 +16,8 @@ final groupProvider =
     FutureProvider.family<Group, String>((ref, groupUid) async {
   try {
     return ref.watch(firestoreServiceProvider).getGroup(groupUid);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to get group");
+  } catch (error) {
+    throw StateError("failed to get group: $error");
   }
 });
 
@@ -29,10 +25,8 @@ final addGroupProvider = FutureProvider.family
     .autoDispose<Future<Group>, GroupDTO>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).addGroup(data);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to add group");
+  } catch (error) {
+    throw StateError("failed to add group: $error");
   }
 });
 
@@ -40,10 +34,8 @@ final editGroupProvider = FutureProvider.family
     .autoDispose<Future<Group>, GroupDTO>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).editGroup(data);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to edit group");
+  } catch (error) {
+    throw StateError("failed to edit group: $error");
   }
 });
 
@@ -51,10 +43,8 @@ final removeGroupProvider =
     FutureProvider.family.autoDispose<void, String>((ref, groupUid) async {
   try {
     return ref.watch(firestoreServiceProvider).removeGroup(groupUid);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to remove group");
+  } catch (error) {
+    throw StateError("failed to remove group: $error");
   }
 });
 
@@ -71,10 +61,8 @@ final addItemToGroupBodyProvider = FutureProvider.family
           data['groupUid']!,
           data['name']!,
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to add item to group body");
+  } catch (error) {
+    throw StateError("failed to add item to group body: $error");
   }
 });
 
@@ -85,24 +73,20 @@ final removeItemFromGroupBodyProvider = FutureProvider.family
           data['groupUid']!,
           data['itemUid']!,
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to remove item from group body");
+  } catch (error) {
+    throw StateError("failed to remove item from group body: $error");
   }
 });
 
 final setGroupBodyProvider = FutureProvider.family
-    .autoDispose<Future<void>, Map<String, dynamic>>((ref, data) async {
+    .autoDispose<Future<void>, Map<String, Object>>((ref, data) async {
   try {
     return ref.watch(firestoreServiceProvider).setGroupBody(
-          data['groupUid'],
-          data['body'],
+          data['groupUid'] as String,
+          data['body'] as List<GroupBodyItem>,
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to set group body");
+  } catch (error) {
+    throw StateError("failed to set group body: $error");
   }
 });
 
@@ -125,10 +109,8 @@ final removeGroupEditorProvider = Provider.family
           data['groupUid']!,
           data['editorUid']!,
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to remove group editor");
+  } catch (error) {
+    throw StateError("failed to remove group editor: $error");
   }
 });
 
@@ -138,10 +120,8 @@ final inviteUserToGroupProvider =
     return ref
         .watch(firestoreServiceProvider)
         .inviteUserToGroup(data['group'], data['userUid']);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to invite user to group");
+  } catch (error) {
+    throw StateError("failed to invite user to group: $error");
   }
 });
 
@@ -152,10 +132,8 @@ final addUserToGroupProvider =
           data['editorUid']!,
           data['groupUid']!,
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to add user to group");
+  } catch (error) {
+    throw StateError("failed to add user to group: $error");
   }
 });
 
@@ -167,10 +145,8 @@ final removeNotificationProvider =
             data['userUid']!,
             data['notificationUid']!,
           );
-    } catch (e) {
-      print(e);
-
-      throw StateError("failed to remove notification");
+    } catch (error) {
+      throw StateError("failed to remove notification: $error");
     }
   },
 );
@@ -182,10 +158,8 @@ final markNotificationAsReadProvider =
       return ref
           .watch(firestoreServiceProvider)
           .markInvitationAsRead(data['userUid']!, data['notificationUid']!);
-    } catch (e) {
-      print(e);
-
-      throw StateError("failed to mark notification as read");
+    } catch (error) {
+      throw StateError("failed to mark notification as read: $error");
     }
   },
 );
@@ -199,10 +173,8 @@ final acceptGroupInvitationProvider =
             data['groupUid']!,
             data['notificationUid']!,
           );
-    } catch (e) {
-      print(e);
-
-      throw StateError("failed to accept group invitation");
+    } catch (error) {
+      throw StateError("failed to accept group invitation: $error");
     }
   },
 );
