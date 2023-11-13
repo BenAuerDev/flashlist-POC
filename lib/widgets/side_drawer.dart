@@ -1,24 +1,15 @@
 import 'package:flashlist/constants/app_sizes.dart';
-import 'package:flashlist/screens/profile.dart';
-import 'package:flashlist/screens/settings.dart';
+import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void navigateTo(Widget screen) {
-      Navigator.of(context).pop();
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => screen,
-        ),
-      );
-    }
-
     return Drawer(
       shape: const BeveledRectangleBorder(),
       child: ListView(
@@ -52,7 +43,7 @@ class SideDrawer extends StatelessWidget {
               gapW12,
               Text(retrieveAppLocalizations(context).profile),
             ]),
-            onTap: () => navigateTo(const ProfileScreen()),
+            onTap: () => context.goNamed(AppRoute.profile.name),
           ),
           ListTile(
             title: Row(children: [
@@ -60,7 +51,7 @@ class SideDrawer extends StatelessWidget {
               gapW12,
               Text(retrieveAppLocalizations(context).settings),
             ]),
-            onTap: () => navigateTo(const SettingsScreen()),
+            onTap: () => context.goNamed(AppRoute.settings.name),
           ),
           ListTile(
             title: Row(children: [
@@ -69,7 +60,7 @@ class SideDrawer extends StatelessWidget {
               Text(retrieveAppLocalizations(context).signOut),
             ]),
             onTap: () {
-              Navigator.of(context).pop();
+              context.pop();
               FirebaseAuth.instance.signOut();
             },
           ),
