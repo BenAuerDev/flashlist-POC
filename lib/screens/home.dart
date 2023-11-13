@@ -1,24 +1,17 @@
-import 'package:flashlist/screens/group_form.dart';
+import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/screens/tabs/groups_list.dart';
 import 'package:flashlist/screens/tabs/notifications.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/notification/notification_badge.dart';
 import 'package:flashlist/widgets/side_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void goToGroupForm() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const GroupForm(),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -62,7 +55,7 @@ class HomeScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         backgroundColor: retrieveColorScheme(context).background,
-        onPressed: goToGroupForm,
+        onPressed: () => context.goNamed(AppRoute.addGroup.name),
         child: const Icon(Icons.add_card),
       ),
       drawer: const SideDrawer(),
