@@ -9,11 +9,15 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // turn off the # in the URLs on the web
+  usePathUrlStrategy();
 
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
