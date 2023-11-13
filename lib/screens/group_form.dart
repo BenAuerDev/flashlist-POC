@@ -4,16 +4,20 @@ import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/color_input.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class GroupForm extends ConsumerWidget {
-  const GroupForm({super.key, this.group});
+  const GroupForm({super.key, this.groupUid});
 
-  final Group? group;
+  final String? groupUid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final groupFormKey = GlobalKey<FormState>();
+
+    final Group? group =
+        groupUid != null ? ref.watch(groupProvider(groupUid!)).value : null;
 
     var enteredTitle = group?.title ?? '';
     Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
@@ -54,18 +58,18 @@ class GroupForm extends ConsumerWidget {
       } else {
         editGroup();
       }
-      Navigator.of(context).pop();
+      context.pop();
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            group == null ? '' : group!.title,
+            group == null ? '' : group.title,
             style: TextStyle(
               color: group == null
                   ? retrieveColorScheme(context).onBackground
-                  : group!.color,
+                  : group.color,
               fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
@@ -100,7 +104,7 @@ class GroupForm extends ConsumerWidget {
                 ),
                 gapH12,
                 ColorInput(
-                  initialColor: group != null ? group!.color : null,
+                  initialColor: group != null ? group.color : null,
                   onSelectColor: (Color color) {
                     enteredColor = color;
                   },
@@ -110,7 +114,7 @@ class GroupForm extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => context.pop(),
                       child: Text(retrieveAppLocalizations(context).goBack),
                     ),
                     ElevatedButton(
