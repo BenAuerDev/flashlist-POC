@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -36,7 +37,7 @@ class BrightnessRadio extends HookWidget {
                 const Icon(Icons.dark_mode),
               if (currentThemeMode == AdaptiveThemeMode.system)
                 const Icon(Icons.settings),
-              const SizedBox(width: 10),
+              gapW12,
 
               Text(retrieveAppLocalizations(context).brightness)
             ],

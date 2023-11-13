@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -63,7 +64,7 @@ class ShareScreen extends HookConsumerWidget {
         child: Column(
           children: [
             UserInviter(group: group),
-            const SizedBox(height: 16),
+            gapH16,
             ref.watch(groupEditorsProvider(group.uid)).when(
                   loading: () => const Center(
                     child: CircularProgressIndicator(),

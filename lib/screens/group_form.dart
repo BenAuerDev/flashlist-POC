@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -97,14 +98,14 @@ class GroupForm extends ConsumerWidget {
                     enteredTitle = newValue!;
                   },
                 ),
-                const SizedBox(height: 12),
+                gapH12,
                 ColorInput(
                   initialColor: group != null ? group!.color : null,
                   onSelectColor: (Color color) {
                     enteredColor = color;
                   },
                 ),
-                const SizedBox(height: 12),
+                gapH12,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

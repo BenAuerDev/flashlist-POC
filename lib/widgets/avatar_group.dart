@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/widgets/slide_fade_transition.dart';
@@ -67,7 +68,7 @@ class AvatarGroup extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(width: 8),
+                      gapW8,
                       for (var user in editors)
                         Align(
                           alignment: isExpanded.value

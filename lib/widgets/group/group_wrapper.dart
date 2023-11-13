@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/screens/new_body_item_form.dart';
 import 'package:flashlist/widgets/avatar_group.dart';
@@ -60,7 +61,7 @@ class GroupWrapper extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          gapH8,
           Hero(
             tag: '${group.uid}-${group.body.length}',
             child: GroupBody(

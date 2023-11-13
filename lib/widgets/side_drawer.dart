@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/screens/profile.dart';
 import 'package:flashlist/screens/settings.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -48,7 +49,7 @@ class SideDrawer extends StatelessWidget {
           ListTile(
             title: Row(children: [
               const Icon(Icons.person),
-              const SizedBox(width: 10),
+              gapW12,
               Text(retrieveAppLocalizations(context).profile),
             ]),
             onTap: () => navigateTo(const ProfileScreen()),
@@ -56,7 +57,7 @@ class SideDrawer extends StatelessWidget {
           ListTile(
             title: Row(children: [
               const Icon(Icons.settings),
-              const SizedBox(width: 10),
+              gapW12,
               Text(retrieveAppLocalizations(context).settings),
             ]),
             onTap: () => navigateTo(const SettingsScreen()),
@@ -64,7 +65,7 @@ class SideDrawer extends StatelessWidget {
           ListTile(
             title: Row(children: [
               const Icon(Icons.logout),
-              const SizedBox(width: 10),
+              gapW12,
               Text(retrieveAppLocalizations(context).signOut),
             ]),
             onTap: () {

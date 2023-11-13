@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/avatar_picker.dart';
@@ -43,18 +44,18 @@ class ProfileScreen extends ConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      gapH12,
                       // TODO add localization
                       Row(
                         children: [
                           Text(
                             '${retrieveAppLocalizations(context).username}: ',
                           ),
-                          const SizedBox(width: 12),
+                          gapW12,
                           Text(user['username'] ?? 'No username'),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      gapH12,
                       Row(
                         children: [
                           Text(

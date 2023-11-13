@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/notification.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -74,7 +75,7 @@ class NotificationItem extends ConsumerWidget {
         child: Row(
           children: [
             const Icon(Icons.groups, size: 35),
-            const SizedBox(width: 16),
+            gapW16,
             Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,

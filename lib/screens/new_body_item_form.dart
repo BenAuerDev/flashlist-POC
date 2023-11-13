@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -111,7 +112,7 @@ class NewBodyItemForm extends HookConsumerWidget {
                       loading: () => const SizedBox(),
                       error: (error, stackTrace) => const SizedBox(),
                     ),
-                const SizedBox(height: 12),
+                gapH12,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
