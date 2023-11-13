@@ -1,10 +1,11 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
-import 'package:flashlist/screens/new_body_item_form.dart';
+import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/widgets/avatar_group.dart';
 import 'package:flashlist/widgets/group/group_body.dart';
 import 'package:flashlist/widgets/group/group_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GroupWrapper extends StatelessWidget {
   const GroupWrapper({super.key, required this.group});
@@ -13,17 +14,15 @@ class GroupWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void addItemToBody() async {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => NewBodyItemForm(group: group),
-        ),
-      );
-    }
+    void addItemToBody() => context.goNamed(
+          AppRoute.addItemToBody.name,
+          pathParameters: {'id': group.uid},
+        );
 
     return Container(
       margin: const EdgeInsets.all(4),
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
+      padding:
+          const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
       decoration: BoxDecoration(
         border: Border.all(color: group.color!),
         borderRadius: BorderRadius.circular(Sizes.p8),
