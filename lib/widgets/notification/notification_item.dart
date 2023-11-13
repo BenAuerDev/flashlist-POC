@@ -4,6 +4,7 @@ import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NotificationItem extends ConsumerWidget {
@@ -28,7 +29,7 @@ class NotificationItem extends ConsumerWidget {
                 'notificationUid': notification.uid,
               },
             ));
-            Navigator.of(context).pop('no');
+            context.pop('no');
           },
           child: Text(retrieveAppLocalizations(context).no),
         ),
@@ -38,7 +39,7 @@ class NotificationItem extends ConsumerWidget {
               'userUid': currentUserUid,
               'notificationUid': notification.uid
             }));
-            Navigator.of(context).pop('notnow');
+            context.pop('notnow');
           },
           child: Text(retrieveAppLocalizations(context).notNow),
         ),
@@ -51,7 +52,7 @@ class NotificationItem extends ConsumerWidget {
                 'notificationUid': notification.uid,
               },
             ));
-            Navigator.of(context).pop('yes');
+            context.pop('yes');
           },
           child: Text(retrieveAppLocalizations(context).yes),
         ),
