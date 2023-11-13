@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/providers/users.dart';
@@ -88,9 +89,7 @@ class UserInviter extends HookConsumerWidget {
             labelText: retrieveAppLocalizations(context).email,
           ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        gapH8,
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -52,9 +53,7 @@ class ColorInput extends HookConsumerWidget {
           },
           child: Text(retrieveAppLocalizations(context).pickAColor),
         ),
-        const SizedBox(
-          width: 16,
-        ),
+        gapW16,
         Container(
           color: currentColor.value,
           child: const SizedBox(

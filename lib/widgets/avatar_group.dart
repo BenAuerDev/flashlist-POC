@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/widgets/slide_fade_transition.dart';
@@ -67,7 +68,7 @@ class AvatarGroup extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(width: 8),
+                      gapW8,
                       for (var user in editors)
                         Align(
                           alignment: isExpanded.value
@@ -82,7 +83,7 @@ class AvatarGroup extends HookConsumerWidget {
                             animationController: animationController,
                             direction: isExpanded.value ? 1 : -1,
                             child: CircleAvatar(
-                              radius: 16,
+                              radius: Sizes.p16,
                               backgroundImage: NetworkImage(
                                 user.imageUrl ??
                                     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',

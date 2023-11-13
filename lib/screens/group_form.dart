@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -65,7 +66,7 @@ class GroupForm extends ConsumerWidget {
               color: group == null
                   ? retrieveColorScheme(context).onBackground
                   : group!.color,
-              fontSize: 24,
+              fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -74,7 +75,7 @@ class GroupForm extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
           child: Form(
             key: groupFormKey,
             child: Column(
@@ -97,14 +98,14 @@ class GroupForm extends ConsumerWidget {
                     enteredTitle = newValue!;
                   },
                 ),
-                const SizedBox(height: 12),
+                gapH12,
                 ColorInput(
                   initialColor: group != null ? group!.color : null,
                   onSelectColor: (Color color) {
                     enteredColor = color;
                   },
                 ),
-                const SizedBox(height: 12),
+                gapH12,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

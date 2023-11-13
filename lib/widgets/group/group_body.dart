@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
@@ -107,11 +108,11 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
                 child: Container(
                   width: double.infinity,
                   height: 40,
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  const EdgeInsets.all(Sizes.p8),
                   child: Text(
                     items[index].name,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: Sizes.p16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -145,7 +146,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
     if (items == null || items.isEmpty) {
       return const Text(
         'No items yet',
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: Sizes.p16),
       );
     }
 

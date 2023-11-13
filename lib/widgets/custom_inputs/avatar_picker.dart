@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -37,7 +38,7 @@ class AvatarPicker extends HookWidget {
           return Container(
             decoration: const BoxDecoration(borderRadius: BorderRadius.zero),
             height: 150,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: Sizes.p20),
             width: double.infinity,
             child: Column(
               children: [
@@ -49,7 +50,7 @@ class AvatarPicker extends HookWidget {
                     Navigator.of(context).pop();
                   },
                 ),
-                const SizedBox(height: 12),
+                gapH12,
                 TextButton.icon(
                   icon: const Icon(Icons.image),
                   label: Text(retrieveAppLocalizations(context).gallery),

@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/screens/auth.dart';
 import 'package:flashlist/screens/home.dart';
@@ -30,7 +31,7 @@ class MyApp extends ConsumerWidget {
     final textTheme = retrieveTextTheme(context);
 
     final cardTheme = const CardTheme().copyWith(
-      margin: const EdgeInsets.all(4),
+      margin: const EdgeInsets.all(Sizes.p4),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(4),
@@ -47,7 +48,7 @@ class MyApp extends ConsumerWidget {
         colorSchemeSeed: Colors.blue,
         brightness: Brightness.light,
         cardTheme: cardTheme.copyWith(
-          margin: const EdgeInsets.all(4),
+          margin: const EdgeInsets.all(Sizes.p4),
         ),
       ),
       dark: ThemeData(
@@ -58,7 +59,7 @@ class MyApp extends ConsumerWidget {
         colorSchemeSeed: Colors.blue,
         brightness: Brightness.dark,
         cardTheme: cardTheme.copyWith(
-          margin: const EdgeInsets.all(4),
+          margin: const EdgeInsets.all(Sizes.p4),
           color: Colors.black38,
         ),
       ),
