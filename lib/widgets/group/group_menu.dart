@@ -1,10 +1,10 @@
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
-import 'package:flashlist/screens/group_form.dart';
-import 'package:flashlist/screens/share.dart';
+import 'package:flashlist/routing/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
@@ -27,14 +27,14 @@ class GroupMenu extends ConsumerWidget {
         actions: [
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.of(context).pop(false);
+              context.pop(false);
             },
             icon: const Icon(Icons.cancel),
             label: Text(retrieveAppLocalizations(context).no),
           ),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.of(context).pop(true);
+              context.pop(true);
             },
             icon: const Icon(Icons.delete),
             label: Text(retrieveAppLocalizations(context).yes),
@@ -56,21 +56,15 @@ class GroupMenu extends ConsumerWidget {
       }
     }
 
-    void onEditGroup() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => GroupForm(group: group),
-        ),
-      );
-    }
+    void onEditGroup() => context.goNamed(
+          AppRoute.editGroup.name,
+          pathParameters: {'id': group.uid},
+        );
 
-    void onShareGroup() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ShareScreen(group: group),
-        ),
-      );
-    }
+    void onShareGroup() => context.goNamed(
+          AppRoute.shareGroup.name,
+          pathParameters: {'id': group.uid},
+        );
 
     void removeCurrentUserFromEditors() async {
       final wantToDelete = await showDialog(

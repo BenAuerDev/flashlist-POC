@@ -5,16 +5,19 @@ import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NewBodyItemForm extends HookConsumerWidget {
-  const NewBodyItemForm({super.key, required this.group});
+  const NewBodyItemForm({super.key, required this.groupUid});
 
-  final Group group;
+  final String groupUid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ScrollController scrollController = useScrollController();
+
+    final Group group = ref.watch(groupProvider(groupUid)).value!;
 
     var color = group.color;
 
@@ -67,7 +70,8 @@ class NewBodyItemForm extends HookConsumerWidget {
       body: Container(
         margin: const EdgeInsets.all(4),
         height: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
+        padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.p4, vertical: Sizes.p8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Sizes.p8),
           border: Border.all(color: color!),
@@ -119,7 +123,7 @@ class NewBodyItemForm extends HookConsumerWidget {
                     TextButton(
                       child: Text(retrieveAppLocalizations(context).goBack),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        context.pop();
                       },
                     ),
                     ElevatedButton(

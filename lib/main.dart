@@ -1,7 +1,5 @@
 import 'package:flashlist/constants/app_sizes.dart';
-import 'package:flashlist/providers/users.dart';
-import 'package:flashlist/screens/auth.dart';
-import 'package:flashlist/screens/home.dart';
+import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +9,15 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // turn off the # in the URLs on the web
+  usePathUrlStrategy();
 
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -64,11 +66,12 @@ class MyApp extends ConsumerWidget {
         ),
       ),
       initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
+      builder: (theme, darkTheme) => MaterialApp.router(
         title: 'Flashlist',
         theme: theme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
+        routerConfig: goRouter,
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -79,22 +82,6 @@ class MyApp extends ConsumerWidget {
           Locale('en'), // English
           Locale('de'), // German
         ],
-        home: DefaultTabController(
-          length: 2,
-          child: ref.watch(authProvider).when(
-                loading: () => const Text('Loading...'),
-                error: (error, stackTrace) {
-                  return const Center(child: Text('Error loading user'));
-                },
-                data: (user) {
-                  FlutterNativeSplash.remove();
-                  if (user != null) {
-                    return const HomeScreen();
-                  }
-                  return const AuthScreen();
-                },
-              ),
-        ),
       ),
     );
   }

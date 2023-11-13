@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ShareScreen extends HookConsumerWidget {
-  const ShareScreen({super.key, required this.group});
+  const ShareScreen({super.key, required this.groupUid});
 
-  final Group group;
+  final String? groupUid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final Group? group = ref.watch(groupProvider(groupUid!)).value;
+
     void showSnackbar(String message, SnackBarAction? action) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -26,7 +28,7 @@ class ShareScreen extends HookConsumerWidget {
 
     void removeEditor(editor) {
       ref.read(removeGroupEditorProvider({
-        'groupUid': group.uid,
+        'groupUid': group!.uid,
         'editorUid': editor.uid,
       }));
 
@@ -41,6 +43,12 @@ class ShareScreen extends HookConsumerWidget {
             }));
           },
         ),
+      );
+    }
+
+    if (group == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
       );
     }
 
