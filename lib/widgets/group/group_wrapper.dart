@@ -23,10 +23,10 @@ class GroupWrapper extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.all(4),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
       decoration: BoxDecoration(
         border: Border.all(color: group.color!),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(Sizes.p8),
         color: group.color!.withOpacity(0.2),
       ),
       child: Column(
@@ -44,7 +44,7 @@ class GroupWrapper extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: group.color,
-                        fontSize: 24,
+                        fontSize: Sizes.p24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -38,7 +38,7 @@ class AvatarPicker extends HookWidget {
           return Container(
             decoration: const BoxDecoration(borderRadius: BorderRadius.zero),
             height: 150,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: Sizes.p20),
             width: double.infinity,
             child: Column(
               children: [

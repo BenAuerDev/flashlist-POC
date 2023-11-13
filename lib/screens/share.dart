@@ -52,7 +52,7 @@ class ShareScreen extends HookConsumerWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: group.color,
-              fontSize: 24,
+              fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -60,7 +60,7 @@ class ShareScreen extends HookConsumerWidget {
         actions: const [SizedBox(width: 50)],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(Sizes.p8),
         child: Column(
           children: [
             UserInviter(group: group),
@@ -96,7 +96,7 @@ class ShareScreen extends HookConsumerWidget {
                             ),
                             title: Text(editors[index].username),
                             dense: true,
-                            contentPadding: const EdgeInsets.all(0),
+                            contentPadding: EdgeInsets.zero,
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {

@@ -69,8 +69,8 @@ class NotificationItem extends ConsumerWidget {
             : retrieveColorScheme(context).primaryContainer.withOpacity(0.2),
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 24,
+          horizontal: Sizes.p16,
+          vertical: Sizes.p24,
         ),
         child: Row(
           children: [

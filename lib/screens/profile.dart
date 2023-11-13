@@ -33,7 +33,7 @@ class ProfileScreen extends ConsumerWidget {
             data: (user) {
               if (user != null) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
                   child: Column(
                     children: [
                       Center(

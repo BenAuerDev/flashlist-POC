@@ -66,7 +66,7 @@ class GroupForm extends ConsumerWidget {
               color: group == null
                   ? retrieveColorScheme(context).onBackground
                   : group!.color,
-              fontSize: 24,
+              fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -75,7 +75,7 @@ class GroupForm extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
           child: Form(
             key: groupFormKey,
             child: Column(

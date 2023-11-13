@@ -39,7 +39,7 @@ class SideDrawer extends StatelessWidget {
                 Text(
                   'Flashlist',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: Sizes.p16,
                     color: retrieveColorScheme(context).onBackground,
                   ),
                 ),

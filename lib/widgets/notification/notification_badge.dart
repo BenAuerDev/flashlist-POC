@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ class NotificationBadge extends ConsumerWidget {
     var count = ref.watch(userUnreadNotificationsCountProvider);
 
     return Container(
-      width: 40,
-      height: 40,
+      width: Sizes.p40,
+      height: Sizes.p40,
       alignment: Alignment.center,
       child: Stack(
         children: [
@@ -30,14 +31,14 @@ class NotificationBadge extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 constraints: const BoxConstraints(
-                  minWidth: 12,
-                  minHeight: 12,
+                  minWidth: Sizes.p12,
+                  minHeight: Sizes.p12,
                 ),
                 child: Text(
                   count.value.toString(),
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 8,
+                    fontSize: Sizes.p8,
                   ),
                   textAlign: TextAlign.center,
                 ),

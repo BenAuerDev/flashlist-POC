@@ -105,10 +105,10 @@ class AuthScreen extends HookWidget {
                 height: 120,
               ),
               Card(
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(Sizes.p8),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(Sizes.p16),
                     child: Form(
                       key: formkey,
                       child: Column(

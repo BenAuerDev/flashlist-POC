@@ -57,7 +57,7 @@ class NewBodyItemForm extends HookConsumerWidget {
             group.title,
             style: TextStyle(
               color: color,
-              fontSize: 24,
+              fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -67,9 +67,9 @@ class NewBodyItemForm extends HookConsumerWidget {
       body: Container(
         margin: const EdgeInsets.all(4),
         height: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(Sizes.p8),
           border: Border.all(color: color!),
           color: color.withOpacity(0.2),
         ),
