@@ -36,7 +36,7 @@ class MyApp extends ConsumerWidget {
       margin: const EdgeInsets.all(Sizes.p4),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(4),
+          Radius.circular(Sizes.p4),
         ),
       ),
     );

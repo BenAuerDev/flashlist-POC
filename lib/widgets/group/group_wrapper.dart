@@ -20,7 +20,7 @@ class GroupWrapper extends StatelessWidget {
         );
 
     return Container(
-      margin: const EdgeInsets.all(4),
+      margin: const EdgeInsets.all(Sizes.p4),
       padding:
           const EdgeInsets.symmetric(horizontal: Sizes.p4, vertical: Sizes.p8),
       decoration: BoxDecoration(
