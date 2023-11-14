@@ -16,7 +16,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // turn off the # in the URLs on the web
+  // this removes the # from the url
   usePathUrlStrategy();
 
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
