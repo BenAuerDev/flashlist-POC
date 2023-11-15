@@ -1,5 +1,6 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
+import 'package:flashlist/models/user.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/widgets/slide_fade_transition.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,11 +18,6 @@ class AvatarGroup extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var isExpanded = useState(false);
-
-    List<String> usersWithoutCurrent = [
-      ...group.permissions.editors,
-      group.permissions.owner,
-    ].where((userUid) => userUid != currentUser!.uid).toList();
 
     AnimationController animationController = useAnimationController(
       duration: const Duration(milliseconds: 300),
@@ -52,33 +48,38 @@ class AvatarGroup extends HookConsumerWidget {
       }
     }
 
-    if (usersWithoutCurrent.isEmpty) {
-      return const SizedBox(width: 20);
-    }
-
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget? child) {
-        return ref.watch(groupEditorsProvider(group.uid)).when(
-              data: (editors) {
+        return ref.watch(groupUsersProvider(group.uid)).when(
+              data: (groupUsers) {
+                final List<CustomUser> usersWithoutCurrent = groupUsers
+                    .where((user) => user.uid != currentUser!.uid)
+                    .toList();
+
+                if (usersWithoutCurrent.isEmpty) {
+                  return const SizedBox();
+                }
+
                 return GestureDetector(
-                  onTap:
-                      usersWithoutCurrent.length > 1 ? expandTemporarily : null,
+                  onTap: group.permissions.editors.length > 1
+                      ? expandTemporarily
+                      : null,
                   child: Row(
+                    textDirection: TextDirection.rtl,
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      gapW8,
-                      for (var user in editors)
+                      for (var user in usersWithoutCurrent.reversed)
                         Align(
                           alignment: isExpanded.value
                               ? Alignment.bottomRight
                               : Alignment.bottomRight,
-                          widthFactor: user == editors.first
+                          widthFactor: user == usersWithoutCurrent.first
                               ? 0.9
                               : animationController.value,
                           child: SlideFadeTransition(
-                            index: editors.indexOf(user),
+                            index: usersWithoutCurrent.indexOf(user),
                             position: animationController.value,
                             animationController: animationController,
                             direction: isExpanded.value ? 1 : -1,
