@@ -96,6 +96,12 @@ final groupEditorsProvider = StreamProvider.autoDispose.family(
   },
 );
 
+final groupUsersProvider = StreamProvider.autoDispose.family(
+  (ref, String groupUid) async* {
+    yield* ref.watch(firestoreServiceProvider).getGroupUsers(groupUid);
+  },
+);
+
 final groupBodyCountProvider = StreamProvider.autoDispose.family(
   (ref, String groupUid) {
     return ref.watch(firestoreServiceProvider).groupBodyCountStream(groupUid);

@@ -49,13 +49,16 @@ class GroupWrapper extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AvatarGroup(group: group),
-                    GroupMenu(group: group),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AvatarGroup(group: group),
+                      GroupMenu(group: group),
+                    ],
+                  ),
                 ),
               ],
             ),

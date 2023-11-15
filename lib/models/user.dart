@@ -12,4 +12,7 @@ class CustomUser {
   final String uid;
   final String? imageUrl;
   final List<dynamic> notifications;
+
+  @override
+  String toString() => username;
 }

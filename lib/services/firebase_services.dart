@@ -226,6 +226,28 @@ class FirestoreService {
     }
   }
 
+  Stream<List<CustomUser>> getGroupUsers(String groupUid) {
+    try {
+      return groupsCollection
+          .doc(groupUid)
+          .snapshots()
+          .map(
+            (snapshot) => [
+              snapshot['permissions']['owner'],
+              ...snapshot['permissions']['editors']
+            ],
+          )
+          .asyncMap((userUids) {
+        if (userUids.isEmpty) {
+          return [];
+        }
+        return getUsersByUid(List<String>.from(userUids));
+      });
+    } on FirebaseException catch (error) {
+      return Stream.error("Failed to fetch group editors: $error");
+    }
+  }
+
   Future<void> removeEditorFromGroup(String groupUid, String editorUid) async {
     try {
       final group = await getGroup(groupUid);
