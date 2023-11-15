@@ -1,3 +1,4 @@
+import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/providers/group.dart';
 import 'package:flashlist/routing/app_router.dart';
@@ -82,33 +83,36 @@ class GroupMenu extends ConsumerWidget {
       }
     }
 
-    return PopupMenuButton(
-      itemBuilder: (context) => [
-        // Owner
-        if (isCurrentUserOwner)
-          PopupMenuItem(
-            onTap: onShareGroup,
-            child: Text(retrieveAppLocalizations(context).share),
-          ),
+    return SizedBox(
+      width: Sizes.p32,
+      child: PopupMenuButton(
+        itemBuilder: (context) => [
+          // Owner
+          if (isCurrentUserOwner)
+            PopupMenuItem(
+              onTap: onShareGroup,
+              child: Text(retrieveAppLocalizations(context).share),
+            ),
 
-        if (isCurrentUserOwner)
-          PopupMenuItem(
-            onTap: onEditGroup,
-            child: Text(retrieveAppLocalizations(context).edit),
-          ),
-        if (isCurrentUserOwner)
-          PopupMenuItem(
-            onTap: removeGroup,
-            child: Text(retrieveAppLocalizations(context).delete),
-          ),
+          if (isCurrentUserOwner)
+            PopupMenuItem(
+              onTap: onEditGroup,
+              child: Text(retrieveAppLocalizations(context).edit),
+            ),
+          if (isCurrentUserOwner)
+            PopupMenuItem(
+              onTap: removeGroup,
+              child: Text(retrieveAppLocalizations(context).delete),
+            ),
 
-        // Editors
-        if (isCurrentUserInEditors && !isCurrentUserOwner)
-          PopupMenuItem(
-            onTap: removeCurrentUserFromEditors,
-            child: Text(retrieveAppLocalizations(context).remove),
-          ),
-      ],
+          // Editors
+          if (isCurrentUserInEditors && !isCurrentUserOwner)
+            PopupMenuItem(
+              onTap: removeCurrentUserFromEditors,
+              child: Text(retrieveAppLocalizations(context).remove),
+            ),
+        ],
+      ),
     );
   }
 }
