@@ -17,6 +17,7 @@ class UserInviter extends HookConsumerWidget {
   });
 
   final Group group;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
@@ -73,10 +74,14 @@ class UserInviter extends HookConsumerWidget {
         return;
       }
 
-      ref.read(inviteUserToGroupProvider({
-        'group': group,
-        'userUid': user.value!.uid,
-      }));
+      ref.read(
+        inviteUserToGroupProvider(
+          {
+            'group': group,
+            'userUid': user.value!.uid,
+          },
+        ),
+      );
 
       emailController.clear();
     }
