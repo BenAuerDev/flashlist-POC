@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/utils/context_retriever.dart';
+import 'package:flashlist/widgets/async_value_widget.dart';
 import 'package:flashlist/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,6 +20,8 @@ class ProfileScreen extends ConsumerWidget {
       }));
     }
 
+    final currentUserValue = ref.watch(currentUserDataProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -29,54 +32,53 @@ class ProfileScreen extends ConsumerWidget {
         ),
         actions: const [SizedBox(width: 50)],
       ),
-      body: ref.watch(currentUserDataProvider).when(
-            data: (user) {
-              if (user != null) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-                  child: Column(
+      body: AsyncValueWidget(
+        value: currentUserValue,
+        data: (user) {
+          if (user != null) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
+              child: Column(
+                children: [
+                  Center(
+                    child: AvatarPicker(
+                      initialImage: user['image_url'],
+                      onPickImage: (pickedImage) {
+                        uploadNewImage(pickedImage, user['uid']);
+                      },
+                    ),
+                  ),
+                  gapH12,
+                  // TODO add localization
+                  Row(
                     children: [
-                      Center(
-                        child: AvatarPicker(
-                          initialImage: user['image_url'],
-                          onPickImage: (pickedImage) {
-                            uploadNewImage(pickedImage, user['uid']);
-                          },
-                        ),
+                      Text(
+                        '${retrieveAppLocalizations(context).username}: ',
                       ),
-                      gapH12,
-                      // TODO add localization
-                      Row(
-                        children: [
-                          Text(
-                            '${retrieveAppLocalizations(context).username}: ',
-                          ),
-                          gapW12,
-                          Text(user['username'] ?? 'No username'),
-                        ],
-                      ),
-                      gapH12,
-                      Row(
-                        children: [
-                          Text(
-                            '${retrieveAppLocalizations(context).email}: ',
-                          ),
-                          const SizedBox(width: 42),
-                          Text(user['email'] ?? 'No email'),
-                        ],
-                      ),
+                      gapW12,
+                      Text(user['username'] ?? 'No username'),
                     ],
                   ),
-                );
-              } else {
-                return const Center(
-                  child: Text('No user data'),
-                );
-              }
-            },
-            loading: () => const CircularProgressIndicator(),
-            error: (error, stackTrace) => Text(error.toString()),
-          ),
+                  gapH12,
+                  Row(
+                    children: [
+                      Text(
+                        '${retrieveAppLocalizations(context).email}: ',
+                      ),
+                      const SizedBox(width: 42),
+                      Text(user['email'] ?? 'No email'),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text('No user data'),
+            );
+          }
+        },
+      ),
     );
   }
 }
