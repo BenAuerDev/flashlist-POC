@@ -5,6 +5,7 @@ import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/user_inviter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShareScreen extends HookConsumerWidget {
   const ShareScreen({super.key, required this.groupUid});
@@ -52,6 +53,8 @@ class ShareScreen extends HookConsumerWidget {
       );
     }
 
+    final groupEditorsValue = ref.watch(groupEditorsProvider(group.uid));
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -74,50 +77,77 @@ class ShareScreen extends HookConsumerWidget {
             UserInviter(group: group),
             gapH16,
             // TODO: add special loading case with shimmer
-            ref.watch(groupEditorsProvider(group.uid)).when(
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  error: (error, stackTrace) => const Center(
-                    child: Text('Error loading editors'),
-                  ),
-                  data: (editors) {
-                    if (editors.isEmpty) {
-                      return Center(
-                        child: Text(
-                          retrieveAppLocalizations(context).noEditorsYet,
+            groupEditorsValue.when(
+              data: (editors) {
+                if (editors.isEmpty) {
+                  return Center(
+                    child: Text(
+                      retrieveAppLocalizations(context).noEditorsYet,
+                    ),
+                  );
+                }
+
+                return Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: editors.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        key: Key(editors[index].uid),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            editors[index].imageUrl ??
+                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                          ),
+                        ),
+                        title: Text(editors[index].username),
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            removeEditor(editors[index]);
+                          },
                         ),
                       );
-                    }
+                    },
+                  ),
+                );
+              },
+              loading: () {
+                final editors = group.permissions.editors;
 
-                    return Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: editors.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            key: Key(editors[index].uid),
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                editors[index].imageUrl ??
-                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                              ),
-                            ),
-                            title: Text(editors[index].username),
-                            dense: true,
-                            contentPadding: EdgeInsets.zero,
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                removeEditor(editors[index]);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+                return Shimmer(
+                  gradient: LinearGradient(colors: [
+                    Colors.grey.withOpacity(0.2),
+                    Colors.black12.withOpacity(0.2),
+                  ]),
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < editors.length; i++)
+                        ListTile(
+                          leading: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            child: Icon(Icons.person),
+                          ),
+                          title: Container(
+                            color: Colors.grey,
+                            height: Sizes.p4,
+                            width: Sizes.p24,
+                            child: const SizedBox(),
+                          ),
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                          trailing: const Icon(Icons.delete),
+                        ),
+                    ],
+                  ),
+                );
+              },
+              error: (error, stackTrace) => const Center(
+                child: Text('Error loading editors'),
+              ),
+            ),
           ],
         ),
       ),
