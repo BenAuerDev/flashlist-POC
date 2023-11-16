@@ -11,7 +11,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-// TOOD: Add a link to the privacy policy and terms of service
+// TODO: Add a link to the privacy policy and terms of service
 // TODO: add logic to send verification email
 
 final _firebase = FirebaseAuth.instance;
