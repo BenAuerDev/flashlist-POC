@@ -104,7 +104,7 @@ class GroupForm extends ConsumerWidget {
                 ),
                 gapH12,
                 ColorInput(
-                  initialColor: group != null ? group.color : null,
+                  initialColor: group?.color,
                   onSelectColor: (Color color) {
                     enteredColor = color;
                   },
