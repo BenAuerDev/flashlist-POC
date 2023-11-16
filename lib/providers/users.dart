@@ -25,10 +25,8 @@ final userNotificationStreamProvider = StreamProvider<List<UserNotification>>(
   (ref) async* {
     try {
       yield* ref.watch(firestoreServiceProvider).userNotificationsStream();
-    } catch (e) {
-      print(e);
-
-      throw StateError("failed to get user's notifications");
+    } catch (error) {
+      throw StateError("failed to get user's notifications: $error");
     }
   },
 );
@@ -39,10 +37,9 @@ final userUnreadNotificationsCountProvider = StreamProvider.autoDispose(
       return ref
           .watch(firestoreServiceProvider)
           .userUnreadNotificationsCountStream();
-    } catch (e) {
-      print(e);
-
-      throw StateError("failed to get user's unread notifications count");
+    } catch (error) {
+      throw StateError(
+          "failed to get user's unread notifications count: $error");
     }
   },
 );
@@ -51,10 +48,8 @@ final getUserByUidProvider =
     FutureProvider.family<CustomUser, String>((ref, userUid) async {
   try {
     return ref.watch(firestoreServiceProvider).getUserByUid(userUid);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to get user by uid");
+  } catch (error) {
+    throw StateError("failed to get user by uid: $error");
   }
 });
 
@@ -62,10 +57,8 @@ final getUserByEmailProvider =
     FutureProvider.family<CustomUser?, String>((ref, email) async {
   try {
     return ref.watch(firestoreServiceProvider).getUserByEmail(email);
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to get user by email");
+  } catch (error) {
+    throw StateError("failed to get user by email: $error");
   }
 });
 
@@ -76,9 +69,7 @@ final uploadUserAvatarProvider =
           data['pickedImage'],
           data['userUid'],
         );
-  } catch (e) {
-    print(e);
-
-    throw StateError("failed to upload user avatar");
+  } catch (error) {
+    throw StateError("failed to upload user avatar: $error");
   }
 });
