@@ -73,6 +73,7 @@ class ShareScreen extends HookConsumerWidget {
           children: [
             UserInviter(group: group),
             gapH16,
+            // TODO: add special loading case with shimmer
             ref.watch(groupEditorsProvider(group.uid)).when(
                   loading: () => const Center(
                     child: CircularProgressIndicator(),

@@ -96,6 +96,7 @@ class AvatarGroup extends HookConsumerWidget {
                   ),
                 );
               },
+              // TODO: add special loading case with shimmer
               loading: () => const SizedBox(),
               error: (error, stackTrace) => const SizedBox(),
             );

@@ -1,5 +1,6 @@
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/utils/context_retriever.dart';
+import 'package:flashlist/widgets/async_value_widget.dart';
 import 'package:flashlist/widgets/notification/notification_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -25,28 +26,29 @@ class NotificationsTab extends HookConsumerWidget {
       return;
     }, []);
 
-    return ref.watch(userNotificationStreamProvider).when(
-          data: (data) {
-            if (data.isEmpty) {
-              return Center(
-                child: Text(retrieveAppLocalizations(context).noNotifications),
-              );
-            }
+    final notificationsValue = ref.watch(userNotificationStreamProvider);
 
-            return SizedBox.expand(
-              child: ListView.builder(
-                itemCount: data.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final notification = data[index];
+    return AsyncValueWidget(
+      value: notificationsValue,
+      data: (data) {
+        if (data.isEmpty) {
+          return Center(
+            child: Text(retrieveAppLocalizations(context).noNotifications),
+          );
+        }
 
-                  return NotificationItem(notification: notification);
-                },
-              ),
-            );
-          },
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) => Text(error.toString()),
+        return SizedBox.expand(
+          child: ListView.builder(
+            itemCount: data.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final notification = data[index];
+
+              return NotificationItem(notification: notification);
+            },
+          ),
         );
+      },
+    );
   }
 }

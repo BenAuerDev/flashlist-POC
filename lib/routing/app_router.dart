@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/screens/auth.dart';
 import 'package:flashlist/screens/group_form.dart';
@@ -6,6 +7,7 @@ import 'package:flashlist/screens/new_body_item_form.dart';
 import 'package:flashlist/screens/profile.dart';
 import 'package:flashlist/screens/settings.dart';
 import 'package:flashlist/screens/share.dart';
+import 'package:flashlist/widgets/async_value_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
@@ -30,24 +32,23 @@ final goRouter = GoRouter(
       name: AppRoute.home.name,
       builder: (context, state) {
         return Consumer(
-          builder: (context, ref, child) => DefaultTabController(
-            length: 2,
-            child: ref.watch(authProvider).when(
-                  // TODO: change logic not to require loading state
-                  // as this is handled by flutter_native_splash
-                  loading: () => const Text('Loading...'),
-                  error: (error, stackTrace) {
-                    return const Center(child: Text('Error loading user'));
-                  },
-                  data: (user) {
-                    FlutterNativeSplash.remove();
-                    if (user != null) {
-                      return const HomeScreen();
-                    }
-                    return const AuthScreen();
-                  },
-                ),
-          ),
+          builder: (context, ref, child) {
+            final authValue = ref.watch(authProvider);
+
+            return DefaultTabController(
+              length: 2,
+              child: AsyncValueWidget<User?>(
+                value: authValue,
+                data: (user) {
+                  FlutterNativeSplash.remove();
+                  if (user != null) {
+                    return const HomeScreen();
+                  }
+                  return const AuthScreen();
+                },
+              ),
+            );
+          },
         );
       },
       routes: [
