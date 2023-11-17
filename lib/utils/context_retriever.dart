@@ -24,3 +24,18 @@ Brightness retrieveBrightness(context) {
 bool retrieveIsDarkTheme(context) {
   return retrieveBrightness(context) == Brightness.dark;
 }
+
+void showContextSnackBar({
+  context,
+  required String message,
+  SnackBarAction? action,
+}) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      action: action,
+      backgroundColor: retrieveColorScheme(context).primary,
+      content: Text(message),
+    ),
+  );
+}
