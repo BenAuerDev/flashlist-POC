@@ -23,18 +23,6 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
   Widget build(BuildContext context) {
     var items = ref.watch(groupBodyProvider(widget.group.uid)).value;
 
-    void showSnackbar(String message, SnackBarAction? action) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: action,
-          content: Text(message),
-          backgroundColor: retrieveColorScheme(context).primary,
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-
     void reinsertItemIntoDb(List<dynamic> oldState) async {
       ref.read(
         setGroupBodyProvider(
@@ -64,9 +52,10 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
       );
 
       if (!response.hasError) {
-        showSnackbar(
-          retrieveAppLocalizations(context).itemRemoved,
-          SnackBarAction(
+        showContextSnackBar(
+          context: context,
+          message: retrieveAppLocalizations(context).itemRemoved,
+          action: SnackBarAction(
             label: retrieveAppLocalizations(context).undo,
             onPressed: () {
               reinsertItemIntoDb(oldState);
@@ -75,7 +64,10 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
           ),
         );
       } else {
-        showSnackbar(retrieveAppLocalizations(context).encounteredError, null);
+        showContextSnackBar(
+          context: context,
+          message: retrieveAppLocalizations(context).encounteredError,
+        );
       }
     }
 
@@ -108,7 +100,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
                 child: Container(
                   width: double.infinity,
                   height: 40,
-                  padding:  const EdgeInsets.all(Sizes.p8),
+                  padding: const EdgeInsets.all(Sizes.p8),
                   child: Text(
                     items[index].name,
                     style: const TextStyle(

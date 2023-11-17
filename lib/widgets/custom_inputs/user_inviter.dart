@@ -22,30 +22,19 @@ class UserInviter extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
 
-    void showSnackbar(String message, SnackBarAction? action) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: action,
-          backgroundColor: retrieveColorScheme(context).primary,
-          content: Text(message),
-        ),
-      );
-    }
-
     void inviteUser() async {
       if (emailController.text.isEmpty || !emailController.text.contains('@')) {
-        showSnackbar(
-          retrieveAppLocalizations(context).pleaseEnterValidEmail,
-          null,
+        showContextSnackBar(
+          context: context,
+          message: retrieveAppLocalizations(context).pleaseEnterValidEmail,
         );
         return;
       }
 
       if (emailController.text == currentUser!.email) {
-        showSnackbar(
-          retrieveAppLocalizations(context).yourOwnEmail,
-          null,
+        showContextSnackBar(
+          context: context,
+          message: retrieveAppLocalizations(context).yourOwnEmail,
         );
         return;
       }
@@ -54,19 +43,19 @@ class UserInviter extends HookConsumerWidget {
 
       if (user.value != null &&
           group.permissions.editors.contains(user.value!.uid)) {
-        showSnackbar(
-          retrieveAppLocalizations(context)
+        showContextSnackBar(
+          context: context,
+          message: retrieveAppLocalizations(context)
               .userAlreadyHasAccess(user.value!.username),
-          null,
         );
         return;
       }
 
       // For Security reasons the user doesn't get
       // any direct feedback if a user with this email address exists.
-      showSnackbar(
-        retrieveAppLocalizations(context).ifUserExistsWillBeInvited,
-        null,
+      showContextSnackBar(
+        context: context,
+        message: retrieveAppLocalizations(context).ifUserExistsWillBeInvited,
       );
 
       if (user.value == null) {

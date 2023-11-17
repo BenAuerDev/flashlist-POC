@@ -31,15 +31,8 @@ class AuthScreen extends HookWidget {
     var enteredPassword = '';
     File? selectedImage;
 
-    void showSnackBar(FirebaseAuthException error) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ??
-              '${retrieveAppLocalizations(context).encounteredError}!'),
-          backgroundColor: retrieveColorScheme(context).error,
-        ),
-      );
+    void useSnackbar(message) {
+      showContextSnackBar(message: message, context: context);
     }
 
     void submit() async {
@@ -87,7 +80,7 @@ class AuthScreen extends HookWidget {
         }
       } on FirebaseAuthException catch (error) {
         isAuthenticating.value = false;
-        showSnackBar(error);
+        useSnackbar(error.message!);
       }
     }
 
