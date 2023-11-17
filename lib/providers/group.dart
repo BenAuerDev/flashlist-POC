@@ -13,7 +13,7 @@ final userGroupsProvider = StreamProvider<List<Group>>((ref) async* {
 });
 
 final groupProvider =
-    FutureProvider.family<Group, String>((ref, groupUid) async {
+    FutureProvider.autoDispose.family<Group, String>((ref, groupUid) async {
   try {
     return ref.watch(firestoreServiceProvider).getGroup(groupUid);
   } catch (error) {
