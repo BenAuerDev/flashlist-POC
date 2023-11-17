@@ -16,32 +16,27 @@ class ShareScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Group? group = ref.watch(groupProvider(groupUid!)).value;
 
-    void showSnackbar(String message, SnackBarAction? action) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: action,
-          backgroundColor: retrieveColorScheme(context).primary,
-          content: Text(message),
-        ),
-      );
-    }
-
     void removeEditor(editor) {
       ref.read(removeGroupEditorProvider({
         'groupUid': group!.uid,
         'editorUid': editor.uid,
       }));
 
-      showSnackbar(
-        retrieveAppLocalizations(context).userHasBeenRemoved(editor.username),
-        SnackBarAction(
+      showContextSnackBar(
+        context: context,
+        message: retrieveAppLocalizations(context)
+            .userHasBeenRemoved(editor.username),
+        action: SnackBarAction(
           label: retrieveAppLocalizations(context).undo,
           onPressed: () {
-            ref.read(addUserToGroupProvider({
-              'editorUid': editor.uid,
-              'groupUid': group.uid,
-            }));
+            ref.read(
+              addUserToGroupProvider(
+                {
+                  'editorUid': editor.uid,
+                  'groupUid': group.uid,
+                },
+              ),
+            );
           },
         ),
       );
@@ -76,7 +71,6 @@ class ShareScreen extends HookConsumerWidget {
           children: [
             UserInviter(group: group),
             gapH16,
-            // TODO: add special loading case with shimmer
             groupEditorsValue.when(
               data: (editors) {
                 if (editors.isEmpty) {
