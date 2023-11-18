@@ -33,6 +33,9 @@ final goRouter = GoRouter(
       builder: (context, state) {
         return Consumer(
           builder: (context, ref, child) {
+            // TODO: think about using ref.watch(authProvider).value
+            // and if it's null, show the auth screen
+            // as the splash screen is shown until the auth state is loaded
             final authValue = ref.watch(authProvider);
 
             return DefaultTabController(
