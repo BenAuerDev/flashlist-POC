@@ -47,24 +47,31 @@ class FirestoreService {
   Stream<List<Group>> groupsForUserStream() {
     try {
       final currentUser = FirebaseAuth.instance.currentUser;
-      return groupsCollection.orderBy('createdAt').snapshots().map((snapshot) {
-        return snapshot.docs.where((doc) {
-          final permissions = doc['permissions'];
-          final owner = permissions['owner'];
-          final editors = permissions['editors'] ?? [];
+      return groupsCollection.orderBy('createdAt').snapshots().map(
+        (snapshot) {
+          return snapshot.docs.where(
+            (doc) {
+              final permissions = doc['permissions'];
+              final owner = permissions['owner'];
+              final editors = permissions['editors'] ?? [];
 
-          return owner == currentUser!.uid || editors.contains(currentUser.uid);
-        }).map((doc) {
-          return Group(
-            doc['title'],
-            doc['createdAt'],
-            doc.id,
-            Color(doc['color']),
-            buildGroupBody(doc),
-            buildGroupPermission(doc),
-          );
-        }).toList();
-      });
+              return owner == currentUser!.uid ||
+                  editors.contains(currentUser.uid);
+            },
+          ).map(
+            (doc) {
+              return Group(
+                doc['title'],
+                doc['createdAt'],
+                doc.id,
+                Color(doc['color']),
+                buildGroupBody(doc),
+                buildGroupPermission(doc),
+              );
+            },
+          ).toList();
+        },
+      );
     } catch (error) {
       rethrow;
     }
