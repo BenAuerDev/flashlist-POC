@@ -49,14 +49,14 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   gapH12,
-                  // TODO add localization
                   Row(
                     children: [
                       Text(
                         '${retrieveAppLocalizations(context).username}: ',
                       ),
                       gapW12,
-                      Text(user['username'] ?? 'No username'),
+                      Text(user['username'] ??
+                          retrieveAppLocalizations(context).noUsername),
                     ],
                   ),
                   gapH12,
@@ -66,7 +66,8 @@ class ProfileScreen extends ConsumerWidget {
                         '${retrieveAppLocalizations(context).email}: ',
                       ),
                       const SizedBox(width: 42),
-                      Text(user['email'] ?? 'No email'),
+                      Text(user['email'] ??
+                          retrieveAppLocalizations(context).noEmail),
                     ],
                   ),
                 ],
