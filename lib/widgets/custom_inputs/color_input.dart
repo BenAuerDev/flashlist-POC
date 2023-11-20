@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ColorInput extends HookConsumerWidget {
+class ColorInput extends HookWidget {
   const ColorInput({super.key, this.initialColor, this.onSelectColor});
 
   final Color? initialColor;
   final Function(Color)? onSelectColor;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     ValueNotifier<Color> pickerColor =
         useState(const Color.fromARGB(255, 255, 255, 255));
 
