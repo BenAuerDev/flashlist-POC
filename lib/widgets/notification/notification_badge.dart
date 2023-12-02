@@ -19,7 +19,7 @@ class NotificationBadge extends ConsumerWidget {
         children: [
           Icon(
             Icons.notifications,
-            color: retrieveColorScheme(context).onBackground,
+            color: colorSchemeOf(context).onBackground,
           ),
           if (count.value != 0 && count.value != null)
             Positioned(

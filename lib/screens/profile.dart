@@ -26,7 +26,7 @@ class ProfileScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            retrieveAppLocalizations(context).profile,
+            appLocalizationsOf(context).profile,
             textAlign: TextAlign.center,
           ),
         ),
@@ -52,22 +52,22 @@ class ProfileScreen extends ConsumerWidget {
                   Row(
                     children: [
                       Text(
-                        '${retrieveAppLocalizations(context).username}: ',
+                        '${appLocalizationsOf(context).username}: ',
                       ),
                       gapW12,
                       Text(user['username'] ??
-                          retrieveAppLocalizations(context).noUsername),
+                          appLocalizationsOf(context).noUsername),
                     ],
                   ),
                   gapH12,
                   Row(
                     children: [
                       Text(
-                        '${retrieveAppLocalizations(context).email}: ',
+                        '${appLocalizationsOf(context).email}: ',
                       ),
                       const SizedBox(width: 42),
-                      Text(user['email'] ??
-                          retrieveAppLocalizations(context).noEmail),
+                      Text(
+                          user['email'] ?? appLocalizationsOf(context).noEmail),
                     ],
                   ),
                 ],

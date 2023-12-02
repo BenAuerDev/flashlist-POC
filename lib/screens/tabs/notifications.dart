@@ -33,7 +33,7 @@ class NotificationsTab extends HookConsumerWidget {
       data: (data) {
         if (data.isEmpty) {
           return Center(
-            child: Text(retrieveAppLocalizations(context).noNotifications),
+            child: Text(appLocalizationsOf(context).noNotifications),
           );
         }
 

@@ -45,7 +45,7 @@ class AvatarPicker extends HookWidget {
               children: [
                 TextButton.icon(
                   icon: const Icon(Icons.camera_alt),
-                  label: Text(retrieveAppLocalizations(context).camera),
+                  label: Text(appLocalizationsOf(context).camera),
                   onPressed: () async {
                     pickImageFromSource('camera');
                     context.pop();
@@ -54,7 +54,7 @@ class AvatarPicker extends HookWidget {
                 gapH12,
                 TextButton.icon(
                   icon: const Icon(Icons.image),
-                  label: Text(retrieveAppLocalizations(context).gallery),
+                  label: Text(appLocalizationsOf(context).gallery),
                   onPressed: () async {
                     pickImageFromSource('gallery');
                     context.pop();
@@ -90,8 +90,8 @@ class AvatarPicker extends HookWidget {
           icon: const Icon(Icons.image),
           label: Text(
             initialImage != null
-                ? retrieveAppLocalizations(context).uploadNewImage
-                : retrieveAppLocalizations(context).addImage,
+                ? appLocalizationsOf(context).uploadNewImage
+                : appLocalizationsOf(context).addImage,
           ),
           onPressed: useImagePicker,
         )

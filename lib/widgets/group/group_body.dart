@@ -54,9 +54,9 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
       if (!response.hasError) {
         showContextSnackBar(
           context: context,
-          message: retrieveAppLocalizations(context).itemRemoved,
+          message: appLocalizationsOf(context).itemRemoved,
           action: SnackBarAction(
-            label: retrieveAppLocalizations(context).undo,
+            label: appLocalizationsOf(context).undo,
             onPressed: () {
               reinsertItemIntoDb(oldState);
               items.insert(index, item);
@@ -66,7 +66,7 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
       } else {
         showContextSnackBar(
           context: context,
-          message: retrieveAppLocalizations(context).encounteredError,
+          message: appLocalizationsOf(context).encounteredError,
         );
       }
     }
@@ -86,14 +86,13 @@ class _DragAndDropListState extends ConsumerState<GroupBody> {
               },
               background: Container(
                 decoration: BoxDecoration(
-                  color: retrieveColorScheme(context).error.withOpacity(0.5),
+                  color: colorSchemeOf(context).error.withOpacity(0.5),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(4),
                   ),
                 ),
                 margin: EdgeInsets.symmetric(
-                  vertical:
-                      retrieveTheme(context).cardTheme.margin!.vertical / 2,
+                  vertical: themeOf(context).cardTheme.margin!.vertical / 2,
                 ),
               ),
               child: Card(

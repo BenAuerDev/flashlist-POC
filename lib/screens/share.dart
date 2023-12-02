@@ -24,10 +24,10 @@ class ShareScreen extends HookConsumerWidget {
 
       showContextSnackBar(
         context: context,
-        message: retrieveAppLocalizations(context)
-            .userHasBeenRemoved(editor.username),
+        message:
+            appLocalizationsOf(context).userHasBeenRemoved(editor.username),
         action: SnackBarAction(
-          label: retrieveAppLocalizations(context).undo,
+          label: appLocalizationsOf(context).undo,
           onPressed: () {
             ref.read(
               addUserToGroupProvider(
@@ -76,7 +76,7 @@ class ShareScreen extends HookConsumerWidget {
                 if (editors.isEmpty) {
                   return Center(
                     child: Text(
-                      retrieveAppLocalizations(context).noEditorsYet,
+                      appLocalizationsOf(context).noEditorsYet,
                     ),
                   );
                 }

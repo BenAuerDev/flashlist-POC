@@ -85,7 +85,7 @@ class AuthScreen extends HookWidget {
     }
 
     return Scaffold(
-      backgroundColor: retrieveColorScheme(context).background,
+      backgroundColor: colorSchemeOf(context).background,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -119,14 +119,13 @@ class AuthScreen extends HookWidget {
                             textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.none,
                             decoration: InputDecoration(
-                              labelText:
-                                  retrieveAppLocalizations(context).email,
+                              labelText: appLocalizationsOf(context).email,
                             ),
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
                                   !value.contains('@')) {
-                                return retrieveAppLocalizations(context)
+                                return appLocalizationsOf(context)
                                     .pleaseEnterValidEmail;
                               }
                               return null;
@@ -138,12 +137,11 @@ class AuthScreen extends HookWidget {
                           if (!isLogin.value)
                             TextFormField(
                               decoration: InputDecoration(
-                                labelText:
-                                    retrieveAppLocalizations(context).username,
+                                labelText: appLocalizationsOf(context).username,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return retrieveAppLocalizations(context)
+                                  return appLocalizationsOf(context)
                                       .pleaseEnterValidUsername;
                                 }
                                 return null;
@@ -153,8 +151,7 @@ class AuthScreen extends HookWidget {
                               },
                             ),
                           PasswordInput(
-                            labelText:
-                                retrieveAppLocalizations(context).password,
+                            labelText: appLocalizationsOf(context).password,
                             textInputAction: TextInputAction.done,
                             onSaved: (newValue) {
                               enteredPassword = newValue!;
@@ -163,16 +160,14 @@ class AuthScreen extends HookWidget {
                           gapH12,
                           if (isAuthenticating.value == true)
                             CircularProgressIndicator(
-                              color: retrieveColorScheme(context).primary,
+                              color: colorSchemeOf(context).primary,
                             ),
                           if (!isAuthenticating.value)
                             ElevatedButton(
                               onPressed: submit,
                               child: isLogin.value
-                                  ? Text(
-                                      retrieveAppLocalizations(context).signIn)
-                                  : Text(
-                                      retrieveAppLocalizations(context).signUp),
+                                  ? Text(appLocalizationsOf(context).signIn)
+                                  : Text(appLocalizationsOf(context).signUp),
                             ),
                           if (!isAuthenticating.value)
                             TextButton(
@@ -181,11 +176,11 @@ class AuthScreen extends HookWidget {
                               },
                               child: isLogin.value
                                   ? Text(
-                                      retrieveAppLocalizations(context)
+                                      appLocalizationsOf(context)
                                           .createNewAccount,
                                     )
                                   : Text(
-                                      retrieveAppLocalizations(context)
+                                      appLocalizationsOf(context)
                                           .alreadyHaveAccount,
                                     ),
                             ),

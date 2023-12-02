@@ -26,7 +26,7 @@ class UserInviter extends HookConsumerWidget {
       if (emailController.text.isEmpty || !emailController.text.contains('@')) {
         showContextSnackBar(
           context: context,
-          message: retrieveAppLocalizations(context).pleaseEnterValidEmail,
+          message: appLocalizationsOf(context).pleaseEnterValidEmail,
         );
         return;
       }
@@ -34,7 +34,7 @@ class UserInviter extends HookConsumerWidget {
       if (emailController.text == currentUser!.email) {
         showContextSnackBar(
           context: context,
-          message: retrieveAppLocalizations(context).yourOwnEmail,
+          message: appLocalizationsOf(context).yourOwnEmail,
         );
         return;
       }
@@ -45,7 +45,7 @@ class UserInviter extends HookConsumerWidget {
           group.permissions.editors.contains(user.value!.uid)) {
         showContextSnackBar(
           context: context,
-          message: retrieveAppLocalizations(context)
+          message: appLocalizationsOf(context)
               .userAlreadyHasAccess(user.value!.username),
         );
         return;
@@ -55,7 +55,7 @@ class UserInviter extends HookConsumerWidget {
       // any direct feedback if a user with this email address exists.
       showContextSnackBar(
         context: context,
-        message: retrieveAppLocalizations(context).ifUserExistsWillBeInvited,
+        message: appLocalizationsOf(context).ifUserExistsWillBeInvited,
       );
 
       if (user.value == null) {
@@ -80,7 +80,7 @@ class UserInviter extends HookConsumerWidget {
         TextField(
           controller: emailController,
           decoration: InputDecoration(
-            labelText: retrieveAppLocalizations(context).email,
+            labelText: appLocalizationsOf(context).email,
           ),
         ),
         gapH8,
@@ -89,7 +89,7 @@ class UserInviter extends HookConsumerWidget {
           children: [
             ElevatedButton(
               onPressed: inviteUser,
-              child: Text(retrieveAppLocalizations(context).inviteUser),
+              child: Text(appLocalizationsOf(context).inviteUser),
             ),
           ],
         ),
