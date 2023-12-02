@@ -121,14 +121,14 @@ class NewBodyItemForm extends HookConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      child: Text(retrieveAppLocalizations(context).goBack),
+                      child: Text(appLocalizationsOf(context).goBack),
                       onPressed: () {
                         context.pop();
                       },
                     ),
                     ElevatedButton(
                       onPressed: submit,
-                      child: Text(retrieveAppLocalizations(context).add),
+                      child: Text(appLocalizationsOf(context).add),
                     ),
                   ],
                 )

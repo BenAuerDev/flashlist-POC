@@ -16,7 +16,7 @@ class GroupsList extends HookConsumerWidget {
     }
 
     if (groups.value!.isEmpty) {
-      return Center(child: Text(retrieveAppLocalizations(context).noListsYet));
+      return Center(child: Text(appLocalizationsOf(context).noListsYet));
     }
 
     if (groups.hasError) {

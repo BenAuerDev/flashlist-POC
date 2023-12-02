@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            retrieveAppLocalizations(context).yourLists,
+            appLocalizationsOf(context).yourLists,
             textAlign: TextAlign.center,
           ),
         ),
@@ -26,10 +26,10 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: retrieveColorScheme(context).background,
+          color: colorSchemeOf(context).background,
           boxShadow: [
             BoxShadow(
-              color: retrieveColorScheme(context).onBackground,
+              color: colorSchemeOf(context).onBackground,
               spreadRadius: -5,
               blurRadius: 5,
               offset: const Offset(0, 0),
@@ -37,8 +37,8 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         child: TabBar(
-          indicatorColor: retrieveColorScheme(context).onBackground,
-          labelColor: retrieveColorScheme(context).onBackground,
+          indicatorColor: colorSchemeOf(context).onBackground,
+          labelColor: colorSchemeOf(context).onBackground,
           tabs: const [
             Tab(
               icon: Icon(Icons.list_alt),
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        backgroundColor: retrieveColorScheme(context).background,
+        backgroundColor: colorSchemeOf(context).background,
         onPressed: () => context.goNamed(AppRoute.addGroup.name),
         child: const Icon(Icons.add_card),
       ),

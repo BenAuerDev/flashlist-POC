@@ -39,7 +39,7 @@ class BrightnessRadio extends HookWidget {
                 const Icon(Icons.settings),
               gapW12,
 
-              Text(retrieveAppLocalizations(context).brightness)
+              Text(appLocalizationsOf(context).brightness)
             ],
           ),
           ToggleButtons(
@@ -62,9 +62,9 @@ class BrightnessRadio extends HookWidget {
               }
             },
             children: [
-              Text(retrieveAppLocalizations(context).light),
-              Text(retrieveAppLocalizations(context).dark),
-              Text(retrieveAppLocalizations(context).system),
+              Text(appLocalizationsOf(context).light),
+              Text(appLocalizationsOf(context).dark),
+              Text(appLocalizationsOf(context).system),
             ],
           ),
         ],

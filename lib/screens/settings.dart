@@ -11,7 +11,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Center(
             child: Text(
-          retrieveAppLocalizations(context).settings,
+          appLocalizationsOf(context).settings,
           textAlign: TextAlign.center,
         )),
         actions: const [

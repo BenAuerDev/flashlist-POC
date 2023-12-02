@@ -31,14 +31,14 @@ class GroupMenu extends ConsumerWidget {
               context.pop(false);
             },
             icon: const Icon(Icons.cancel),
-            label: Text(retrieveAppLocalizations(context).no),
+            label: Text(appLocalizationsOf(context).no),
           ),
           ElevatedButton.icon(
             onPressed: () {
               context.pop(true);
             },
             icon: const Icon(Icons.delete),
-            label: Text(retrieveAppLocalizations(context).yes),
+            label: Text(appLocalizationsOf(context).yes),
           ),
         ],
       );
@@ -48,8 +48,8 @@ class GroupMenu extends ConsumerWidget {
       final wantToDelete = await showDialog(
         context: context,
         builder: (context) => showConfirmDialog(
-          retrieveAppLocalizations(context).deleteList,
-          retrieveAppLocalizations(context).wantToDeleteList(group.title),
+          appLocalizationsOf(context).deleteList,
+          appLocalizationsOf(context).wantToDeleteList(group.title),
         ),
       );
       if (wantToDelete) {
@@ -71,8 +71,8 @@ class GroupMenu extends ConsumerWidget {
       final wantToDelete = await showDialog(
         context: context,
         builder: (context) => showConfirmDialog(
-          retrieveAppLocalizations(context).removeListForYou,
-          retrieveAppLocalizations(context).wantToRemoveListForYou(group.title),
+          appLocalizationsOf(context).removeListForYou,
+          appLocalizationsOf(context).wantToRemoveListForYou(group.title),
         ),
       );
       if (wantToDelete) {
@@ -91,25 +91,25 @@ class GroupMenu extends ConsumerWidget {
           if (isCurrentUserOwner)
             PopupMenuItem(
               onTap: onShareGroup,
-              child: Text(retrieveAppLocalizations(context).share),
+              child: Text(appLocalizationsOf(context).share),
             ),
 
           if (isCurrentUserOwner)
             PopupMenuItem(
               onTap: onEditGroup,
-              child: Text(retrieveAppLocalizations(context).edit),
+              child: Text(appLocalizationsOf(context).edit),
             ),
           if (isCurrentUserOwner)
             PopupMenuItem(
               onTap: removeGroup,
-              child: Text(retrieveAppLocalizations(context).delete),
+              child: Text(appLocalizationsOf(context).delete),
             ),
 
           // Editors
           if (isCurrentUserInEditors && !isCurrentUserOwner)
             PopupMenuItem(
               onTap: removeCurrentUserFromEditors,
-              child: Text(retrieveAppLocalizations(context).remove),
+              child: Text(appLocalizationsOf(context).remove),
             ),
         ],
       ),
