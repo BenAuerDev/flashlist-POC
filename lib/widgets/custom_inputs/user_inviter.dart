@@ -1,6 +1,6 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/group/group_user.dart';
 import 'package:flashlist/providers/users.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
