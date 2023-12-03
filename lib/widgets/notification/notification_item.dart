@@ -19,7 +19,7 @@ class NotificationItem extends ConsumerWidget {
 
     AlertDialog invitationDialog = AlertDialog(
       title: Text(notification.title),
-      content: Text(retrieveAppLocalizations(context).wantToJoin),
+      content: Text(appLocalizationsOf(context).wantToJoin),
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -31,7 +31,7 @@ class NotificationItem extends ConsumerWidget {
             ));
             context.pop('no');
           },
-          child: Text(retrieveAppLocalizations(context).no),
+          child: Text(appLocalizationsOf(context).no),
         ),
         ElevatedButton(
           onPressed: () {
@@ -41,7 +41,7 @@ class NotificationItem extends ConsumerWidget {
             }));
             context.pop('notnow');
           },
-          child: Text(retrieveAppLocalizations(context).notNow),
+          child: Text(appLocalizationsOf(context).notNow),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -54,7 +54,7 @@ class NotificationItem extends ConsumerWidget {
             ));
             context.pop('yes');
           },
-          child: Text(retrieveAppLocalizations(context).yes),
+          child: Text(appLocalizationsOf(context).yes),
         ),
       ],
     );
@@ -67,7 +67,7 @@ class NotificationItem extends ConsumerWidget {
         margin: const EdgeInsets.only(bottom: 4),
         color: notification.isRead
             ? Colors.transparent
-            : retrieveColorScheme(context).primaryContainer.withOpacity(0.2),
+            : colorSchemeOf(context).primaryContainer.withOpacity(0.2),
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.p16,

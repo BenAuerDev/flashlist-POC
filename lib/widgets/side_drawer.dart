@@ -15,13 +15,12 @@ class SideDrawer extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            decoration:
-                BoxDecoration(color: retrieveColorScheme(context).background),
+            decoration: BoxDecoration(color: colorSchemeOf(context).background),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  retrieveIsDarkTheme(context)
+                  isDarkThemeOf(context)
                       ? 'assets/favicon/logo_white_no_background.png'
                       : 'assets/favicon/logo_black_no_background.png',
                   width: 120,
@@ -31,7 +30,7 @@ class SideDrawer extends StatelessWidget {
                   'Flashlist',
                   style: TextStyle(
                     fontSize: Sizes.p16,
-                    color: retrieveColorScheme(context).onBackground,
+                    color: colorSchemeOf(context).onBackground,
                   ),
                 ),
               ],
@@ -41,7 +40,7 @@ class SideDrawer extends StatelessWidget {
             title: Row(children: [
               const Icon(Icons.person),
               gapW12,
-              Text(retrieveAppLocalizations(context).profile),
+              Text(appLocalizationsOf(context).profile),
             ]),
             onTap: () => context.goNamed(AppRoute.profile.name),
           ),
@@ -49,7 +48,7 @@ class SideDrawer extends StatelessWidget {
             title: Row(children: [
               const Icon(Icons.settings),
               gapW12,
-              Text(retrieveAppLocalizations(context).settings),
+              Text(appLocalizationsOf(context).settings),
             ]),
             onTap: () => context.goNamed(AppRoute.settings.name),
           ),
@@ -57,7 +56,7 @@ class SideDrawer extends StatelessWidget {
             title: Row(children: [
               const Icon(Icons.logout),
               gapW12,
-              Text(retrieveAppLocalizations(context).signOut),
+              Text(appLocalizationsOf(context).signOut),
             ]),
             onTap: () {
               context.pop();

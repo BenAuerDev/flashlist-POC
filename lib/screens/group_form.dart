@@ -20,14 +20,14 @@ class GroupForm extends ConsumerWidget {
         groupUid != null ? ref.watch(groupProvider(groupUid!)).value : null;
 
     var enteredTitle = group?.title ?? '';
-    Color? enteredColor = group?.color ?? retrieveColorScheme(context).primary;
+    Color? enteredColor = group?.color ?? colorSchemeOf(context).primary;
 
     Future createGroup() async {
       final res = ref.read(
         addGroupProvider(
           GroupDTO(
             enteredTitle,
-            enteredColor ?? retrieveColorScheme(context).primary,
+            enteredColor ?? colorSchemeOf(context).primary,
           ),
         ),
       );
@@ -68,7 +68,7 @@ class GroupForm extends ConsumerWidget {
             group == null ? '' : group.title,
             style: TextStyle(
               color: group == null
-                  ? retrieveColorScheme(context).onBackground
+                  ? colorSchemeOf(context).onBackground
                   : group.color,
               fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class GroupForm extends ConsumerWidget {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return retrieveAppLocalizations(context)
+                      return appLocalizationsOf(context)
                           .pleaseEnterValidListTitle;
                     }
                     return null;
@@ -115,14 +115,14 @@ class GroupForm extends ConsumerWidget {
                   children: [
                     TextButton(
                       onPressed: () => context.pop(),
-                      child: Text(retrieveAppLocalizations(context).goBack),
+                      child: Text(appLocalizationsOf(context).goBack),
                     ),
                     ElevatedButton(
                       onPressed: submit,
                       child: Text(
                         group == null
-                            ? retrieveAppLocalizations(context).add
-                            : retrieveAppLocalizations(context).edit,
+                            ? appLocalizationsOf(context).add
+                            : appLocalizationsOf(context).edit,
                       ),
                     ),
                   ],

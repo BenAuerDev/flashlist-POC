@@ -17,7 +17,7 @@ class ColorInput extends HookWidget {
         useState(const Color.fromARGB(255, 255, 255, 255));
 
     ValueNotifier<Color> currentColor =
-        useState(initialColor ?? retrieveColorScheme(context).primary);
+        useState(initialColor ?? colorSchemeOf(context).primary);
 
     void changeColor(Color color) {
       currentColor.value = color;
@@ -30,7 +30,7 @@ class ColorInput extends HookWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text('${retrieveAppLocalizations(context).pickAColor}!'),
+                title: Text('${appLocalizationsOf(context).pickAColor}!'),
                 content: SingleChildScrollView(
                   child: ColorPicker(
                     pickerColor: pickerColor.value,
@@ -39,7 +39,7 @@ class ColorInput extends HookWidget {
                 ),
                 actions: <Widget>[
                   ElevatedButton(
-                    child: Text(retrieveAppLocalizations(context).pick),
+                    child: Text(appLocalizationsOf(context).pick),
                     onPressed: () {
                       pickerColor = currentColor;
                       onSelectColor!(pickerColor.value);
@@ -51,7 +51,7 @@ class ColorInput extends HookWidget {
               ),
             );
           },
-          child: Text(retrieveAppLocalizations(context).pickAColor),
+          child: Text(appLocalizationsOf(context).pickAColor),
         ),
         gapW16,
         Container(
