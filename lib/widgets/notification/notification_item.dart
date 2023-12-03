@@ -1,6 +1,6 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/notification.dart';
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/notification.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

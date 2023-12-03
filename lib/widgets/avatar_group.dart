@@ -1,7 +1,7 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/models/user.dart';
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/group/group_user.dart';
 import 'package:flashlist/widgets/slide_fade_transition.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,7 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/group/group.dart';
+import 'package:flashlist/providers/group/group_user.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/user_inviter.dart';
 import 'package:flutter/material.dart';

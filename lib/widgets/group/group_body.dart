@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/group/group_body.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

@@ -1,4 +1,4 @@
-import 'package:flashlist/providers/group.dart';
+import 'package:flashlist/providers/group/group.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/group/group_wrapper.dart';
 import 'package:flutter/material.dart';
