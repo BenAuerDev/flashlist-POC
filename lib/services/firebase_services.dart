@@ -135,7 +135,7 @@ class FirestoreService {
 
       return Group(
         updatedGroup.title,
-        Timestamp.now(),
+        group.createdAt,
         updatedGroup.uid!,
         updatedGroup.color,
         [],
