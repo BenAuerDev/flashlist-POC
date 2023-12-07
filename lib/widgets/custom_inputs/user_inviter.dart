@@ -11,6 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final currentUser = FirebaseAuth.instance.currentUser;
 
 class UserInviter extends HookConsumerWidget {
+  /// Custom Widget to invite a user to a group
   const UserInviter({
     super.key,
     required this.group,
