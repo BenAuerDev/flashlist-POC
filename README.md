@@ -1,5 +1,5 @@
 # Flashlist
-Flashlist is a crossplatform app, allowing the user to create, share and manage lists, so you don't have to search through whatsapp conversations.
+Flashlist is a crossplatform app (currently only Android), allowing the user to create, share and manage lists, so you don't have to search through whatsapp conversations.
 
 ## Installation
 This App is built with Flutter and Firebase so if you haven't already, [install the Flutter-SDK](https://docs.flutter.dev/get-started/install) AND [install Firebase CLI](https://firebase.google.com/docs/cli#setup_update_cli) 
