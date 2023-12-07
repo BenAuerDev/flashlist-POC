@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class PasswordInput extends HookWidget {
+  /// Custom TextInput Widget to give user the option to show/hide password
   const PasswordInput({
     super.key,
     this.labelText,

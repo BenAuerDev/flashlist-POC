@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AvatarPicker extends HookWidget {
+  /// Custom Widget using package:image_picker to allow user to upload image
   const AvatarPicker({super.key, required this.onPickImage, this.initialImage});
 
   final String? initialImage;

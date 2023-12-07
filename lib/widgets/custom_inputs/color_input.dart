@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
 class ColorInput extends HookWidget {
+  /// Custom Widget using package:flutter_colorpicker to allow user to pick a color
   const ColorInput({super.key, this.initialColor, this.onSelectColor});
 
   final Color? initialColor;
