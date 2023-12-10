@@ -2,6 +2,7 @@ import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flashlist/widgets/svg/logo_branding.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,25 +15,12 @@ class SideDrawer extends StatelessWidget {
       shape: const BeveledRectangleBorder(),
       child: ListView(
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: colorSchemeOf(context).background),
+          const DrawerHeader(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  isDarkThemeOf(context)
-                      ? 'assets/favicon/logo_white_no_background.png'
-                      : 'assets/favicon/logo_black_no_background.png',
-                  width: 120,
-                  height: 100,
-                ),
-                Text(
-                  'Flashlist',
-                  style: TextStyle(
-                    fontSize: Sizes.p16,
-                    color: colorSchemeOf(context).onBackground,
-                  ),
-                ),
+                LogoBranding(),
               ],
             ),
           ),
