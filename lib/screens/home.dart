@@ -4,6 +4,8 @@ import 'package:flashlist/screens/tabs/notifications.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/notification/notification_badge.dart';
 import 'package:flashlist/widgets/side_drawer.dart';
+import 'package:flashlist/widgets/svg/add_flashlist.dart';
+import 'package:flashlist/widgets/svg/logo_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,7 +43,7 @@ class HomeScreen extends StatelessWidget {
           labelColor: colorSchemeOf(context).onBackground,
           tabs: const [
             Tab(
-              icon: Icon(Icons.list_alt),
+              icon: LogoIcon(),
             ),
             Tab(
               icon: NotificationBadge(),
@@ -56,7 +58,7 @@ class HomeScreen extends StatelessWidget {
         ),
         backgroundColor: colorSchemeOf(context).background,
         onPressed: () => context.goNamed(AppRoute.addGroup.name),
-        child: const Icon(Icons.add_card),
+        child: const AddFlashlistIcon(),
       ),
       drawer: const SideDrawer(),
       body: const TabBarView(
