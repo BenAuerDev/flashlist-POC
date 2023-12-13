@@ -2,8 +2,6 @@ import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum LogoTheme { black, white, color }
-
 class AddFlashlistIcon extends StatelessWidget {
   const AddFlashlistIcon({
     super.key,

@@ -3,7 +3,7 @@ import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashlist/widgets/notification/notification_badge.dart';
-import 'package:flashlist/widgets/svg/logo_branding_horizontal.dart';
+import 'package:flashlist/widgets/svg/logo_branding_vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +17,7 @@ class SideDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const DrawerHeader(
-            child: LogoBrandingHorizontal(),
+            child: LogoBrandingVertical(),
           ),
           Container(
             margin: const EdgeInsets.only(top: Sizes.p12, left: Sizes.p20),
