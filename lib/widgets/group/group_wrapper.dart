@@ -1,6 +1,7 @@
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/models/group.dart';
 import 'package:flashlist/routing/app_router.dart';
+import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/avatar_group.dart';
 import 'package:flashlist/widgets/group/group_body.dart';
 import 'package:flashlist/widgets/group/group_menu.dart';
@@ -42,7 +43,7 @@ class GroupWrapper extends StatelessWidget {
                       group.title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: group.color,
+                        color: colorSchemeOf(context).onBackground,
                         fontSize: Sizes.p24,
                         fontWeight: FontWeight.bold,
                       ),
