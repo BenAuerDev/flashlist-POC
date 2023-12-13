@@ -12,8 +12,8 @@ class NotificationBadge extends ConsumerWidget {
     var count = ref.watch(userUnreadNotificationsCountProvider);
 
     return Container(
-      width: Sizes.p40,
-      height: Sizes.p40,
+      width: Sizes.p24,
+      height: Sizes.p24,
       alignment: Alignment.center,
       child: Stack(
         children: [
