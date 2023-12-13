@@ -14,8 +14,8 @@ class LogoBrandingVertical extends StatelessWidget {
   /// The [width] and [height] can be set to any value but should be the same
   const LogoBrandingVertical({
     super.key,
-    this.width = 595,
-    this.height = 420,
+    this.width = 420,
+    this.height = 595,
     this.color = LogoTheme.color,
     this.withBranding = true,
   });
