@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 enum LogoTheme { black, white, color }
 
 class LogoBrandingVertical extends StatelessWidget {
-  /// A Custom Widget returning the FlashList Logo with Branding
+  /// A Custom Widget returning the FlashList Logo with Branding in [Vertical] orientation
   ///
   /// Branding text can be hidden by setting [withBranding] to false
   ///
