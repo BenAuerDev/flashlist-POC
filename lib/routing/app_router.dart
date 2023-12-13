@@ -4,6 +4,7 @@ import 'package:flashlist/screens/auth.dart';
 import 'package:flashlist/screens/group_form.dart';
 import 'package:flashlist/screens/home.dart';
 import 'package:flashlist/screens/new_body_item_form.dart';
+import 'package:flashlist/screens/notifications.dart';
 import 'package:flashlist/screens/profile.dart';
 import 'package:flashlist/screens/settings.dart';
 import 'package:flashlist/screens/share.dart';
@@ -19,6 +20,7 @@ enum AppRoute {
   settings,
   profile,
   addItemToBody,
+  notifications,
   addGroup,
   editGroup,
   shareGroup,
@@ -89,6 +91,11 @@ final goRouter = GoRouter(
               child: NewBodyItemForm(groupUid: groupUid),
             );
           },
+        ),
+        GoRoute(
+          path: 'notifications',
+          name: AppRoute.notifications.name,
+          builder: (context, state) => const NotificationsScreen(),
         ),
         GoRoute(
           path: 'settings',

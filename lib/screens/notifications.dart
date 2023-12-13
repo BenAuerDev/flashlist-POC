@@ -7,8 +7,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class NotificationsTab extends HookConsumerWidget {
-  const NotificationsTab({super.key});
+class NotificationsScreen extends HookConsumerWidget {
+  const NotificationsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,27 +28,32 @@ class NotificationsTab extends HookConsumerWidget {
 
     final notificationsValue = ref.watch(userNotificationStreamProvider);
 
-    return AsyncValueWidget(
-      value: notificationsValue,
-      data: (data) {
-        if (data.isEmpty) {
-          return Center(
-            child: Text(appLocalizationsOf(context).noNotifications),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notifications'),
+      ),
+      body: AsyncValueWidget(
+        value: notificationsValue,
+        data: (data) {
+          if (data.isEmpty) {
+            return Center(
+              child: Text(appLocalizationsOf(context).noNotifications),
+            );
+          }
+
+          return SizedBox.expand(
+            child: ListView.builder(
+              itemCount: data.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final notification = data[index];
+
+                return NotificationItem(notification: notification);
+              },
+            ),
           );
-        }
-
-        return SizedBox.expand(
-          child: ListView.builder(
-            itemCount: data.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final notification = data[index];
-
-              return NotificationItem(notification: notification);
-            },
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

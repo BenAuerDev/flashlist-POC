@@ -1,8 +1,7 @@
 import 'package:flashlist/routing/app_router.dart';
 import 'package:flashlist/screens/tabs/groups_list.dart';
-import 'package:flashlist/screens/tabs/notifications.dart';
+import 'package:flashlist/screens/tabs/notes_list.dart';
 import 'package:flashlist/utils/context_retriever.dart';
-import 'package:flashlist/widgets/notification/notification_badge.dart';
 import 'package:flashlist/widgets/side_drawer.dart';
 import 'package:flashlist/widgets/svg/add_flashlist.dart';
 import 'package:flashlist/widgets/svg/logo_icon.dart';
@@ -46,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               icon: LogoIcon(),
             ),
             Tab(
-              icon: NotificationBadge(),
+              icon: Icon(Icons.notes_outlined),
             ),
           ],
         ),
@@ -64,7 +63,7 @@ class HomeScreen extends StatelessWidget {
       body: const TabBarView(
         children: [
           GroupsList(),
-          NotificationsTab(),
+          NotesList(),
         ],
       ),
     );
