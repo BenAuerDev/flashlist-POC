@@ -32,6 +32,17 @@ class SideDrawer extends StatelessWidget {
                   onTap: () => context.goNamed(AppRoute.profile.name),
                 ),
                 ListTile(
+                  title: const Row(children: [
+                    NotificationBadge(),
+                    gapW12,
+                    Text('Notifications'),
+                  ]),
+                  onTap: () {
+                    context.pop();
+                    context.goNamed(AppRoute.notifications.name);
+                  },
+                ),
+                ListTile(
                   title: Row(children: [
                     const Icon(Icons.settings),
                     gapW12,
