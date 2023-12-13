@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final darkTheme = ThemeData(
-  textTheme: GoogleFonts.latoTextTheme(
+  textTheme: GoogleFonts.exoTextTheme(
     textTheme.apply(bodyColor: Colors.white),
   ),
   useMaterial3: true,
