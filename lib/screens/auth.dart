@@ -5,6 +5,7 @@ import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/avatar_picker.dart';
 import 'package:flashlist/widgets/custom_inputs/password_input.dart';
+import 'package:flashlist/widgets/svg/logo_branding_vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -90,12 +91,9 @@ class AuthScreen extends HookWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset(
-                AdaptiveTheme.of(context).mode.isDark
-                    ? 'assets/favicon/logo_white_no_background.png'
-                    : 'assets/favicon/logo_black_no_background.png',
-                width: 120,
-                height: 120,
+              const LogoBrandingVertical(
+                width: 180,
+                height: 180,
               ),
               Card(
                 margin: const EdgeInsets.all(Sizes.p8),
