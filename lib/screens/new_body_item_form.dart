@@ -6,7 +6,6 @@ import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/group/group_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NewBodyItemForm extends HookConsumerWidget {
@@ -60,7 +59,7 @@ class NewBodyItemForm extends HookConsumerWidget {
           child: Text(
             group.title,
             style: TextStyle(
-              color: color,
+              color: colorSchemeOf(context).onBackground,
               fontSize: Sizes.p24,
               fontWeight: FontWeight.bold,
             ),
@@ -118,21 +117,15 @@ class NewBodyItemForm extends HookConsumerWidget {
                       error: (error, stackTrace) => const SizedBox(),
                     ),
                 gapH12,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      child: Text(appLocalizationsOf(context).goBack),
-                      onPressed: () {
-                        context.pop();
-                      },
-                    ),
-                    ElevatedButton(
-                      onPressed: submit,
-                      child: Text(appLocalizationsOf(context).add),
-                    ),
-                  ],
-                )
+                ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 36),
+                    ), // Set the height as needed.
+                  ),
+                  onPressed: submit,
+                  child: Text(appLocalizationsOf(context).add),
+                ),
               ],
             ),
           ),
