@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flashlist/constants/app_sizes.dart';
 import 'package:flashlist/utils/context_retriever.dart';
 import 'package:flashlist/widgets/custom_inputs/avatar_picker.dart';
